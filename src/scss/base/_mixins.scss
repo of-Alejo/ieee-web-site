@@ -1,0 +1,105 @@
+@use 'variables' as v;
+
+/** Media Queries **/
+@mixin phone {
+    @media (min-width: v.$phone) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: v.$tablet) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: v.$desktop) {
+        @content;
+    }
+}
+
+@mixin XlDesktop {
+    @media (min-width: v.$xlDesktop) {
+        @content;
+    }
+}
+
+@mixin button($bgColor, $hoverColor, $textColor, $borderRadius: 5rem, $padding: 1.2rem 3.5rem, $borderWidth: 2px) {
+    background-color: $bgColor;
+    padding: $padding;
+    color: $textColor;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border: $borderWidth solid black;
+    border-radius: $borderRadius;
+    transition: background-color .3s, color .3s;
+    text-align: center;
+    display: flex;
+
+    &:hover {
+        background-color: darken($hoverColor, 50%);
+        color: white;
+        cursor: pointer;
+    }
+}
+
+
+@mixin gridLayout($columns, $gap) {
+    display: grid;
+    gap: $gap;
+    grid-template-columns: repeat($columns, 1fr);
+}
+
+@mixin container($maxWidth: 140rem, $margin: 0 auto) {
+    width: min(95%, $maxWidth);
+    margin: $margin;
+}
+
+@mixin headings {
+    font-family: v.$mainFont;
+    font-weight: v.$blackFont;
+    margin: 2rem 0;
+}
+
+@mixin pageTitle {
+    @include headings;
+    margin: 6rem 0 3rem 0;
+    text-align: center;
+}
+
+@mixin pageDescription {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: v.$thin;
+    color: v.$darkGray;
+    margin-bottom: 5rem;
+}
+
+@mixin logo($textAlign: center, $margin: 0) {
+    color: v.$white;
+    white-space: nowrap;
+    text-align: $textAlign;
+    margin: $margin;
+
+    @include mixinDesktop {
+        text-align: left;
+    }
+}
+
+@mixin linkStyle {
+    all: unset;
+    color: v.$white;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    font-weight: v.$boldWeight;
+
+    &:hover {
+        color: v.$blue;
+        cursor: pointer;
+    }
+}
+
+@mixin backgroundGradient($bgColor, $direction: to left top) {
+    background-image: linear-gradient($direction, $bgColor, lighten($bgColor, 15%));
+}

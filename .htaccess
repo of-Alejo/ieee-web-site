@@ -1,0 +1,32 @@
+# Para proteger
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+
+# Redireccionar
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-SSL} !on
+RewriteCond %{HTTP_HOST} ^justisalud\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.justisalud\.com$
+RewriteRule ^/?$ "https\:\/\/www\.justisalud\.com\/" [R=301,L]
+
+# Aplica la reescritura a todas las solicitudes
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ /index.php [L]
+
+# Permitir que la raíz funcione correctamente
+RewriteRule ^$ /index.php [L]
+
+# Permitir variables GET
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^index.php$ /index.php?%1 [QSA,L]
+
+# Caché
+<FilesMatch "\.(html|js|css|img|png|webp|avi|php)$">
+    Header set Cache-Control "max-age=0, no-store"
+</FilesMatch>
+

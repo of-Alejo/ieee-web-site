@@ -1,0 +1,184 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+#burgerMenu {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    background-color: transparent;
+    border: none;
+    background-color: #1c120d;
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+    padding: 1rem;
+    @include m.desktop {
+        display: none;
+    }
+    i {
+        font-size: 4rem;
+        color: #fff;
+    }
+}
+
+.header {
+    img {
+        width: 6rem;
+    }
+    nav, button {
+        display: none;
+    }
+    @include m.desktop {
+        a, a picture{
+            z-index: 4;
+        }
+        a span{
+            z-index:3;
+        }
+        nav a:hover {
+            i {
+                color: #42bda9;
+            }
+            span {
+                animation: slideRightNav .5s ease-in-out;
+                display: flex;
+            }
+        }
+    }
+
+    @include m.desktop {
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        background-color: #1c120d;
+        min-width: 9rem;
+        min-height: 100%;
+        nav, button {
+            width: 7rem;
+            display: flex;
+            position: fixed;
+            align-items: center;
+            flex-direction: column;
+            a {
+                margin: auto;
+                padding: 2rem 1rem;
+                display: flex;
+                align-items: center;
+                i {
+                    font-size: 2rem;
+                }
+            }
+            span {
+                display: none;
+                font-size: larger;
+                position: fixed;
+                left: 7rem;
+                padding: 2rem;
+                border-top-right-radius: 2rem;
+                border-bottom-right-radius: 2rem;
+                background-color: #1c120d;
+                color: #42bda9;
+                font-weight: 100;
+            }
+        }
+        #closeMenu {
+            @include m.tablet {
+                display: none;
+            }
+        }
+    }
+}
+
+.headerShow { // Only for mobile
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 4;
+    width: 100%;
+    background-color: #1c120d;
+    animation: pageSlideRight .8s ease-in-out;
+    nav a, button {
+        padding: 2rem 3rem;
+        font-size: 2.5rem;
+    }
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        i {
+            font-size: 3rem;
+        }
+        & a:first-of-type { // For the logo
+            img {
+                width: 10rem;
+            }
+            span {
+                display: none;
+            }
+        }
+    }
+    button {
+        display: block;
+        margin: 0 auto;
+        background-color: transparent;
+        border: none;
+        color: #fff;
+    }
+    #closeMenu {
+        display: flex;
+        align-items: center;
+        animation: pageSlideLeft 1.5s ease-in-out;
+        i {
+            font-size: 8rem;
+        }
+        span {
+            font-size: 3rem;
+        }
+    }
+}
+
+.btnProfile {
+    background-color: transparent;
+    border: none;
+    padding: 1rem;
+    bottom: 2rem;
+    left: .8rem;
+    cursor: pointer;
+    i {
+        color: #fff;
+        font-size: 3rem;
+        z-index:4;
+    }
+    span {
+        z-index:3;
+        bottom: .8rem;
+    }
+    @include m.desktop {
+        &:hover {
+            i {
+                color: #42bda9;
+            }
+            span {
+                animation: slideRightNav .5s ease-in-out;
+                display: flex;
+            }
+        }
+    }
+    
+}
+
+.socialMediaBubble {
+    position: fixed;
+    right: 2rem;
+}
+
+.cita {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+}
+
+.logo {
+    display: block;
+    width: 10rem;
+}

@@ -1,0 +1,18 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+#formRegister {
+    align-items: center;
+
+    .field {
+        width: max-content;
+
+        input {
+            width: 20rem;
+
+            @include m.tablet {
+                min-width: 40rem; // Ensures minimum width on tablet screens
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+// Fonts
+$mainFont: 'Public Sans', sans-serif;
+
+// Media Query Sizes
+$phone: 480px;
+$tablet: 768px;
+$desktop: 1024px;
+$xlDesktop: 1200px;
+
+// Colors
+$lightBrown: #6a584b;
+$darkBrown: #483e36;
+$veryDarkBrown: #1c120d;
+
+$black: #1a1b15;
+$white: #FFFFFF;
+$silver: #c6beba;
+$lightSilver: #e7e4e3;
+$gray: #64748B;
+$lightGray: #F8FAFC;
+$darkGray: #1E293B;
+$teal: #42bda9;
+
+$red: rgb(169, 0, 0);
+$green: #02db02;
+$tealGreen: #4fb454;
+
+// Other Styles
+$backgroundColor: transparent;
+$borderColor: #000;
+$bottomBorder: 3px solid $borderColor;
+$submitButtonColor: #42bda9;
+
+// Font Weights
+$thin: 300;
+$regular: 400;
+$bold: 700;
+$blackFont: 900;

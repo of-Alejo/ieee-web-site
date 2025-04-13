@@ -1,0 +1,66 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+// Estilos para el botón deshabilitado
+.btnDisabled {
+    background-color: v.$gray;
+    color: v.$lightGray;
+    border-color: v.$darkGray;
+    cursor: not-allowed;
+
+    &:hover {
+        background-color: v.$gray; // Asegura que no cambie en hover
+    }
+
+    &:focus {
+        outline: none; // Evita bordes de enfoque
+    }
+}
+
+// Estilos generales para botones de formularios
+.btn {
+    @include m.button(transparent, v.$black, v.$black);
+    transition: all 0.3s ease; // Ajuste de transición para mejor fluidez
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.1); // Añade un ligero cambio en hover
+    }
+}
+
+// Botón de enviar (submit)
+.btnSubmit {
+    @include m.button(v.$black, v.$submitButtonColor, v.$submitButtonColor);
+    display: flex;
+    width: fit-content;
+    margin: 2rem auto;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: darken(v.$submitButtonColor, 10%);
+    }
+}
+
+// Botón para crear cuenta (enlace)
+.btnCreateAccount {
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+    color: v.$lightGray;
+
+    &:hover {
+        text-decoration: none; // Elimina subrayado en hover
+    }
+}
+
+// Botón de cerrar (close)
+.btnClose {
+    @include m.button(transparent, v.$black, v.$black);
+    max-height: 5rem;
+    width: 5rem; 
+    padding: 2.5rem;
+    font-weight: 900;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
