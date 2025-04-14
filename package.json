@@ -28,11 +28,12 @@
   "main": "gulpfile.js",
   "scripts": {
     "clean": "rm -rf node_modules && npm cache clean --force",
-    "server": "php -S 0.0.0.0:3000 -t public",
+    "server": "php -S localhost:3000 -t public",
     "production": "gulp build",
     "dev": "concurrently \"npm run server\" \"gulp dev\""
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^7.0.2",
     "concurrently": "^9.1.2",
     "css-loader": "^7.1.2",
     "cssnano": "^7.0.6",
@@ -52,6 +53,7 @@
     "gulp-postcss": "^10.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^6.0.1",
+    "gulp-seo": "^1.0.2",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser-js": "^5.2.2",
     "gulp-uglify": "^3.0.2",
@@ -63,7 +65,6 @@
     "terser": "^5.39.0"
   },
   "dependencies": {
-    "@fullhuman/postcss-purgecss": "^7.0.2",
     "dotenv": "^16.5.0"
   }
 }
