@@ -2,18 +2,6 @@
     <div>
         <article>
             <h3 hidden>Iniciar Sesión</h3>
-            <div class="img">
-                <picture>
-                    <source srcset="build/img/forms/gandhi.avif" type="image/avif">
-                    <source srcset="build/img/forms/gandhi.webp" type="image/webp">
-                    <img loading="lazy" width="200" height="200" src="build/img/forms/gandhi.png" alt="Mahatma Gandhi">
-                </picture>
-            </div>
-            <p class="phrase">
-                "La verdadera medida de una sociedad justa se encuentra en cómo trata a sus miembros más vulnerables".
-                <br>
-                <span>Mahatma Gandhi.</span>
-            </p>
         </article>
         
         <?php if (getSubDomain() != '/admin'): ?>

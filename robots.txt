@@ -1,17 +1,9 @@
 # Permite a todos los robots rastrear las siguientes secciones
 User-agent: *
 Allow: /
-Allow: /buscador
-Allow: /blog
-Allow: /noticias
-Allow: /ubicacion
-Allow: /politica-privacidad
-Allow: /terminos-condiciones
 
 # Prohíbe el acceso a secciones sensibles o específicas
-Disallow: /admin
-Disallow: /recuperarUsuario
-Disallow: /admin?
+# Disallow: /admin
 
 # Sitemap para ayudar a los motores de búsqueda a encontrar páginas relevantes
-Sitemap: https://www.justisalud.com/sitemap.xml
+# Sitemap: https://www.justisalud.com/sitemap.xml

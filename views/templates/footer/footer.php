@@ -5,9 +5,10 @@
     </div>
     <div>
         <p>&copy; <?php 
-            $initial = 2023; // Año de inicio del contenido o del sitio web
+            $initial = 2025; // Año de inicio del contenido o del sitio web
             $actual = date("Y");
-            echo $initial . (($initial != $actual) ? "- . {$actual}" : ''); ?> JustiSalud. Todos los derechos reservados.
+            echo $initial . (($initial != $actual) ? "- . {$actual}" : ''); ?> 
+            
         </p>
     </div>
 </footer>

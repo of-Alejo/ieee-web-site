@@ -11,47 +11,33 @@
     <meta name="robots" content="index, follow">
 
     <!-- Información -->
-    <title>JustiSalud - <?php echo $title; ?></title>
+    <title>IEEE - <?php echo $title; ?></title>
     <meta name="title" content="<?php echo $metaTitle; ?>">
-    <meta name="description" content="<?php echo $descriptionSite; ?> - Consultoría en Responsabilidad Civil Médica en Popayán, Colombia. Empoderamos a nuestros usuarios frente a situaciones que comprometen la atención de su salud.">
-    <meta name="author" content="IVÁN FERNANDO YANZA MEJÍA">
-    <meta name="keywords" content="JustiSalud, Responsabilidad, Civil, Médica, Consultoría Legal, Salud, Popayán, Colombia, Salud, Medicina, Derecho">
+    <meta name="description" content="<?php echo $descriptionSite; ?>">
+    <meta name="author" content="UNICAUCA">
+    <meta name="keywords" content="">
     <meta name="publisher" content="DAVID ALEJANDRO ORTEGA FLÓREZ">
-    <meta name="geo.position" content="2.438011;-76.603747">
+    <meta name="geo.position" content="">
 
     <!-- Tema color -->
-    <meta name="theme-color" content="#055e80">
+    <meta name="theme-color" content="">
 
     <!-- Favicon -->
     <link rel="icon" href="/build/img/logo/logo.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/build/img/logo/logo.ico" type="image/x-icon">
 
     <!-- Copyright -->
-    <meta name="copyright" content="2024">
+    <meta name="copyright" content="20245">
 
     <!-- Sitio Principal -->
-    <link rel="canonical" href="https://www.justisalud.com">
+    <link rel="canonical" href="">
 
 
     <!-- Redes Sociales -->
     <!-- Para Facebook -->
     <!-- Etiquetas de Facebook Open Graph -->
-    <meta property="fb:pages" content="100084877171245">
-    <meta property="og:title" content="JustiSalud - Consultoría en Responsabilidad Civil Médica">
-    <meta property="og:description" content="Empoderamos a nuestros usuarios frente a situaciones que comprometen la atención de su salud en Popayán, Colombia.">
-    <meta property="og:image" content="https://www.justisalud.com/build/img/logo/logoCompleto.png">
-    <meta property="og:url" content="https://www.justisalud.com">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="JustiSalud">
-    <meta property="og:image:width" content="821">
-    <meta property="og:image:height" content="292">
 
     <!-- Etiquetas para Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://www.justisalud.com/">
-    <meta name="twitter:title" content="JustiSalud - Consultoría en Responsabilidad Civil Médica">
-    <meta name="twitter:description" content="Empoderamos a nuestros usuarios frente a situaciones que comprometen la atención de su salud en Popayán, Colombia.">
-    <meta name="twitter:image" content="https://www.justisalud.com/build/img/logo/logoCompleto.png">
 
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -76,13 +62,7 @@
 
 <body>
     <?php include_once __DIR__ .'/templates/header/header.php'; ?>
-    <?php echo $contenido; ?>
-
-    <?php if(getSubDomain() != '/admin'): ?>
-        <?php include_once __DIR__ .'/templates/forms/register.php';  ?>
-    <?php endif; ?>
-    <?php include_once __DIR__ .'/templates/forms/login.php';  ?>
-    <?php include_once __DIR__ .'/templates/footer/footer.php';?>
+    <?php echo $content; ?>
 </body>
 
 </html>

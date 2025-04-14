@@ -50,85 +50,11 @@ class Email {
         $mail->SMTPAuth = true;
         $mail->Username = $_ENV['EMAIL'];
         $mail->Password = $_ENV['PASSWORD'];
-        $mail->setFrom($_ENV['EMAIL'], 'Soporte técnico JustiSalud');
+        $mail->setFrom($_ENV['EMAIL'], '');
         $mail->isHTML(true); // Enviar correo con HTML
         $mail->Subject = $asunto; // Asunto del correo
         $mail->CharSet = 'UTF-8';
         return $mail;
-    }
-
-    /**
-     * Envía un correo de recuperación de contraseña
-     * 
-     * @return bool
-     */
-    public function sendRecoverEmail() : bool {
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return false;
-
-        $mail = $this->createEmail('Renueva tu contraseña de JustiSalud');
-        $fullName = "{$this->name}  {$this->lastName}";
-        $mail->addAddress($this->email, $fullName);
-
-        // Cargar contenido de la plantilla HTML
-        $template = file_get_contents(__DIR__ . '/templates/recuperar.html');
-        $link = "https://{$_SERVER['HTTP_HOST']}/recuperarUsuario?token={$this->token}";
-        $content = str_replace(['{{NOMBRE}}', '{{ENLACE}}'], [$this->name, $link], $template);
-        $mail->Body = $content;
-
-        $mail->AltBody = "JustiSalud\nRenueva tu contraseña de usuario olvidada en JustiSalud.\nDirígete al siguiente enlace para renovar tu contraseña:\n {$link}";
-        
-        return $this->sendEmail($mail);
-    }
-
-    /**
-     * Envía un correo de confirmación de registro
-     * 
-     * @return bool
-     */
-    public function sendConfirmEmail() : bool {
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return false;
-        $mail = $this->createEmail('Confirma tu cuenta de JustiSalud');
-        $nombreCompleto = "{$this->name} {$this->lastName}";
-        $mail->addAddress($this->email, $nombreCompleto);
-
-        // Cargar contenido de la plantilla HTML
-        $template = file_get_contents(__DIR__ . '/templates/registro.html');
-        $link = "https://{$_SERVER['HTTP_HOST']}/confirmarRegistro?token={$this->token}";
-        $contenido = str_replace(['{{NOMBRE}}', '{{ENLACE}}'], [$this->name, $link], $template);
-        $mail->Body = $contenido;
-
-        $mail->AltBody = "JustiSalud\nConfirma tu nueva cuenta en JustiSalud.\nDirígete al siguiente enlace para finalizar el registro de tu cuenta:\n {$link}";
-        
-        return $this->sendEmail($mail);
-    }
-
-    /**
-     * Envía un correo de petición de cita
-     * 
-     * @param string $userId
-     * @param string $tel
-     * @param string $date
-     * @param string $hour
-     * @return bool
-     */
-    public function sendPetitionEmail(string $userId, string $tel, string $date, string $hour) : bool {
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return false;
-        $mail = $this->createEmail('Servicio de agendar citas JustiSalud');
-        $mail->addAddress('justisaludcol@gmail.com', 'Equipo JustiSalud');
-
-        // Cargar contenido de la plantilla HTML
-        $template = file_get_contents(__DIR__ . '/templates/nuevaCita.html');
-        $link = "https://{$_SERVER['HTTP_HOST']}/admin?userId= {$userId}";
-        $contenido = str_replace(
-            ['{{ID}}', '{{NOMBRE}}', '{{APELLIDO}}', '{{CORREO}}', '{{CELULAR}}', '{{FECHA}}', '{{HORA}}', '{{ENLACE}}'],
-            [$userId, $this->name, $this->lastName, $this->email, $tel, $date, $hour, $link],
-            $template
-        );
-        $mail->Body = $contenido;
-
-        $mail->AltBody = "JustiSalud\nNueva cita agendada.\nDatos del usuario:\n1. Identificador: {$userId}\n2. Nombres: {$this->name}\n3. Apellidos: {$this->lastName}\n4. Correo: {$this->email}\n5. Celular: {$tel}\n6. Fecha: {$date}\n7. Hora: {$hour}\nAdministrar Citas: {$link}";
-        
-        return $this->sendEmail($mail);
     }
 
     /**
@@ -158,7 +84,7 @@ class Email {
             }
         } else {
             // Configuración para producción
-            $mail->Host = 'mail.justisalud.com';
+            $mail->Host = '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port = 465;
 

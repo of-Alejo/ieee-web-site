@@ -22,9 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function activateFunctions() {
     // Activa funcionalidades específicas según la página actual
     const pathActions = {
-        [routes.index]: initIndexApp,
-        [routes.search]: initSearch,
-        [routes.blog]: initBlog
+        [routes.index]: initIndexApp
     };
     
     if (pathActions[window.location.pathname]) {
