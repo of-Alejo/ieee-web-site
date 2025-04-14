@@ -11,11 +11,6 @@ namespace Email;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use Dotenv\Dotenv;
-
-// Carga las variables de entorno desde el archivo .env
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->safeLoad(); // Si el archivo no existe, no se produce un error
 
 class Email {
     private string $name;
@@ -79,7 +74,7 @@ class Email {
                     $respuesta = true;
                     break;
                 } catch (Exception $error) {
-                    error_log("Error al enviar correo a: {$this->email } - Error: " . $error->getMessage(), 3, __DIR__ . '/error_email.log');
+                    error_log("Error al enviar correo a: {$this->email } - Error: " . $error->getMessage(), 3, __DIR__ . '/../logs/error_email.log');
                 }
             }
         } else {
@@ -92,7 +87,7 @@ class Email {
                 $mail->send();
                 $respuesta = true;
             } catch (Exception $error) {
-                error_log("Error al enviar correo a: {$this->email } - Error: " . $error->getMessage(), 3, __DIR__ . '/error_email.log');
+                error_log("Error al enviar correo a: {$this->email } - Error: " . $error->getMessage(), 3, __DIR__ . '/../logs/error_email.log');
             }
         }
 

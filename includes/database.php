@@ -24,10 +24,11 @@ try {
             $_ENV['DB_USER_DEV'], 
             $_ENV['DB_PASS_DEV']
         );
+        
+        // Habilitar el modo de manejo de errores de PDO
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
-    // Habilitar el modo de manejo de errores de PDO
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Permitir el manejo de errores
     $pdo->exec('SET NAMES utf8mb4'); // Establecer el conjunto de caracteres
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); // Desactivar el modo de emulación
 
@@ -35,10 +36,14 @@ try {
     
 } catch (PDOException $error) {
     // Manejar errores específicos de PDO
-    error_log("Error de conexión: " . $error->getMessage(), 3, __DIR__ . 'error_db.log');
+    error_log("Error de conexión: " . $error->getMessage(), 
+        3, 
+        __DIR__ . '../logs/error_db.log');
     die("Error de PDO: " . $error->getMessage());
 } catch (Exception $error) {
     // Manejar otras excepciones
-    error_log("Error de conexión: " . $error->getMessage(), 3, __DIR__ . 'error_db.log');
+    error_log("Error de conexión: " . $error->getMessage(), 
+        3, 
+        __DIR__ . '../logs/error_db.log');
     die("Error: " . $error->getMessage());
 }

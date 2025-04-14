@@ -14,7 +14,6 @@ import concat from 'gulp-concat';
 import { deleteSync } from 'del'; 
 import notify from 'gulp-notify';
 import eslint from 'gulp-eslint';
-import purgecss from '@fullhuman/postcss-purgecss';
 import seo from 'gulp-seo';
 
 const sassCompiler = gulpSass(sass);
@@ -46,12 +45,9 @@ function css(isProduction = false) {
         .pipe(sourcemaps.init())
         .pipe(sassCompiler({ outputStyle }).on('error', handleError))
         .pipe(postcss([
-            autoprefixer({ overrideBrowserslist: ['last 2 versions', 'not dead'] }),
-            cssnano(),
-            isProduction && purgecss({
-                content: [paths.php, paths.js],
-            })
-        ].filter(Boolean)))
+            autoprefixer(),
+            cssnano()
+        ]))
         .pipe(sourcemaps.write('.'))
         .pipe(dest(`${paths.build}css`))
         .pipe(notify({ message: 'CSS procesado correctamente!', onLast: true }));
@@ -84,14 +80,6 @@ function versionWebp() {
         .pipe(notify({ message: 'Imágenes convertidas a WebP!', onLast: true }));
 }
 
-// Convertir imágenes a formato AVIF
-function versionAvif() {
-    return src('src/img/**/*.{png,jpg}')
-        .pipe(avif({ quality: 70 }))
-        .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: 'Imágenes convertidas a AVIF!', onLast: true }));
-}
-
 // Verificar calidad del código JS (ESLint)
 function lintJS() {
     return src(paths.js)
@@ -108,16 +96,20 @@ function seoOptimization() {
             robots: 'index, follow',
             canonical: 'http://localhost:3000',
         }))
-        .pipe(dest('./reports/seo'))
+        .pipe(dest('./logs/reports/seo'))
         .pipe(notify({ message: 'SEO optimizado para archivos PHP!', onLast: true }));
 }
 
 // Automatizar tareas en desarrollo
 function dev() {
+    css();
+    javascript();
+    images();
+    versionWebp();
+    
     watch(paths.scss, css);
     watch(paths.js, javascript);
-    watch(paths.images, series(images, versionWebp, versionAvif));
-    watch(paths.php, seoOptimization); // Vigila cambios en PHP dentro de views
+    watch(paths.images, series(images, versionWebp));
 }
 
 // Build final para producción
@@ -129,7 +121,6 @@ function productionBuild() {
             javascript,
             images,
             versionWebp,
-            versionAvif,
             seoOptimization
         )
     );
@@ -137,5 +128,5 @@ function productionBuild() {
 
 // Exports
 export const build = productionBuild();
-export { css, javascript as js, images, versionWebp, versionAvif, dev, clean, lintJS, seoOptimization };
+export { css, javascript as js, images, versionWebp, dev, clean, lintJS, seoOptimization };
 export default dev;

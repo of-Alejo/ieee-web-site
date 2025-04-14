@@ -1,8 +1,5 @@
 <?php
 
-use Model\Cita;
-use Model\User;
-
 /*
     FUNCIONES
     Aquí existen funciones que se pueden usar en cualquier lugar.

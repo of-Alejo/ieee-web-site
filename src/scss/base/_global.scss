@@ -1,5 +1,6 @@
 @use 'variables' as v;
 @use 'mixins' as m;
+@use "sass:color";
 
 html {
     font-size: 62.5%; // 1rem = 10px para facilitar cálculos
@@ -62,7 +63,7 @@ a {
     color: v.$white;
 
     &:hover {
-        color: lighten(v.$white, 20%); // Mejora visual en hover
+        color: color.adjust(v.$white, $lightness: 20%); // Mejora visual en hover
     }
 }
 

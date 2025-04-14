@@ -1,4 +1,5 @@
 @use 'variables' as v;
+@use "sass:color";
 
 /** Media Queries **/
 @mixin phone {
@@ -38,7 +39,7 @@
     display: flex;
 
     &:hover {
-        background-color: darken($hoverColor, 50%);
+        background-color: color.adjust($hoverColor, $lightness: -50%);
         color: white;
         cursor: pointer;
     }
@@ -101,5 +102,5 @@
 }
 
 @mixin backgroundGradient($bgColor, $direction: to left top) {
-    background-image: linear-gradient($direction, $bgColor, lighten($bgColor, 15%));
+    background-image: linear-gradient($direction, $bgColor, color.adjust($bgColor, $lightness: 15%));
 }

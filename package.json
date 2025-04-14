@@ -27,10 +27,10 @@
   "type": "module",
   "main": "gulpfile.js",
   "scripts": {
-    "clean": "rm -rf node_modules && npm cache clean --force",
-    "server": "php -S localhost:3000 -t public",
+    "dev": "concurrently \"npm run server\" \"gulp dev\"",
     "production": "gulp build",
-    "dev": "concurrently \"npm run server\" \"gulp dev\""
+    "clean": "rm -rf node_modules && npm cache clean --force",
+    "server": "php -S localhost:3000 -t public"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^7.0.2",

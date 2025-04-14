@@ -10,13 +10,13 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
-use Controllers\PrincipalPages;
+use Controllers\Main;
 use MVC\Router;
 
 $router = new Router();
 
 // Validadores de URLs
-$router->get('/', [PrincipalPages::class, 'index']);
+$router->get('/', [Main::class, 'index']);
 
 // Verifica si la ruta está bien, y tiene un función asociada para renderizar.
 $router->checkRoutes();

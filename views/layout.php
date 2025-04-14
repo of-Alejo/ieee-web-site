@@ -11,11 +11,11 @@
     <meta name="robots" content="index, follow">
 
     <!-- Información -->
-    <title>IEEE - <?php echo $title; ?></title>
+    <title>IEEE Unicauca: <?php echo $title; ?></title>
     <meta name="title" content="<?php echo $metaTitle; ?>">
     <meta name="description" content="<?php echo $descriptionSite; ?>">
     <meta name="author" content="UNICAUCA">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="Branch, ieee, Colombia, Popayán, Unicauca, universidad, Cauca, Rama, IEEE">
     <meta name="publisher" content="DAVID ALEJANDRO ORTEGA FLÓREZ">
     <meta name="geo.position" content="">
 
@@ -23,11 +23,11 @@
     <meta name="theme-color" content="">
 
     <!-- Favicon -->
-    <link rel="icon" href="/build/img/logo/logo.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/build/img/logo/logo.ico" type="image/x-icon">
+    <link rel="icon" href="/build/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/build/img/favicon.ico" type="image/x-icon">
 
     <!-- Copyright -->
-    <meta name="copyright" content="20245">
+    <meta name="copyright" content="2025">
 
     <!-- Sitio Principal -->
     <link rel="canonical" href="">
@@ -63,6 +63,7 @@
 <body>
     <?php include_once __DIR__ .'/templates/header/header.php'; ?>
     <?php echo $content; ?>
+    <?php include_once __DIR__ .'/templates/footer/footer.php'; ?>
 </body>
 
 </html>
