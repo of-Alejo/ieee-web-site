@@ -5,10 +5,11 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import postcss from 'gulp-postcss';
 import sourcemaps from 'gulp-sourcemaps';
-import cache from 'gulp-cache';
 import imagemin from 'gulp-imagemin';
+import svgmin from 'gulp-svgmin';
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminOptipng from 'imagemin-optipng';
 import webp from 'gulp-webp';
-import avif from 'gulp-avif';
 import terser from 'gulp-terser-js';
 import concat from 'gulp-concat';
 import { deleteSync } from 'del'; 
@@ -19,17 +20,21 @@ import seo from 'gulp-seo';
 const sassCompiler = gulpSass(sass);
 const { src, dest, watch, parallel, series } = gulp;
 
+// Rutas configuradas
 const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
-    php: 'views/**/*.php',
     images: 'src/img/**/*',
+    php: 'views/**/*.php',
+    pngJpgImages: 'src/img/**/*.{png,jpg}',
+    svgImages: 'src/img/**/*.svg',
+    icoFiles: 'src/img/**/*.ico',
     build: 'public/build/',
 };
 
 // Manejo de errores
 function handleError(err) {
-    console.error(err.toString());
+    console.error(`[Error]: ${err.toString()}`);
     this.emit('end');
 }
 
@@ -38,78 +43,95 @@ function clean() {
     return deleteSync([paths.build]);
 }
 
-// Compilar y minificar CSS
+// Compilar y optimizar CSS
 function css(isProduction = false) {
     const outputStyle = isProduction ? 'compressed' : 'expanded';
     return src(paths.scss)
         .pipe(sourcemaps.init())
-        .pipe(sassCompiler({ outputStyle }).on('error', handleError))
+        .pipe(sassCompiler({ outputStyle: outputStyle }).on('error', handleError))
         .pipe(postcss([
-            autoprefixer(),
-            cssnano()
-        ]))
+            autoprefixer({ overrideBrowserslist: ['last 2 versions', 'not dead'] }),
+            isProduction && cssnano(), // Minificar solo en producción
+        ].filter(Boolean)))
         .pipe(sourcemaps.write('.'))
         .pipe(dest(`${paths.build}css`))
         .pipe(notify({ message: 'CSS procesado correctamente!', onLast: true }));
 }
 
-// Minificar y concatenar JS
-function javascript() {
+// Lint y minificación de JS
+function lintJS() {
+    return src(`${paths.build}build/js/main.js`)
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+}
+
+function minifyJS() {
     return src(paths.js)
         .pipe(sourcemaps.init())
         .pipe(concat('main.js'))
         .pipe(terser().on('error', handleError))
         .pipe(sourcemaps.write('.'))
         .pipe(dest(`${paths.build}js`))
-        .pipe(notify({ message: 'JavaScript minificado!', onLast: true }));
+        .pipe(notify({ message: 'JavaScript procesado y minificado!', onLast: true }));
 }
 
-// Optimizar imágenes
-function images() {
-    return src(paths.images)
-        .pipe(cache(imagemin({ optimizationLevel: 3 })))
+// Optimizar imágenes PNG y JPG
+function optimizeImages() {
+    return src(paths.pngJpgImages)
+        .pipe(imagemin([
+            imageminMozjpeg({ quality: 85, progressive: true }),
+            imageminOptipng({ optimizationLevel: 5 }),
+        ]))
         .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: 'Imágenes optimizadas!', onLast: true }));
+        .pipe(notify({ message: '¡Imágenes PNG y JPG optimizadas!', onLast: true }));
+}
+
+// Optimizar archivos SVG
+function optimizeSVG() {
+    return src(paths.svgImages)
+        .pipe(svgmin())
+        .pipe(dest(`${paths.build}img`))
+        .pipe(notify({ message: '¡Archivos SVG optimizados!', onLast: true }));
+}
+
+// Copiar archivos ICO
+function copyIcons() {
+    return src(paths.icoFiles)
+        .pipe(dest(`${paths.build}img`))
+        .pipe(notify({ message: '¡Archivos ICO copiados!', onLast: true }));
 }
 
 // Convertir imágenes a formato WebP
-function versionWebp() {
-    return src('src/img/**/*.{png,jpg}')
-        .pipe(webp({ quality: 70 }))
+function convertToWebp() {
+    return src(paths.pngJpgImages)
+        .pipe(webp({ quality: 80 }))
         .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: 'Imágenes convertidas a WebP!', onLast: true }));
+        .pipe(notify({ message: '¡Imágenes convertidas a WebP!', onLast: true }));
 }
 
-// Verificar calidad del código JS (ESLint)
-function lintJS() {
-    return src(paths.js)
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError());
-}
-
-// Optimizar SEO para archivos PHP en views
+// Optimización SEO para archivos PHP
 function seoOptimization() {
-    return src(paths.php) // Ahora apunta a la carpeta views
+    return src(paths.php)
         .pipe(seo({
             siteName: 'IEEE Web Site',
             robots: 'index, follow',
-            canonical: 'http://localhost:3000',
+            canonical: 'https://yourwebsite.com',
         }))
         .pipe(dest('./logs/reports/seo'))
         .pipe(notify({ message: 'SEO optimizado para archivos PHP!', onLast: true }));
 }
 
+// Procesar todas las imágenes
+function processImages() {
+    return parallel(optimizeImages, optimizeSVG, copyIcons, convertToWebp);
+}
+
 // Automatizar tareas en desarrollo
 function dev() {
-    css();
-    javascript();
-    images();
-    versionWebp();
-    
     watch(paths.scss, css);
-    watch(paths.js, javascript);
-    watch(paths.images, series(images, versionWebp));
+    watch(paths.js, minifyJS);
+    watch(paths.images, processImages);
 }
 
 // Build final para producción
@@ -117,16 +139,15 @@ function productionBuild() {
     return series(
         clean,
         parallel(
-            () => css(true), // CSS comprimido con PurgeCSS
-            javascript,
-            images,
-            versionWebp,
-            seoOptimization
+            () => css(true), // CSS comprimido
+            minifyJS,        // Minificación de JS
+            processImages,   // Procesar imágenes (optimizar, SVG, ICO, WebP)
+            seoOptimization  // Optimización SEO
         )
     );
 }
 
 // Exports
 export const build = productionBuild();
-export { css, javascript as js, images, versionWebp, dev, clean, lintJS, seoOptimization };
+export { css, minifyJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, seoOptimization, processImages };
 export default dev;
