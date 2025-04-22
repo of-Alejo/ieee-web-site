@@ -32,15 +32,17 @@
     color: $textColor;
     font-size: 1.8rem;
     font-weight: 700;
-    border: $borderWidth solid black;
+    border: $borderWidth solid $textColor;
     border-radius: $borderRadius;
     transition: background-color .3s, color .3s;
     text-align: center;
     display: flex;
-
+    align-items: center;
     &:hover {
-        background-color: color.adjust($hoverColor, $lightness: -50%);
-        color: white;
+        scale: 1.02;
+        background-color: $textColor;
+        color: $bgColor;
+        border-color: $bgColor;
         cursor: pointer;
     }
 }
@@ -50,11 +52,6 @@
     display: grid;
     gap: $gap;
     grid-template-columns: repeat($columns, 1fr);
-}
-
-@mixin container($maxWidth: 140rem, $margin: 0 auto) {
-    width: min(95%, $maxWidth);
-    margin: $margin;
 }
 
 @mixin headings {
@@ -75,30 +72,6 @@
     font-weight: v.$thin;
     color: v.$darkGray;
     margin-bottom: 5rem;
-}
-
-@mixin logo($textAlign: center, $margin: 0) {
-    color: v.$white;
-    white-space: nowrap;
-    text-align: $textAlign;
-    margin: $margin;
-
-    @include mixinDesktop {
-        text-align: left;
-    }
-}
-
-@mixin linkStyle {
-    all: unset;
-    color: v.$white;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    font-weight: v.$boldWeight;
-
-    &:hover {
-        color: v.$blue;
-        cursor: pointer;
-    }
 }
 
 @mixin backgroundGradient($bgColor, $direction: to left top) {

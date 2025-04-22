@@ -11,7 +11,7 @@
     <meta name="robots" content="index, follow">
 
     <!-- Información -->
-    <title>IEEE Unicauca: <?php echo $title; ?></title>
+    <title>IEEE Unicauca <?php echo $title; ?></title>
     <meta name="title" content="<?php echo $metaTitle; ?>">
     <meta name="description" content="<?php echo $descriptionSite; ?>">
     <meta name="author" content="UNICAUCA">
@@ -24,7 +24,7 @@
 
     <!-- Favicon -->
     <link rel="icon" href="/build/img/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/build/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/build/img/img_2025/favicon.ico" type="image/x-icon">
 
     <!-- Copyright -->
     <meta name="copyright" content="2025">

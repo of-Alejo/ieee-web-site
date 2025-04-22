@@ -29,7 +29,8 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"gulp\"",
     "gulp": "gulp",
-    "server": "php -S localhost:3000 -t public"
+    "server": "php -S localhost:3000 -t public",
+    "serverGlobal": "php -S 0.0.0.0:3000 -t public"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",

@@ -80,8 +80,8 @@ function minifyJS() {
 function optimizeImages() {
     return src(paths.pngJpgImages)
         .pipe(imagemin([
-            imageminMozjpeg({ quality: 85, progressive: true }),
-            imageminOptipng({ optimizationLevel: 5 }),
+            imageminMozjpeg({ quality: 85}),
+            imageminOptipng({ optimizationLevel: 3 }),
         ]))
         .pipe(dest(`${paths.build}img`))
         .pipe(notify({ message: '¡Imágenes PNG y JPG optimizadas!', onLast: true }));
@@ -124,7 +124,7 @@ function seoOptimization() {
 
 // Procesar todas las imágenes
 function processImages() {
-    return parallel(optimizeImages, optimizeSVG, copyIcons, convertToWebp);
+    return series(optimizeImages, optimizeSVG, copyIcons, convertToWebp);
 }
 
 // Automatizar tareas en desarrollo

@@ -1,0 +1,44 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+main{
+    .about-us{
+        @include m.gridLayout(3, 1 rem);
+        padding: 4rem 0;
+        h2{
+            grid-row: 1;
+            grid-column: 2;
+        }
+        article{
+            grid-row: 2;
+            width: 30rem ;
+            text-align: justify;
+            box-shadow: v.$azul 0px 10px 20px, v.$azul 0px 6px 6px;
+            padding: 2rem;
+            picture, img, source{
+                width: 10rem;
+            }
+            &:hover{
+                scale: 1.02;
+            }
+        }
+    }
+    .informe-anual{
+        color: v.$azul;
+        padding: 4rem;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        div{
+            display: flex;
+            justify-content: space-evenly;
+            div{
+                margin: 0 2rem;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+        }
+    }
+    
+}

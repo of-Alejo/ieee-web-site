@@ -6,4 +6,4 @@ Allow: /
 # Disallow: /admin
 
 # Sitemap para ayudar a los motores de búsqueda a encontrar páginas relevantes
-# Sitemap: https://www.justisalud.com/sitemap.xml
+# Sitemap: 
