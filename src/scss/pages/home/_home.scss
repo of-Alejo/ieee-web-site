@@ -3,19 +3,27 @@
 
 main{
     .about-us{
-        @include m.gridLayout(3, 1 rem);
         padding: 4rem 0;
+        justify-items: center;
+        color: v.$azul;
+        @include m.desktop {
+            @include m.gridLayout(3, 1 rem);
+        }
         h2{
             grid-row: 1;
             grid-column: 2;
         }
         article{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             grid-row: 2;
             width: 30rem ;
             text-align: justify;
             box-shadow: v.$azul 0px 10px 20px, v.$azul 0px 6px 6px;
             padding: 2rem;
-            picture, img, source{
+            margin: 2rem 0;
+            svg{
                 width: 10rem;
             }
             &:hover{
@@ -23,7 +31,33 @@ main{
             }
         }
     }
-    .informe-anual{
+
+    .join-us {
+        div{
+            display: flex;
+            background-color: v.$azul;
+            margin: 0;
+            padding: 2rem;
+            article{
+                color: white;
+                padding: 5rem;
+            }
+            img, source{
+                display: none;
+                width: 40rem;
+                @include m.desktop {
+                    display: block;
+                }
+            }
+        }
+        svg{
+            transform: rotate(180deg);
+            margin: 0;
+            scale: 1.02;
+            height:20rem;
+        }
+    }
+    .report{
         color: v.$azul;
         padding: 4rem;
         display: flex;
@@ -32,6 +66,10 @@ main{
         div{
             display: flex;
             justify-content: space-evenly;
+            flex-direction: column;
+            @include m.desktop {
+                flex-direction: row;
+            }
             div{
                 margin: 0 2rem;
                 align-items: center;

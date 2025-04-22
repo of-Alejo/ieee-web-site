@@ -2,7 +2,19 @@
 @use 'base/mixins' as m;
 
 #burgerMenu {
-display: none;
+    position: fixed;
+    background-color: transparent;
+    border: none;
+    background-color: v.$azul;
+    border-radius: 5px;
+    z-index: 100;
+    padding: 1rem;
+    font-size: 2rem;
+    color: white;
+    margin: 1rem;
+    @include m.desktop {
+        display: none;
+    }
 }
 
 .header {
@@ -14,7 +26,10 @@ display: none;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
+    animation: moveBackground 14s infinite alternate linear;
+    @include m.desktop {
+        animation:none;
+    }
     nav {
         display: flex;
         justify-content: space-evenly;
@@ -22,16 +37,23 @@ display: none;
         padding: 1rem 2rem;
         margin: 5rem;
         a {
+            display: none;
             color: white; 
             font-size: 1.7rem; 
             text-decoration: none; 
             padding: 1rem;
+
+            @include m.desktop {
+                display: flex;
+            }
             picture, source, img {
                 width: 7rem;
             }
-
             &:hover {
                 border-bottom: solid white 2px;
+            }
+            &:nth-child(4){
+                display: block;
             }
             &:nth-child(4):hover {
                 border-bottom: none; 
@@ -43,21 +65,30 @@ display: none;
     }
     
     section{
-        display: flex;
-        justify-content: space-evenly;
+        @include m.desktop {
+            display: flex;
+            justify-content: space-evenly;
+        }
     }
     article {
         display: flex;
         flex-direction: column;
         flex: 6;
         align-items: flex-start; 
-        padding-left: 10rem; 
-        
+        align-items: center;
+        padding: 0 3rem; 
+        @include m.desktop {
+            padding-left: 10rem; 
+        }
         h1 {
             font-size: 7rem;
             color: rgba(255, 255, 255, 0.301); 
             position: relative;
             padding-bottom: 2rem;
+            top: -5rem;
+            @include m.desktop {
+                top: 0;
+            }
             span {
                 font-size: 4rem;
                 position: absolute; 
@@ -73,11 +104,14 @@ display: none;
             font-size: 1.5rem; 
             color: white;
             margin-top: 1rem;
-            width: 40rem;
+            @include m.desktop {
+                width: 40rem;
+                
+            }
         }
 
         a {
-            @include m.button(white, v.$azul, v.$azul, 5px)
+            @include m.button(white, v.$azul, v.$azul, 5px);
         }
     }
     aside {
@@ -91,11 +125,16 @@ display: none;
         }
         
         ul {
+            padding: 0;
+            display:flex;
             list-style: none;
+            gap: 3rem;
+            @include m.desktop {
+                flex-direction: column;
+            }
         }
     
         i {
-            padding-bottom: 3rem;
             font-size: 3rem;
             &:hover{
                 scale:1.2;
