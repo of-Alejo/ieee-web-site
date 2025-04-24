@@ -29,7 +29,7 @@
         <?php endif; ?>
         <?php if ($_SERVER['REQUEST_URI'] == '/eventos') : ?>
             <article>
-                <h1>Eventos<span>Nuestros Eventos</span></h1>
+                <h1>Eventos<span>Unicauca</span></h1>
                 <p>¿Qué hacemos? Entérate de todos los eventos que realizamos y que no te puedes perder.</p>
                 <a class="btn" href="/eventos#timeline" title="Ver eventos">¡Quiero ver!</a>
             </article>

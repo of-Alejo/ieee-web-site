@@ -7,13 +7,12 @@
     color: v.$azul; // Usando la variable v.v.$azul
     font-family: 'Public Sans', sans-serif;
     position: relative;
-
+    width: 100vw;
     h2 {
         text-align: center;
         font-size: 2.5rem;
         margin-bottom: 2rem;
     }
-
     .timeline-container {
         display: flex;
         flex-direction: column;
@@ -40,6 +39,10 @@
         align-items: center;
         margin-bottom: 3rem;
         position: relative;
+        margin-left: 4rem;
+        @include m.desktop{
+            margin-left: 0;
+        }
 
         &:nth-child(odd) {
             flex-direction: row-reverse;
@@ -49,7 +52,7 @@
             content: attr(data-year); // Mostrar el año
             position: absolute;
             top: 50%;
-            left: 50%;
+            left: -10%;
             transform: translate(-50%, -50%);
             background-color: v.$azul;
             color: #fff;
@@ -58,6 +61,12 @@
             padding: 0.5rem 1rem;
             border-radius: 20px;
             z-index: 1;
+            @include m.tablet{
+                left: 48%;
+            }
+            @include m.desktop {
+                left: 50%;
+            }
         }
 
         picture {
@@ -105,11 +114,6 @@
             picture,
             .timeline-content {
                 width: 100%;
-            }
-
-            &:before {
-                left: 10px;
-                transform: translateY(-50%);
             }
         }
     }
