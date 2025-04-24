@@ -26,7 +26,8 @@ const paths = {
     js: 'src/js/**/*.js',
     images: 'src/img/**/*',
     php: 'views/**/*.php',
-    pngJpgImages: 'src/img/**/*.{png,jpg}',
+    pngJpgImages: 'src/img/**/*.{png,jpg,jpeg,JPG}',
+    heicImages: 'src/img/**/*.{heic,HEIC}',
     svgImages: 'src/img/**/*.svg',
     icoFiles: 'src/img/**/*.ico',
     build: 'public/build/',
@@ -81,7 +82,7 @@ function optimizeImages() {
     return src(paths.pngJpgImages)
         .pipe(imagemin([
             imageminMozjpeg({ quality: 85}),
-            imageminOptipng({ optimizationLevel: 3 }),
+            imageminOptipng({ optimizationLevel: 5 }),
         ]))
         .pipe(dest(`${paths.build}img`))
         .pipe(notify({ message: '¡Imágenes PNG y JPG optimizadas!', onLast: true }));
@@ -110,6 +111,21 @@ function convertToWebp() {
         .pipe(notify({ message: '¡Imágenes convertidas a WebP!', onLast: true }));
 }
 
+// Convertir imágenes HEIC a formato WebP
+function convertHeicToWebp() {
+    return src(paths.heicImages)
+        .pipe(webp({ quality: 80 })) 
+        .pipe(dest(`${paths.build}img`))
+        .pipe(notify({ message: '¡Imágenes HEIC convertidas a WebP!', onLast: true }));
+}
+
+// Copiar archivos HEIC sin optimizar
+function copyHeic() {
+    return src(paths.heicImages)
+        .pipe(dest(`${paths.build}img`))
+        .pipe(notify({ message: '¡Imágenes HEIC copiadas sin optimizar!', onLast: true }));
+}
+
 // Optimización SEO para archivos PHP
 function seoOptimization() {
     return src(paths.php)
@@ -122,16 +138,10 @@ function seoOptimization() {
         .pipe(notify({ message: 'SEO optimizado para archivos PHP!', onLast: true }));
 }
 
-// Procesar todas las imágenes
-function processImages() {
-    return series(optimizeImages, optimizeSVG, copyIcons, convertToWebp);
-}
-
 // Automatizar tareas en desarrollo
 function dev() {
     watch(paths.scss, css);
     watch(paths.js, minifyJS);
-    watch(paths.images, processImages);
 }
 
 // Build final para producción
@@ -141,7 +151,6 @@ function productionBuild() {
         parallel(
             () => css(true), // CSS comprimido
             minifyJS,        // Minificación de JS
-            processImages,   // Procesar imágenes (optimizar, SVG, ICO, WebP)
             seoOptimization  // Optimización SEO
         )
     );
@@ -149,5 +158,5 @@ function productionBuild() {
 
 // Exports
 export const build = productionBuild();
-export { css, minifyJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, seoOptimization, processImages };
+export { css, minifyJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, seoOptimization, convertHeicToWebp, copyHeic };
 export default dev;

@@ -14,49 +14,48 @@
     <title>IEEE Unicauca <?php echo $title; ?></title>
     <meta name="title" content="<?php echo $metaTitle; ?>">
     <meta name="description" content="<?php echo $descriptionSite; ?>">
-    <meta name="author" content="UNICAUCA">
-    <meta name="keywords" content="Branch, ieee, Colombia, Popayán, Unicauca, universidad, Cauca, Rama, IEEE">
-    <meta name="publisher" content="DAVID ALEJANDRO ORTEGA FLÓREZ">
-    <meta name="geo.position" content="">
+    <meta name="author" content="UNICAUCA"> <meta name="publisher" content="DAVID ALEJANDRO ORTEGA FLÓREZ">
+    <meta name="geo.position" content="2.446339294065221, -76.59841050197932">
 
     <!-- Tema color -->
-    <meta name="theme-color" content="">
+    <meta name="theme-color" content="#124072">
 
     <!-- Favicon -->
-    <link rel="icon" href="/build/img/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/build/img/img_2025/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/build/img/logos/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/build/img/logos/favicon.ico" type="image/x-icon">
 
     <!-- Copyright -->
     <meta name="copyright" content="2025">
 
     <!-- Sitio Principal -->
-    <link rel="canonical" href="">
-
+    <link rel="canonical" href="http://ieee.unicauca.edu.co/">
 
     <!-- Redes Sociales -->
     <!-- Para Facebook -->
-    <!-- Etiquetas de Facebook Open Graph -->
+    <meta property="fb:pages" content="IEEEUnicauca">
+    <meta property="og:title" content="<?php echo $title; ?>">
+    <meta property="og:description" content="<?php echo $descriptionSite; ?>">
+    <meta property="og:site_name" content="Rama IEEE Unicauca">
+    <meta property="og:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
+    <meta property="og:image:width" content="821">
+    <meta property="og:url" content="http://ieee.unicauca.edu.co/">
+    <meta property="og:type" content="website">
 
-    <!-- Etiquetas para Twitter Card -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://ieee.unicauca.edu.co/">
+    <meta name="twitter:title" content="<?php echo $title; ?>">
+    <meta name="twitter:description" content="<?php echo $descriptionSite; ?>">
+    <meta name="twitter:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
 
     <!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CSS -->
     <link rel="preload" href="/build/css/app.css" as="style">
     <link rel="stylesheet" href="/build/css/app.css">
 
     <!-- JS -->
-    <!-- DOMPurify (Sanitizar) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js" integrity="sha512-jB0TkTBeQC9ZSkBqDhdmfTv1qdfbWpGE72yJ/01Srq6hEzZIz2xkz1e57p9ai7IeHMwEG7HpzG6NdptChif5Pg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Teléfono internacional -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js" defer></script>
-    <!-- Código principal JS -->
     <script rel="preload" src="build/js/main.js" as="script" defer></script>
 </head>
 

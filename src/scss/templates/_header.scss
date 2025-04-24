@@ -22,7 +22,7 @@
     width: 100vw;
     background-image: 
         linear-gradient(to right, rgba(18, 63, 114, 0.87), rgba(18, 63, 114, 0.404)),
-        url('/build/img/img_2025/group_photos/DSC09828.webp'); 
+        url('/build/img/templates/header/rama_2024.webp'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -74,10 +74,11 @@
         display: flex;
         flex-direction: column;
         flex: 6;
-        align-items: flex-start; 
         align-items: center;
+        
         padding: 0 3rem; 
         @include m.desktop {
+            align-items: flex-start; 
             padding-left: 10rem; 
         }
         h1 {
