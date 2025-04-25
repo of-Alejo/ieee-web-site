@@ -26,7 +26,7 @@ const paths = {
     js: 'src/js/**/*.js',
     images: 'src/img/**/*',
     php: 'views/**/*.php',
-    pngJpgImages: 'src/img/**/*.{png,jpg,jpeg,JPG}',
+    pngJpgImages: 'src/img/**/*.{png,jpg,jpeg}',
     heicImages: 'src/img/**/*.{heic,HEIC}',
     svgImages: 'src/img/**/*.svg',
     icoFiles: 'src/img/**/*.ico',

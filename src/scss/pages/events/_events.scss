@@ -47,7 +47,6 @@
         &:nth-child(odd) {
             flex-direction: row-reverse;
         }
-
         &:before {
             content: attr(data-year); // Mostrar el año
             position: absolute;
@@ -88,7 +87,11 @@
             h3 {
                 font-size: 1.8rem;
                 margin-bottom: 0.5rem;
-                color: v.$azul;
+                color: v.$azul; 
+                span {
+                    font-style: italic;
+                    font-weight: 500;
+                }
             }
 
             p {

@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer" aria-labelledby="footer-title" aria-label="Pie de página" id="footer">
     <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%">
         <path d="M-2.54,64.64 C303.89,145.56 219.24,53.80 499.72,149.52 L499.15,151.48 L0.00,150.00 Z" style="stroke: none; fill: #123f72"></path>
     </svg>
@@ -13,23 +13,22 @@
             <h3>¿Listo para empezar?</h3>
             <a class="btn" href="https://www.instagram.com/direct/t/101507081252221" title="Contáctanos en Instagram">Contáctanos</a>
         </div>
-        <div class="footer-info-tools">
+        <div class="footer-info-tools" aria-label="Enlaces útiles de IEEE Unicauca">
             <div>
                 <h4>RAMA IEEE</h4>
-                <a href="/Nosotros" title="Conoce más sobre nosotros">Nosotros</a>
-                <a href="/Misión" title="Nuestra misión">Misión</a>
-                <a href="/Visión" title="Nuestra visión">Visión</a>
-                <a href="/Informe anual" title="Consulta nuestro informe anual">Informe anual</a>
+                <a href="/#about-us" title="Conoce más sobre nosotros">Nosotros</a>
+                <a href="/#join-us" title="Únete a nuestra rama IEEE Unicauca">Únetenos</a>
+                <a href="/#annual-report" title="Consulta nuestro informe anual">Informe anual</a>
             </div>
             <div>
                 <h4>EVENTOS</h4>
-                <a href="/tet2022" title="Detalles del TET 2022">TET 2022</a>
-                <a href="/tet2025" title="Detalles del TET 2025">TET 2025</a>
+                <a href="/eventos#timeline" title="Ir a la linea de eventos IEEE">Linea del tiempo</a>
+                <a href="/tet" title="Detalles del TET 2025">TET 2025</a>
             </div>
             <div>
                 <h4>ORGANIZACIÓN</h4>
-                <a href="/" title="Conoce a la Junta Directiva">Junta Directiva</a>
-                <a href="/Misión" title="Conoce los comités">Comités</a>
+                <a href="/organización#junta" title="Conoce a la Junta Directiva">Junta Directiva</a>
+                <a href="/organización#comites" title="Conoce los comités">Comités</a>
             </div>
         </div>
     </div>

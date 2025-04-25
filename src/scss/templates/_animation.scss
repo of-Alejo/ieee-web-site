@@ -2,3 +2,8 @@
     0% { background-position: left center; }
     100% { background-position: right center; }
 }
+
+@keyframes scaleTet {
+    0% { scale: 0.92; }
+    100% { scale: 1; }
+}

@@ -1,0 +1,165 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use "sass:color";
+
+#tet-2025 {
+    font-family: 'Roboto', sans-serif;
+    color: v.$azul;
+    background: linear-gradient(to bottom, #f5f7fa, #e4e9f0);
+    padding: 2rem;
+
+    section {
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2, h3, h4, h5 {
+            color: v.$azul;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            position: relative;
+
+            &::after {
+                content: '';
+                display: block;
+                width: 50px;
+                height: 3px;
+                background: v.$azul;
+                margin-top: 0.5rem;
+                border-radius: 2px;
+            }
+        }
+
+        p, li {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        ul, ol {
+            padding-left: 3rem;
+            list-style: none;
+
+            li {
+                position: relative;
+                margin-bottom: 1.5rem;
+
+                // Ícono 3D
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: -3rem;
+                    top: 50%;
+                    transform: translateY(-50%) rotateX(45deg) rotateY(45deg);
+                    width: 20px;
+                    height: 20px;
+                    background: linear-gradient(135deg, v.$azul, color.adjust(v.$azul, $lightness: -10%));
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                    border-radius: 4px;
+                }
+            }
+        }
+
+        a {
+            color: v.$azul;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: color.adjust(v.$white, $lightness: -10%);
+            }
+        }
+    }
+
+    // Animación para las secciones
+    section {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+
+    // Estilo para la sección de patrocinadores
+    #patrocinadores-tet {
+        text-align: center;
+
+        p {
+            font-size: 1.8rem;
+            color: #555;
+        }
+    }
+
+    // Estilo para la sección de precios
+    #precios-tet {
+        ul {
+            li {
+                font-size: 1.6rem;
+                color: #444;
+
+                strong {
+                    color: v.$azul;
+                }
+            }
+        }
+    }
+
+    // Botones y enlaces
+    a.btn {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: v.$azul;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            background: (v.$azul, 10%);
+            transform: scale(1.05);
+        }
+    }
+
+    // Fondo animado para el encabezado
+    header {
+        background: linear-gradient(135deg, rgba(18, 63, 114, 0.8), rgba(18, 63, 114, 0.6));
+        color: #fff;
+        padding: 3rem;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.6rem;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+            animation: rotateBackground 10s linear infinite;
+        }
+    }
+
+}
+

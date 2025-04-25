@@ -7,7 +7,7 @@
     <nav aria-label="Navegación principal del sitio">
         <a href="/" aria-label="Ir a la sección NOSOTROS" title="NOSOTROS">NOSOTROS</a>
         <a href="/eventos" aria-label="Ir a la sección EVENTOS" title="EVENTOS">EVENTOS</a>
-        <a href="/tet" aria-label="Ir a la sección TET" title="TET">TET</a>
+        <a href="/tet" aria-label="Ir a la sección TET 2025" title="TET 2025">TET 2025</a>
         <a href="/" aria-label="Inicio">
             <picture>
                 <source srcset="/build/img/logos/logo.webp" type="image/webp">
@@ -19,23 +19,30 @@
         <a href="/organization" aria-label="Ir a la sección ORGANIZACIÓN" title="ORGANIZACIÓN">ORGANIZACIÓN</a>
     </nav>
 
-    <section>
+    <section aria-label="Contenido principal del encabezado" aria-labelledby="header-content">
         <?php if ($_SERVER['REQUEST_URI'] == '/') : ?>
             <article>
-                <h1>RAMA IEEE<span>Unicauca</span></h1>
+                <h1 id="header-content">RAMA IEEE<span>Unicauca</span></h1>
                 <p>El IEEE es una organización sin ánimo de lucro y es considerada la mayor asociación del mundo para el desarrollo tecnológico.</p>
                 <a class="btn" href="https://www.instagram.com/direct/t/101507081252221" title="Contáctanos en Instagram">Contáctanos</a>
             </article>
         <?php endif; ?>
         <?php if ($_SERVER['REQUEST_URI'] == '/eventos') : ?>
             <article>
-                <h1>Eventos<span>Unicauca</span></h1>
+                <h1 id="header-content">Eventos<span>Unicauca</span></h1>
                 <p>¿Qué hacemos? Entérate de todos los eventos que realizamos y que no te puedes perder.</p>
                 <a class="btn" href="/eventos#timeline" title="Ver eventos">¡Quiero ver!</a>
             </article>
         <?php endif; ?>
-        <aside>
-            <h2>Síguenos en nuestras redes sociales</h2>
+        <?php if ($_SERVER['REQUEST_URI'] == '/tet') : ?>
+            <article>
+                <h1 id="header-content">TET 2025<span>Evento Insignia</span></h1>
+                <p>¿Quieres saber más sobre la décima edición del Seminario de Tecnologías Emergentes de Telecomunicaciones?</p>
+                <a class="btn" href="/tet#timeline" title="Ver más información sobre TET 2025">¡Quiero saber más!</a>
+            </article>
+        <?php endif; ?>
+        <aside aria-label="Redes sociales de la Rama IEEE Unicauca" aria-labelledby="social-media">
+            <h2 id="social-media">Síguenos en nuestras redes sociales</h2>
             <ul>
                 <li>
                     <a href="https://www.linkedin.com/in/ieeeunicauca/" aria-label="Visítanos en LinkedIn" title="LinkedIn">

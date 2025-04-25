@@ -52,6 +52,9 @@
             &:hover {
                 border-bottom: solid white 2px;
             }
+            &:nth-child(3){
+                animation: scaleTet 1s ease-in-out infinite alternate;
+            }
             &:nth-child(4){
                 display: block;
             }

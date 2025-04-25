@@ -18,6 +18,7 @@ $router = new Router();
 // Validadores de URLs
 $router->get('/', [Main::class, 'index']);
 $router->get('/eventos', [Main::class, 'events']);
+$router->get('/tet', [Main::class, 'tet_2025']);
 
 // Verifica si la ruta está bien, y tiene un función asociada para renderizar.
 $router->checkRoutes();
