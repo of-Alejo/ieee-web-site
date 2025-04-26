@@ -1,26 +1,32 @@
 // Variables globales
 const baseUrl = window.location.origin;
 
-// Páginas permitidas
+// Páginas permitidas, añadir nuevas rutas aquí
 const routes = {
-    index: '/'
+    index: '/',
+    eventos: '/eventos',
+    tet: '/tet',
+    anuario: '/anuario',
+    galeria: '/galeria',
+    organizacion: '/organizacion',
+    e404: '/404',
+    e500: '/500'
 };
 
 // Función principal (main), se ejecuta siempre
 document.addEventListener("DOMContentLoaded", () => {
     const currentPath = window.location.pathname;
-    
     const isAllowedRoute = Object.values(routes).includes(currentPath);
 
     // Verifica si la URL actual está dentro de las rutas permitidas
-    // Estas funciones se encuentran en la carpeta functions
     if (isAllowedRoute) {
-        activateFunctions();
+        activateFunctions(); // Activa funciones específicas según la página
+
+        menuBurger();
     } 
 });
 
 function activateFunctions() {
-    // Activa funcionalidades específicas según la página actual
     const pathActions = {
         //[routes.index]: initIndexApp
     };

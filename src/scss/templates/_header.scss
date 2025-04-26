@@ -12,7 +12,7 @@
     font-size: 2rem;
     color: white;
     margin: 1rem;
-    @include m.desktop {
+    @include m.tablet {
         display: none;
     }
 }
@@ -27,48 +27,73 @@
     background-position: center;
     background-repeat: no-repeat;
     animation: moveBackground 14s infinite alternate linear;
+
     @include m.desktop {
         animation:none;
     }
+
     nav {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center; 
-        padding: 1rem 2rem;
-        margin: 5rem;
+        padding: 3rem 0;
+        position: fixed;
+        display: flex ;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        z-index: 3;
+        background-color: v.$azul;
+        animation: slideNav 0.5s ease-in-out;
+        
+        @include m.tablet {
+            justify-content: space-evenly;
+            align-items: center; 
+            padding: 1rem 2rem;
+            margin: 5rem;
+            position: relative;
+            background-color: transparent;
+            display: flex !important;
+            flex-direction: row;
+        }
         a {
-            display: none;
             color: white; 
             font-size: 1.7rem; 
             text-decoration: none; 
-            padding: 1rem;
-
-            @include m.desktop {
-                display: flex;
+            padding: 1.6rem;
+            margin: 0;
+            
+            @include m.tablet {
+                display: flex !important;
+                
+                &:hover {
+                    border-bottom: solid white 2px;
+                }
+                &:nth-child(3){
+                    animation: scaleTet 1s ease-in-out infinite alternate;
+                }
+                &:nth-child(4){
+                    display: block;
+                }
+                &:nth-child(4):hover {
+                    border-bottom: none; 
+                    scale: 1.1;
+                    transition: scale 0.5s ease;
+                }
             }
             picture, source, img {
-                width: 7rem;
-            }
-            &:hover {
-                border-bottom: solid white 2px;
-            }
-            &:nth-child(3){
-                animation: scaleTet 1s ease-in-out infinite alternate;
-            }
-            &:nth-child(4){
-                display: block;
-            }
-            &:nth-child(4):hover {
-                border-bottom: none; 
-                scale: 1.1;
-                transition: scale 0.5s ease;
+                width: 6rem;
+                @include m.desktop {
+                    width: 7rem;
+                    
+                }
             }
             
         }
     }
     
     section{
+        margin: 25rem 0;
         @include m.desktop {
+            margin: 0;
             display: flex;
             justify-content: space-evenly;
         }

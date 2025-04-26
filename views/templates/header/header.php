@@ -1,10 +1,10 @@
 <!-- Menu hamburguesa -->
-<button type="button" id="burgerMenu" title="Abrir menú principal" aria-expanded="false">
+<button type="button" id="burgerMenu" title="Abrir menú principal" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú principal">
     <i class="fa-solid fa-bars" aria-hidden="true"></i>
 </button>
 
 <header class="header">
-    <nav aria-label="Navegación principal del sitio">
+    <nav aria-label="Navegación principal del sitio" class="hide" id="menu" role="navigation" aria-hidden="false">
         <a href="/" aria-label="Ir a la sección NOSOTROS" title="NOSOTROS">NOSOTROS</a>
         <a href="/eventos" aria-label="Ir a la sección EVENTOS" title="EVENTOS">EVENTOS</a>
         <a href="/tet" aria-label="Ir a la sección TET 2025" title="TET 2025">TET 2025</a>

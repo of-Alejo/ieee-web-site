@@ -36,16 +36,16 @@ try {
     
 } catch (PDOException $error) {
     // Manejar errores específicos de PDO
-    header("Location: /500");
-    exit();
+    //header("Location: /500");
+    //exit();
     error_log("Error de conexión: " . $error->getMessage(), 
         3, 
         __DIR__ . '../logs/error_db.log');
     die("Error de PDO: " . $error->getMessage());
 } catch (Exception $error) {
     // Manejar otras excepciones
-    header("Location: /500");
-    exit();
+    //header("Location: /500");
+    //exit();
     error_log("Error de conexión: " . $error->getMessage(), 
         3, 
         __DIR__ . '../logs/error_db.log');
