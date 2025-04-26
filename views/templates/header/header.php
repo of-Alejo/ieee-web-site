@@ -14,11 +14,12 @@
                 <img loading="lazy" width="150" height="150" src="/build/img/logos/logo.png" alt="Logo de la Rama IEEE Unicauca">
             </picture>
         </a>
-        <a href="/yearbook" aria-label="Ir a la sección ANUARIO" title="ANUARIO">ANUARIO</a>
-        <a href="/galery" aria-label="Ir a la sección GALERÍA" title="GALERÍA">GALERÍA</a>
+        <a href="/anuario" aria-label="Ir a la sección ANUARIO" title="ANUARIO">ANUARIO</a>
+        <a href="/galería" aria-label="Ir a la sección GALERÍA" title="GALERÍA">GALERÍA</a>
         <a href="/organization" aria-label="Ir a la sección ORGANIZACIÓN" title="ORGANIZACIÓN">ORGANIZACIÓN</a>
     </nav>
 
+    
     <section aria-label="Contenido principal del encabezado" aria-labelledby="header-content">
         <?php if ($_SERVER['REQUEST_URI'] == '/') : ?>
             <article>
@@ -31,7 +32,7 @@
             <article>
                 <h1 id="header-content">Eventos<span>Unicauca</span></h1>
                 <p>¿Qué hacemos? Entérate de todos los eventos que realizamos y que no te puedes perder.</p>
-                <a class="btn" href="/eventos#timeline" title="Ver eventos">¡Quiero ver!</a>
+                <a class="btn" href="/eventos#events" title="Ver eventos">¡Quiero ver!</a>
             </article>
         <?php endif; ?>
         <?php if ($_SERVER['REQUEST_URI'] == '/tet') : ?>
@@ -41,6 +42,29 @@
                 <a class="btn" href="/tet#timeline" title="Ver más información sobre TET 2025">¡Quiero saber más!</a>
             </article>
         <?php endif; ?>
+        <?php if ($_SERVER['REQUEST_URI'] == '/anuario') : ?>
+            <article>
+                <h1 id="header-content">Anuario<span>Unicauca</span></h1>
+                <p>¿Quieres saber más sobre el anuario de la Rama IEEE Unicauca?</p>
+                <a class="btn" href="/anuario" title="Ver anuario">¡Quiero ver!</a>
+            </article>
+        <?php endif; ?>
+        <?php if ($_SERVER['REQUEST_URI'] == '/galeria') : ?>
+            <article>
+                <h1 id="header-content">TET 2025<span>Evento Insignia</span></h1>
+                <p>¿Quieres saber más sobre la décima edición del Seminario de Tecnologías Emergentes de Telecomunicaciones?</p>
+                <a class="btn" href="/tet#timeline" title="Ver más información sobre TET 2025">¡Quiero saber más!</a>
+            </article>
+        <?php endif; ?>
+        <?php if ($_SERVER['REQUEST_URI'] == '/organizacion') : ?>
+            <article>
+                <h1 id="header-content">TET 2025<span>Evento Insignia</span></h1>
+                <p>¿Quieres saber más sobre la décima edición del Seminario de Tecnologías Emergentes de Telecomunicaciones?</p>
+                <a class="btn" href="/tet#timeline" title="Ver más información sobre TET 2025">¡Quiero saber más!</a>
+            </article>
+        <?php endif; ?>
+
+
         <aside aria-label="Redes sociales de la Rama IEEE Unicauca" aria-labelledby="social-media">
             <h2 id="social-media">Síguenos en nuestras redes sociales</h2>
             <ul>

@@ -27,4 +27,12 @@ class Main {
             'descriptionSite' => 'El TET 2025 es un evento organizado por la Rama IEEE Unicauca, donde se busca fomentar el desarrollo tecnológico y la innovación en la región.'
         ]);
     }
+    public static function year_book(Router $router) : void{
+        // Para la url  '/'
+        $router->render('main/year_book', [
+            'title' => '- TET 2025',
+            'metaTitle' => 'TET 2025 - Rama IEEE Unicauca',
+            'descriptionSite' => 'El TET 2025 es un evento organizado por la Rama IEEE Unicauca, donde se busca fomentar el desarrollo tecnológico y la innovación en la región.'
+        ]);
+    }
 }

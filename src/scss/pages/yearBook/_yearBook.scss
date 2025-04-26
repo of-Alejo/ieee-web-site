@@ -1,0 +1,123 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+
+.timeline {
+    padding: 2rem;
+    color: v.$azul; // Usando la variable v.v.$azul
+    font-family: 'Public Sans', sans-serif;
+    position: relative;
+    width: 100vw;
+    h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+    .timeline-container {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 800px;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: v.$azul;
+        }
+    }
+
+    .timeline-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+        position: relative;
+        margin-left: 4rem;
+        @include m.desktop{
+            margin-left: 0;
+        }
+
+        &:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+        &:before {
+            content: attr(data-year); // Mostrar el año
+            position: absolute;
+            top: 50%;
+            left: -8%;
+            transform: translate(-50%, -50%);
+            background-color: v.$azul;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            z-index: 1;
+            @include m.tablet{
+                left: 48%;
+            }
+            @include m.desktop {
+                left: 50%;
+            }
+        }
+
+        picture {
+            width: 45%;
+            max-width: 300px;
+
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .timeline-content {
+            width: 45%;
+            text-align: left;
+
+            h3 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+                color: v.$azul; 
+                span {
+                    font-style: italic;
+                    font-weight: 500;
+                }
+            }
+
+            p {
+                font-size: 1.4rem;
+                color: #64748B;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .timeline-container:before {
+            left: 10px;
+        }
+
+        .timeline-item {
+            flex-direction: column;
+            align-items: flex-start;
+
+            &:nth-child(odd) {
+                flex-direction: column;
+            }
+
+            picture,
+            .timeline-content {
+                width: 100%;
+            }
+        }
+    }
+}
