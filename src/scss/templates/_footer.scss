@@ -7,13 +7,15 @@ footer{
     justify-content: flex-end;
     flex-direction: column;
     color: white;
+    width: 100vw;
     @include m.desktop {
         height: 100vh;
     }
     svg{
-        scale: 1.02;
+        scale: 1 1.02;
     }
     div{
+        
         background-color: v.$azul;
     }
     .footer-img{
@@ -31,7 +33,6 @@ footer{
     }
 
     .footer-info{
-        scale: 1.02;
         .footer-info-initial{
             justify-content: space-around;
             align-items: center;
