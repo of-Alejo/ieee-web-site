@@ -1,3 +1,4 @@
+<?php if ($_SERVER['REQUEST_URI'] != '/404' && $_SERVER['REQUEST_URI'] != '/500'): ?>
 <footer class="footer" aria-labelledby="footer-title" aria-label="Pie de página" id="footer">
     <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%">
         <path d="M-2.54,64.64 C303.89,145.56 219.24,53.80 499.72,149.52 L499.15,151.48 L0.00,150.00 Z" style="stroke: none; fill: #123f72"></path>
@@ -67,3 +68,4 @@
         </ul>
     </div>
 </footer>
+<?php endif; ?>
