@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         activateFunctions(); // Activa funciones específicas según la página
 
         menuBurger();
+        initializeParticles()
     } 
 });
 

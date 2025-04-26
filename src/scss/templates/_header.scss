@@ -26,7 +26,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    animation: moveBackground 14s infinite alternate linear;
+    animation: moveBackground 18s infinite alternate linear;
 
     @include m.desktop {
         animation:none;
@@ -63,7 +63,7 @@
             text-decoration: none; 
             padding: 1.6rem;
             margin: 0;
-            
+            z-index: 3;
             @include m.tablet {
                 display: flex !important;
                 
@@ -142,6 +142,7 @@
         }
 
         a {
+            z-index: 3;
             @include m.button(white, v.$azul, v.$azul, 5px);
         }
     }
@@ -160,6 +161,7 @@
             display:flex;
             list-style: none;
             gap: 3rem;
+            z-index: 3;
             @include m.desktop {
                 flex-direction: column;
             }
