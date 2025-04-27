@@ -3,163 +3,252 @@
 @use "sass:color";
 
 #tet-2025 {
-    font-family: 'Roboto', sans-serif;
-    color: v.$azul;
-    background: linear-gradient(to bottom, #f5f7fa, #e4e9f0);
-    padding: 2rem;
-
-    section {
-        margin-bottom: 3rem;
-        padding: 2rem;
-        background: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-        &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    .info-tet {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin: 2rem 0;
+        padding: 4rem 2rem;
+        
+        @include m.desktop {
+            flex-direction: row;
+            padding: 4rem 6rem;
+            height: 100vh;
+            
         }
+        article {
+            display: flex;
+            flex-direction: column;
+            flex: 0 1 70%;
+            padding: 2rem;
+            margin: 0 3rem;
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-        h2, h3, h4, h5 {
-            color: v.$azul;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            position: relative;
-
-            &::after {
-                content: '';
-                display: block;
-                width: 50px;
-                height: 3px;
-                background: v.$azul;
-                margin-top: 0.5rem;
-                border-radius: 2px;
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
             }
         }
 
-        p, li {
-            font-size: 1.6rem;
-            line-height: 1.8;
-            color: #333;
+        h2 {
+            font-size: 3rem;
+            color: v.$azul;
+            margin-bottom: 1rem;
+            span{
+                color: v.$gold-tet;
+            }
         }
 
-        ul, ol {
-            padding-left: 3rem;
-            list-style: none;
+        p {
+            text-align: justify;
+            font-size: 1.6rem;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.8;
+        }
+    }
+
+    .location-date-tet {
+        text-align: center;
+        margin: 3rem 0;
+        padding: 6rem 0;
+        background-color: v.$azul;
+        h3 {
+            font-size: 2.5rem;
+            color: v.$gold-tet;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        iframe {
+            width: 80vw;
+            border: 2px solid v.$azul;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+    }
+
+    .theme-tet {
+        margin: 3rem 0;
+        padding: 4rem;
+        .icon-3d {
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+            z-index: 3;
+            @include m.desktop {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        h3 {
+            font-size: 2.5rem;
+            color: v.$red-tet;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
 
             li {
-                position: relative;
-                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                font-size: 1.8rem;
+                color: v.$azul;
+                background-color: white;
+                border: 2px solid v.$gold-tet;
+                border-radius: 8px;
+                padding: 1rem 1.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-                // Ícono 3D
-                &::before {
-                    content: '';
-                    position: absolute;
-                    left: -3rem;
-                    top: 50%;
-                    transform: translateY(-50%) rotateX(45deg) rotateY(45deg);
-                    width: 20px;
-                    height: 20px;
-                    background: linear-gradient(135deg, v.$azul, color.adjust(v.$azul, $lightness: -10%));
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-                    border-radius: 4px;
+                &:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+                }
+
+                .icon-3d {
+                    margin-right: 1rem;
                 }
             }
         }
+    }
+    
+    
+    svg{
+        scale: 1 1.09;
+        @include m.desktop {
+            scale: 1 1.05;
+        }
+    }
+    .end-svg{
+        transform: rotate(180deg) !important;
+        scale: 1 1.05;
+        @include m.desktop {
+            scale: 1 1.01;
+        }
+    }
+    .prices-tet {
+        margin: 0;
+        padding: 1rem 4rem;
+        background-color: v.$azul;
+        
+        h3 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: v.$gold-tet;
+            text-align: center;
+        }
+        h4{
+            color: white;
+        }
+        ul {
+            list-style: none;
+            padding: 2rem 4rem;
+            margin: 0;
 
-        a {
-            color: v.$azul;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-
-            &:hover {
-                color: color.adjust(v.$white, $lightness: -10%);
+            li {
+                font-size: 1.6rem;
+                color: white;
+                margin-bottom: 1rem;
+                span{
+                    font-weight: 900;
+                    font-style: italic;
+                }
+                strong {
+                    color: v.$gold-tet;
+                }
             }
         }
     }
 
-    // Animación para las secciones
-    section {
-        animation: fadeIn 1s ease-in-out;
+    .pay-entrance {
+        margin: 4rem auto;
+        padding: 2rem;
+        max-width: 600px;
+        background-color: v.$azul;
+        border-radius: 12px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        color: white;
+        text-align: flex-start;
+
+        h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ol {
+            list-style: decimal;
+            padding-left: 2rem;
+            background-color: white;
+            padding: 3rem;
+            i{
+                width: 3rem;
+                font-size: 900;
+                color: v.$gold-tet;
+            }
+            &>li {
+                padding: 2rem;
+                border: solid 5px v.$gold-tet;
+                font-size: 1.6rem;
+                color: v.$azul;
+                margin-bottom: 1rem;
+                a{
+                    color: v.$azul;
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.3s ease;
+                    &:hover {
+                        color: v.$gold-tet;
+                    }
+                }
+                strong {
+                    color: v.$gold-tet;
+                }
+            }
+            ul{
+                padding: 2rem;
+                list-style: none;
+                i{
+                    color: v.$gold-tet;
+                }
+                span{
+                    font-weight: 900;
+                    font-style: italic;
+                    color: v.$gold-tet;
+                }
+            }
+        }
     }
 
-
-    // Estilo para la sección de patrocinadores
     #patrocinadores-tet {
         text-align: center;
+        margin: 3rem 0;
+
+        h3 {
+            font-size: 2.5rem;
+            color: v.$gold-tet;
+            margin-bottom: 1rem;
+        }
 
         p {
             font-size: 1.8rem;
             color: #555;
         }
     }
-
-    // Estilo para la sección de precios
-    #precios-tet {
-        ul {
-            li {
-                font-size: 1.6rem;
-                color: #444;
-
-                strong {
-                    color: v.$azul;
-                }
-            }
-        }
-    }
-
-    // Botones y enlaces
-    a.btn {
-        display: inline-block;
-        padding: 1rem 2rem;
-        background: v.$azul;
-        color: #fff;
-        text-transform: uppercase;
-        font-weight: bold;
-        border-radius: 5px;
-        transition: background 0.3s ease, transform 0.3s ease;
-
-        &:hover {
-            background: (v.$azul, 10%);
-            transform: scale(1.05);
-        }
-    }
-
-    // Fondo animado para el encabezado
-    header {
-        background: linear-gradient(135deg, rgba(18, 63, 114, 0.8), rgba(18, 63, 114, 0.6));
-        color: #fff;
-        padding: 3rem;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 3rem;
-        position: relative;
-        overflow: hidden;
-
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1.6rem;
-        }
-
-        &::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
-            animation: rotateBackground 10s linear infinite;
-        }
-    }
-
 }
 

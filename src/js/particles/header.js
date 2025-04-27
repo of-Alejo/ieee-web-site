@@ -1,6 +1,4 @@
 function initializeParticles() {
-    const isMobile = window.innerWidth <= 768; // Detectar si es móvil
-
     particlesJS("particles-js", {
         particles: {
             number: {

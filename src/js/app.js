@@ -1,5 +1,6 @@
 // Variables globales
 const baseUrl = window.location.origin;
+const isMobile = window.innerWidth <= 768;
 
 // Páginas permitidas, añadir nuevas rutas aquí
 const routes = {
@@ -23,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         activateFunctions(); // Activa funciones específicas según la página
 
         menuBurger();
-        initializeParticles()
+        initializeParticles();
+        tet();
     } 
 });
 
