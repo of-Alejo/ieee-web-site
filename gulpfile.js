@@ -263,7 +263,7 @@ function productionBuild() {
         convertToWebp, // Convertir a WebP
         copyHeic, // Copiar HEIC sin optimizar
         copyIcons, // Copiar archivos ICO
-        generateSitemap, // Generar sitemap
+        //generateSitemap, // Generar sitemap
         cleanProduction, // Limpiar carpeta project
         () => {
             return src(paths.php) // Copiar archivos PHP a la carpeta project

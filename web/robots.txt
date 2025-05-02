@@ -2,7 +2,15 @@
 
 # Allow all user agents full access
 User-agent: *
-Disallow:
+Allow: /
+Allow: /eventos
+Allow: /tet
+Allow: /anuario
+Allow: /galeria
+Allow: /organizacion
+Allow: /404
+Allow: /500
+
 
 # Block access to sensitive directories
 Disallow: /admin/
@@ -16,4 +24,4 @@ Disallow: /*.sql$
 Disallow: /*.log$
 
 # Sitemap location
-Sitemap: http://www.ieee-web-site.com/sitemap.xml
+Sitemap: http://www.ieee.unicauca.edu.co/sitemap.xml
