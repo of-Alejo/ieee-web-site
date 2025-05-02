@@ -11,10 +11,11 @@
     <meta name="robots" content="index, follow">
 
     <!-- Información -->
-    <title>IEEE Unicauca <?php echo $title; ?></title>
-    <meta name="title" content="<?php echo $metaTitle; ?>">
-    <meta name="description" content="<?php echo $descriptionSite; ?>">
-    <meta name="author" content="UNICAUCA"> <meta name="publisher" content="DAVID ALEJANDRO ORTEGA FLÓREZ">
+    <title>IEEE Unicauca <?php echo htmlspecialchars($title); ?></title>
+    <meta name="title" content="<?php echo htmlspecialchars($metaTitle); ?>">
+    <meta name="description" content="<?php echo htmlspecialchars($descriptionSite); ?>">
+    <meta name="author" content="UNICAUCA">
+    <meta name="publisher" content="DAVID ALEJANDRO ORTEGA FLÓREZ">
     <meta name="geo.position" content="2.446339294065221, -76.59841050197932">
 
     <!-- Tema color -->
@@ -33,8 +34,8 @@
     <!-- Redes Sociales -->
     <!-- Para Facebook -->
     <meta property="fb:pages" content="IEEEUnicauca">
-    <meta property="og:title" content="<?php echo $title; ?>">
-    <meta property="og:description" content="<?php echo $descriptionSite; ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($title); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($descriptionSite); ?>">
     <meta property="og:site_name" content="Rama IEEE Unicauca">
     <meta property="og:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
     <meta property="og:image:width" content="821">
@@ -44,8 +45,8 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="http://ieee.unicauca.edu.co/">
-    <meta name="twitter:title" content="<?php echo $title; ?>">
-    <meta name="twitter:description" content="<?php echo $descriptionSite; ?>">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($title); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($descriptionSite); ?>">
     <meta name="twitter:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
 
     <!-- Iconos -->
@@ -62,9 +63,9 @@
 </head>
 
 <body>
-    <?php include_once __DIR__ .'/templates/header/header.php'; ?>
+    <?php include_once __DIR__ . '/templates/header/header.php'; ?>
     <?php echo $content; ?>
-    <?php include_once __DIR__ .'/templates/footer/footer.php'; ?>
+    <?php include_once __DIR__ . '/templates/footer/footer.php'; ?>
 </body>
 
 </html>

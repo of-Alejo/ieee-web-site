@@ -7,7 +7,7 @@
     "gulp",
     "sass",
     "JS",
-    "PHP8",
+    "PHP5.3",
     "MVC",
     "MySQL",
     "Composer",
@@ -75,7 +75,7 @@
     "terser": "^5.39.0"
   },
   "dependencies": {
-    "dotenv": "^16.5.0",
+    "dotenv": "^8.2.0",
     "particles.js": "^2.0.0"
   }
 }

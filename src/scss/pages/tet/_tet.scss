@@ -177,6 +177,7 @@
 
     .pay-entrance {
         margin: 4rem auto;
+        margin-top: 0;
         padding: 2rem;
         max-width: 600px;
         background-color: v.$azul;
@@ -226,10 +227,25 @@
                 i{
                     color: v.$gold-tet;
                 }
+                
                 span{
                     font-weight: 900;
                     font-style: italic;
                     color: v.$gold-tet;
+                }   
+            }
+            .forms {
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                padding: 3rem;
+                margin-top: 1rem;
+                &:hover {
+                    background-color: v.$gold-tet;
+                    strong{
+                        color: v.$azul;
+                        text-decoration: none;
+                    }
                 }
             }
         }

@@ -12,8 +12,8 @@
 
     <section class="location-date-tet" aria-labelledby="location-date-tet">
         <h3 id="location-date-tet">Ubicación y fecha</h3>
-        <p><strong>13, 14 y 15 de noviembre de 2025</strong></p>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.1827118240085!2d-76.59900549100925!3d2.44614732599877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30030979580709%3A0xe7695b90f0ac275c!2sFacultad%20de%20Ingenier%C3%ADa%20Electr%C3%B3nica%20y%20Telecomunicaciones%20-%20FIET!5e0!3m2!1ses!2sco!4v1745710011043!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación del evento TET 2025"></iframe>
+        <p><strong>6, 7 y 8 de noviembre de 2025</strong></p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.198233881399!2d-76.60756641451813!3d2.4409190940970498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3003056efbbfad%3A0xa4256ccb5eaae1d5!2sParaninfo%20Francisco%20Jos%C3%A9%20de%20Caldas%20(Universidad%20del%20Cauca)!5e0!3m2!1ses!2sco!4v1745786423045!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación del evento TET 2025"></iframe>
     </section>
 
     <section class="theme-tet" aria-labelledby="theme-tet">
@@ -88,15 +88,8 @@
                 </ul>
             </li>
             <li>
-                Envía un correo con el asunto <strong>"PAGO BOLETA TET"</strong> a <a href="mailto:ramaieee@unicauca.edu.co">ramaieee@unicauca.edu.co</a> adjuntando:<br>
-                <ul>
-                    <li><i class="fa-solid fa-signature" style="color: #123f72;"></i><span>Nombre completo</span></li>
-                    <li><i class="fa-solid fa-id-card" style="color: #123f72;"></i><span>Cédula</span></li>
-                    <li><i class="fa-solid fa-hashtag" style="color: #123f72;"></i><span>Código</span></li>
-                    <li><i class="fa-solid fa-mobile" style="color: #123f72;"></i><span>Número de celular</span></li>
-                    <li><i class="fa-solid fa-calendar-check" style="color: #123f72;"></i><span>Fecha de pago</span></li>
-                    <li><i class="fa-solid fa-money-check-dollar" style="color: #123f72;"></i><span>Comprobante de pago</span></li>
-                </ul>
+                Realiza la inscripción luego de efectuar el pago a través del siguiente <strong>"Forms"</strong>. 
+                <a class="btn forms" href="https://docs.google.com/forms/d/e/1FAIpQLSerKH5M0w7O6qinFScoYlk6eayk7hg82chEe8RxWETUuajRTA/viewform?fbclid=PAZXh0bgNhZW0CMTEAAac-40dqaIAKOyVDBpztuOFX15-Xz5TPRSsMx9ZK_aZ4IZO9jC6WgrQw4FFTDw_aem_8OJcxIZ7KXatl3Rg8Mt-Jg" target="_blank" rel="noopener noreferrer"><br><strong>Formulario de inscripción</strong></a>.
             </li>
         </ol>
     </section>

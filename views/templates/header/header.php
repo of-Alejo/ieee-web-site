@@ -8,8 +8,8 @@
     <div id="particles-js"></div> <!-- stats - count particles -->
 
     <!-- Nav -->
-    <?php include_once 'nav.php'; ?>
+    <?php include_once __DIR__ . '/nav.php'; ?>
 
     <!-- Contenido Principal -->
-    <?php include_once 'main_content.php'; ?>
+    <?php include_once __DIR__ . '/main_content.php'; ?>
 </header>

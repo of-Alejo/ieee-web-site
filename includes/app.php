@@ -5,13 +5,12 @@
     Hace el llamado para las funciones a utilizar en el sitio web e inicializa la DB
 */
 
-// Usa variables de entorno .ENV
-use Dotenv\Dotenv;
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Dotenv.php';
 
-// Añadir Dotenv (hide datos) [.env].
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->safeLoad();
+// Añadir Dotenv (ocultar datos) [.env].
+$dotenv = new Dotenv(__DIR__ . '/../');
+$dotenv->load(); 
 
-require 'functions.php';
-require 'database.php';
+require_once 'functions.php';
+require_once 'database.php';
