@@ -1,0 +1,19 @@
+# robots.txt for IEEE Web Site
+
+# Allow all user agents full access
+User-agent: *
+Disallow:
+
+# Block access to sensitive directories
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /private/
+
+# Block access to specific file types
+Disallow: /*.php$
+Disallow: /*.sql$
+Disallow: /*.log$
+
+# Sitemap location
+Sitemap: http://www.ieee-web-site.com/sitemap.xml
