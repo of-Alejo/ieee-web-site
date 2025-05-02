@@ -12,15 +12,23 @@ import imageminOptipng from 'imagemin-optipng';
 import webp from 'gulp-webp';
 import terser from 'gulp-terser-js';
 import concat from 'gulp-concat';
-import { deleteSync } from 'del'; 
 import notify from 'gulp-notify';
 import eslint from 'gulp-eslint';
 import seo from 'gulp-seo';
+import fs from 'fs-extra';
+import path from 'path';
+import javascriptObfuscator from 'gulp-javascript-obfuscator';
+import browserSync from 'browser-sync';
+import rev from 'gulp-rev';
+import revDel from 'gulp-rev-delete-original';
+import sitemap from 'gulp-sitemap';
+import debug from 'gulp-debug';
 
 const sassCompiler = gulpSass(sass);
 const { src, dest, watch, parallel, series } = gulp;
+const server = browserSync.create();
 
-// Rutas configuradas
+// Rutas configuradas para los archivos
 const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
@@ -30,18 +38,51 @@ const paths = {
     heicImages: 'src/img/**/*.{heic,HEIC}',
     svgImages: 'src/img/**/*.svg',
     icoFiles: 'src/img/**/*.ico',
-    build: 'public/build/',
+    build: 'web/build/',
 };
+
+// Archivos y carpetas a copiar a la carpeta project
+const filesToCopy = [
+    './controllers/',
+    './includes/',
+    './models/',
+    './views/',
+    './web/',
+    './vendor/',
+    './.env',
+    './.htaccess',
+    './composer.json',
+    './composer.lock',
+    './package.json',
+    './Router.php',
+];
 
 // Manejo de errores
 function handleError(err) {
+    notify.onError({
+        title: "Error en Gulp",
+        message: `Error: ${err.message}`,
+        sound: "Beep",
+    })(err);
     console.error(`[Error]: ${err.toString()}`);
     this.emit('end');
 }
 
 // Limpieza de la carpeta build
-function clean() {
-    return deleteSync([paths.build]);
+async function clean() {
+    const del = (await import('del')).deleteSync; // Importación dinámica
+    del([paths.build]);
+}
+
+// Limpieza de la carpeta project
+async function cleanProduction() {
+    const del = (await import('del')).deleteSync; // Importación dinámica
+    del(['project']);
+}
+
+// Limpieza de todas las carpetas
+function cleanAll() {
+    return del([paths.build, 'project']);
 }
 
 // Compilar y optimizar CSS
@@ -67,25 +108,40 @@ function lintJS() {
         .pipe(eslint.failAfterError());
 }
 
-function minifyJS() {
+// Minificar y ofuscar JavaScript
+function minifyAndObfuscateJS() {
     return src(paths.js)
         .pipe(sourcemaps.init())
-        .pipe(concat('main.js'))
-        .pipe(terser().on('error', handleError))
+        .pipe(concat('main.js')) // Combinar todos los archivos JS en uno
+        .pipe(terser({
+            compress: {
+                drop_console: true, // Eliminar console.log
+            },
+            output: {
+                comments: false, // Eliminar comentarios
+            },
+        }).on('error', handleError)) // Minificar el archivo
+        .pipe(javascriptObfuscator({ // Ofuscar el archivo
+            compact: true,
+            controlFlowFlattening: true,
+            deadCodeInjection: true,
+            debugProtection: true, // Protección contra depuración
+            disableConsoleOutput: true,
+        }))
         .pipe(sourcemaps.write('.'))
         .pipe(dest(`${paths.build}js`))
-        .pipe(notify({ message: 'JavaScript procesado y minificado!', onLast: true }));
+        .pipe(notify({ message: 'JavaScript procesado, minificado y ofuscado!', onLast: true }));
 }
 
-// Optimizar imágenes PNG y JPG
+// Optimizar imágenes
 function optimizeImages() {
     return src(paths.pngJpgImages)
         .pipe(imagemin([
-            imageminMozjpeg({ quality: 85}),
+            imageminMozjpeg({ quality: 75, progressive: true }),
             imageminOptipng({ optimizationLevel: 5 }),
         ]))
         .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: '¡Imágenes PNG y JPG optimizadas!', onLast: true }));
+        .pipe(notify({ message: '¡Imágenes optimizadas!', onLast: true }));
 }
 
 // Optimizar archivos SVG
@@ -132,31 +188,111 @@ function seoOptimization() {
         .pipe(seo({
             siteName: 'IEEE Web Site',
             robots: 'index, follow',
-            canonical: 'https://yourwebsite.com',
+            canonical: 'http://ieee.unicauca.edu.co/',
         }))
         .pipe(dest('./logs/reports/seo'))
         .pipe(notify({ message: 'SEO optimizado para archivos PHP!', onLast: true }));
 }
 
+// Nueva función para copiar archivos y carpetas a la carpeta project
+function copyToProduction() {
+    return Promise.all(
+        filesToCopy.map((file) => {
+            const resolvedPath = path.resolve(file); // Resolver la ruta completa
+            if (!fs.existsSync(resolvedPath)) {
+                console.error(`La ruta no existe: ${resolvedPath}`);
+                return Promise.resolve(); // Ignorar rutas inexistentes
+            }
+            return fs.copy(resolvedPath, `project/${file.replace('./', '')}`);
+        })
+    ).then(() => {
+        console.log('¡Archivos copiados a la carpeta project y listo para subir por SFTP!');
+    }).catch((err) => {
+        console.error(`Error al copiar archivos: ${err.message}`);
+    });
+}
+
+// Generar sitemap
+function generateSitemap() {
+    return src('web/**/*.php', { read: false })
+        .pipe(sitemap({
+            siteUrl: 'http://ieee.unicauca.edu.co/',
+        }))
+        .pipe(dest('./web'));
+}
+
+// Nueva función para depuración
+function debugTask() {
+    return src(paths.js)
+        .pipe(debug({ title: 'Procesando archivo:' }))
+        .pipe(dest(`${paths.build}js`));
+}
+
+// Servidor de desarrollo con BrowserSync
+function serve(done) {
+    server.init({
+        server: {
+            baseDir: './web',
+        },
+        port: 3000,
+    });
+    done();
+}
+
+function reload(done) {
+    server.reload();
+    done();
+}
+
 // Automatizar tareas en desarrollo
 function dev() {
-    watch(paths.scss, css);
-    watch(paths.js, minifyJS);
+    watch(paths.scss, series(css, reload));
+    watch(paths.js, series(minifyAndObfuscateJS, reload));
+    watch(paths.php, reload);
 }
 
 // Build final para producción
 function productionBuild() {
     return series(
         clean,
-        parallel(
-            () => css(true), // CSS comprimido
-            minifyJS,        // Minificación de JS
-            seoOptimization  // Optimización SEO
-        )
+        () => css(true), // CSS comprimido
+        minifyAndObfuscateJS, // Minificación y ofuscación de JS
+        seoOptimization, // Optimización SEO
+        optimizeImages, //Hacerlomanualmente con los scripts
+        optimizeSVG, // Optimización de SVG
+        convertToWebp, // Convertir a WebP
+        copyHeic, // Copiar HEIC sin optimizar
+        copyIcons, // Copiar archivos ICO
+        generateSitemap, // Generar sitemap
+        cleanProduction, // Limpiar carpeta project
+        () => {
+            return src(paths.php) // Copiar archivos PHP a la carpeta project
+                .pipe(dest('project'));
+        },
+        () => {
+            return src(paths.build) // Copiar archivos de build a la carpeta project
+                .pipe(dest('project'));
+        },
+        () => {
+            return src('web/**/*') // Copiar archivos de web a la carpeta project
+                .pipe(dest('project'));
+        },
+        cacheBust, // Agregar hash a los archivos
+        copyToProduction // Copiar archivos a la carpeta project
     );
+}
+
+// Cache Busting
+function cacheBust() {
+    return src(`${paths.build}/**/*.{css,js}`)
+        .pipe(rev())
+        .pipe(dest(paths.build))
+        .pipe(revDel())
+        .pipe(rev.manifest())
+        .pipe(dest(paths.build));
 }
 
 // Exports
 export const build = productionBuild();
-export { css, minifyJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, seoOptimization, convertHeicToWebp, copyHeic };
+export { css, minifyAndObfuscateJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, seoOptimization, convertHeicToWebp, copyHeic, cleanAll, serve, cacheBust, generateSitemap, debugTask };
 export default dev;

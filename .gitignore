@@ -5,3 +5,5 @@ node_modules
 /vendor/
 vendor/
 /logs
+/project
+/web/build/
