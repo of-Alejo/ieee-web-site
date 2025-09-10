@@ -43,7 +43,7 @@ Este sitio web está desarrollado utilizando **PHP** (compatible con PHP 5.3), *
 
 Asegúrate de tener instalados:
 
-* **PHP** >= 5.3
+* **PHP** = 5.3
 * **Composer**
 * **Node.js** >= 14
 * **npm**
@@ -88,7 +88,7 @@ DB_NAME_DEV=ieee
 
 DB_HOST=localhost
 DB_USER=ieee
-DB_PASS=*dbi333*
+DB_PASS=
 DB_NAME=ieee
 ```
 
@@ -233,10 +233,9 @@ Este proyecto está licenciado bajo la **MIT License**. Puedes usarlo, modificar
 
 ## 📧 Contacto
 
-¿Tienes dudas o sugerencias? Contáctanos:
+¿Tienes dudas o sugerencias?:
 
 * **Correo:** [davidalejof@unicauca.edu.co](mailto:davidalejof@unicauca.edu.co)
-* **Instagram:** [@_of_alejandro](https://instagram.com/_of_alejandro)
 
 ---
 
