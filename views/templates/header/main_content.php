@@ -14,11 +14,22 @@
             <a class="btn" href="/eventos#events" title="Ver eventos">¡Quiero saber más!</a>
         </article>
     <?php elseif ($_SERVER['REQUEST_URI'] === '/tet') : ?>
-        <article>
-            <h1 id="header-content">TET 2025<span>Evento Insignia</span></h1>
+        <article id="header-tet">
+            <h1 id="header-content-tet">
+                TET 
+                <ul id="header-content-tet-list" class="scrolling-list">
+                    <li>2025</li>
+                    <li>10° Edición</li>
+                    <li>Unicauca</li>
+                </ul>
+                <span>Evento Insignia</span>
+            </h1>
+
             <p>¿Quieres saber más sobre la décima edición del Seminario de Tecnologías Emergentes de Telecomunicaciones?</p>
             <a class="btn" href="/tet#tet-2025" title="Ver más información sobre TET 2025">¡Quiero saber más!</a>
         </article>
+
+
     <?php elseif ($_SERVER['REQUEST_URI'] === '/anuario') : ?>
         <article>
             <h1 id="header-content">Anuario<span>Unicauca</span></h1>

@@ -1,4 +1,18 @@
 
+@keyframes slideVertical {
+  0%, 22% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  30%, 55% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  60%, 100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -18,4 +32,32 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+
+@keyframes rotateBackground {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes moveBall{
+  0%{
+    transform: translateY(0) translateX(-20%);
+  }
+  25%{
+    transform: translateY(20%) translateX(0);
+  }
+  50%{
+    transform: translateY(0) translateX(20%);
+  }
+  75%{
+    transform: translateY(20%) translateX(0);
+  }
+  100%{
+    transform: translateY(0) translateX(-20%);
+  }
 }

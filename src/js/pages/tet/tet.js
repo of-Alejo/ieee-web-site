@@ -1,4 +1,5 @@
 function tet() {
+    timerTet();
     const icons = [
         { id: "icon-3d-1", shape: "star" }, // Estrella 3D
         { id: "icon-3d-2", shape: "pyramid" },
@@ -17,8 +18,8 @@ function tet() {
 }
 
 function create3DIcon(container, shape) {
-    const width = isMobile ? 100 : 150; // Tamaño del contenedor
-    const height = isMobile ? 100 : 150;
+    const width = isMobile ? 180 : 150; // Tamaño del contenedor
+    const height = isMobile ? 180 : 150;
 
     // Crear la escena
     const scene = new THREE.Scene();
@@ -104,4 +105,27 @@ function createStarGeometry3D() {
     };
 
     return new THREE.ExtrudeGeometry(shape, extrudeSettings);
+}
+
+function timerTet(){
+    // Fecha objetivo: 6 de noviembre de 2025, 00:00:00
+    const eventDay = new Date('2025-11-06T00:00:00').getTime();
+    const elem = document.getElementById('counter-time-tet');
+
+    setInterval(() => {
+        const now = new Date().getTime();
+        const rest = eventDay - now;
+
+        if (rest <= 0) {
+        elem.innerText = "¡El evento comenzó!";
+        return;
+        }
+
+        const days = Math.floor(rest / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((rest % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((rest % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((rest % (1000 * 60)) / 1000);
+
+        elem.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
 }

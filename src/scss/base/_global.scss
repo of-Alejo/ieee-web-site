@@ -49,12 +49,13 @@ body {
     &::-webkit-scrollbar:vertical {
         width: 12px;
     }
-
+    /* Global: azul */
+    
     &::-webkit-scrollbar-thumb {
         background-color: v.$azul;
     }
+    
 }
-
 
 a {
     text-decoration: none;

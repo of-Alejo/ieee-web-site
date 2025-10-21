@@ -31,7 +31,16 @@ class Router {
         $current_Url = strtok(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/', '?');
         $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
 
-        // Dependiendo si la solicitud es GET o POST verifica la función asignada para dicha URL
+        if (strlen($current_Url) > 100) {
+            header('Location: /404');
+            exit();
+        }
+
+        if (preg_match('/[<>"\']/', $current_Url)) {
+            header('Location: /404'); 
+            exit();
+        }
+
         if ($method === 'GET') {
             $fn = isset($this->getRoutes[$current_Url]) ? $this->getRoutes[$current_Url] : null;
         } else {

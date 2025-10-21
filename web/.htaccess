@@ -1,12 +1,30 @@
-# Proteger el archivo .htaccess
+# ==============================
+# Seguridad básica
+# ==============================
+
+# Proteger el propio archivo .htaccess
 <Files .htaccess>
     Require all denied
 </Files>
 
-# Redirigir todo el tráfico de HTTPS a HTTP
+# Evitar listado de directorios
+Options -Indexes
+
+# Proteger archivos sensibles
+<FilesMatch "\.(env|json|log|ini|sh|bak|sql|swp|dist|htaccess)$">
+    Require all denied
+</FilesMatch>
+
+# ==============================
+# Redirecciones y reescrituras
+# ==============================
+
 RewriteEngine On
+
+# Forzar siempre HTTP (redirigir de https:// a http://)
 RewriteCond %{HTTPS} on
-RewriteRule ^(.*)$ http://%{HTTP_HOST}/$1 [R=301,L]
+RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 
 # Evitar bucles en parámetros GET
 RewriteCond %{QUERY_STRING} ^i=1$ [NC]
@@ -18,31 +36,44 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^(.+)$ index.php [QSA,L]
 
-# Habilitar la compresión para mejorar el rendimiento
+# ==============================
+# Rendimiento
+# ==============================
+
+# Habilitar compresión GZIP/Deflate
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml
 </IfModule>
 
-# Configurar el almacenamiento en caché para mejorar el rendimiento
+# Configurar almacenamiento en caché (para recursos estáticos)
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType text/html "access plus 1 hour"
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType text/javascript "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/css "access plus 1 hour"
+    ExpiresByType text/javascript "access plus 1 hour"
+    ExpiresByType application/javascript "access plus 1 hour"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType application/pdf "access plus 1 month"
-    ExpiresByType application/x-shockwave-flash "access plus 1 month"
     ExpiresByType image/x-icon "access plus 1 year"
 </IfModule>
 
-# Evitar el listado de directorios
-Options -Indexes
+# ==============================
+# Cabeceras de seguridad
+# ==============================
 
-# Proteger archivos sensibles
-<FilesMatch "\.(env|json|log|ini|sh|bak|sql|swp|dist)$">
-    Require all denied
-</FilesMatch>
+<IfModule mod_headers.c>
+    # Evitar sniffing de tipos MIME
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Política de referencia
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Control de iframes (anti clickjacking)
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # HSTS: forzar HTTPS en navegadores
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>

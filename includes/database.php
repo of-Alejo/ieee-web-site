@@ -37,10 +37,23 @@ try {
 
 } catch (PDOException $error) {
     // Manejar errores específicos de PDO
+    // Crear directorio de logs si no existe
+    $logDir = __DIR__ . '/../logs';
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+    
+    // Log del error (sin datos sensibles)
+    $logMessage = date('Y-m-d H:i:s') . " - Error DB: " . $error->getMessage() . PHP_EOL;
+    error_log($logMessage, 3, $logDir . '/error_db.log');
+    
+    // En desarrollo mostrar detalles
+    if (!isProduction()) {
+        echo "Error de desarrollo: " . $error->getMessage();
+    }
+    
     header("Location: /500");
     exit();
-    // error_log("Error de conexión: " . $error->getMessage(), 3, __DIR__ . '/../logs/error_db.log');
-    // die("Error de PDO: " . $error->getMessage());
 } catch (Exception $error) {
     // Manejar otras excepciones
     header("Location: /500");

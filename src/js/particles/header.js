@@ -56,6 +56,3 @@ function initializeParticles() {
         retina_detect: true
     });
 }
-
-// Inicializar partículas al cargar la página
-document.addEventListener("DOMContentLoaded", initializeParticles);

@@ -28,10 +28,16 @@ function isProduction() {
 
 // Imprime la información de la variable.
 function debug($variable) {
-    echo "<pre>";
-    var_dump($variable);
-    echo "</pre>";
-    exit;
+    // Solo funciona en desarrollo
+    if (!isProduction()) {
+        echo "<pre>";
+        var_dump($variable);
+        echo "</pre>";
+        exit;
+    } else {
+        // En producción, solo log básico sin exponer al público
+        error_log("Debug llamado en producción: " . print_r($variable, true));
+    }
 }
 
 /**
@@ -40,8 +46,22 @@ function debug($variable) {
  * @param mixed $html Código HTML a sanitizar
  * @return mixed Retorna el código HTML sanitizado 
  */
-function sanitize($html) {
-    return !is_null($html) ? htmlspecialchars($html) : "";
+function sanitize($input) {
+    if (is_array($input)) {
+        return array_map('sanitize', $input);
+    }
+    
+    // Sanitización para PHP 5.3
+    $input = trim($input);
+    $input = stripslashes($input);
+    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+    
+    // Limitar longitud para prevenir ataques DoS
+    if (strlen($input) > 1000) {
+        $input = substr($input, 0, 1000);
+    }
+    
+    return $input;
 }
 
 /**

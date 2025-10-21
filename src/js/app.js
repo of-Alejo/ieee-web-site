@@ -23,8 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isAllowedRoute) {
         activateFunctions(); // Activa funciones específicas según la página
 
-        menuBurger();
+        (isMobile) ? menuBurger() : null;
         initializeParticles();
+        if (window.location.pathname == "/tet")
         tet();
     } 
 });

@@ -38,7 +38,7 @@ class Main {
         ));
     }
 
-    public static function galery($router) {
+    public static function gallery($router) {
         // Para la url '/galeria'
         $router->render('main/galery', array(
             'title' => '- Galería',

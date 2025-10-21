@@ -8,28 +8,33 @@
     <meta name="language" content="es">
 
     <!-- Indexación en Google -->
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow">
 
     <!-- Información -->
     <title>IEEE Unicauca <?php echo htmlspecialchars($title); ?></title>
     <meta name="title" content="<?php echo htmlspecialchars($metaTitle); ?>">
     <meta name="description" content="<?php echo htmlspecialchars($descriptionSite); ?>">
-    <meta name="author" content="UNICAUCA">
+    <meta name="author" content="IEEE Student Branch Unicauca">
     <meta name="publisher" content="DAVID ALEJANDRO ORTEGA FLÓREZ">
+    <meta name="keywords" content="IEEE, Unicauca, tecnología, telecomunicaciones, eventos académicos, TET 2025">
     <meta name="geo.position" content="2.446339294065221, -76.59841050197932">
+    <meta name="geo.placename" content="Popayán, Cauca, Colombia">
+    <meta name="geo.region" content="CO-19">
 
     <!-- Tema color -->
-    <meta name="theme-color" content="#124072">
+    <meta name="theme-color" content="#123f72">
+    <meta name="msapplication-TileColor" content="#123f72">
 
     <!-- Favicon -->
     <link rel="icon" href="/build/img/logos/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/build/img/logos/favicon.ico" type="image/x-icon">
 
     <!-- Copyright -->
-    <meta name="copyright" content="2025">
+    <meta name="copyright" content="<?php echo date('Y'); ?> IEEE Student Branch Unicauca">
 
     <!-- Sitio Principal -->
-    <link rel="canonical" href="http://ieee.unicauca.edu.co/">
+    <link rel="canonical" href="http://www.ieee.unicauca.edu.co">
 
     <!-- Redes Sociales -->
     <!-- Para Facebook -->
@@ -39,30 +44,68 @@
     <meta property="og:site_name" content="Rama IEEE Unicauca">
     <meta property="og:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
     <meta property="og:image:width" content="821">
+    <meta property="og:image:height" content="463">
+    <meta property="og:image:alt" content="Logo IEEE Unicauca">
     <meta property="og:url" content="http://ieee.unicauca.edu.co/">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_CO">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ramitaIEEE">
     <meta name="twitter:url" content="http://ieee.unicauca.edu.co/">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($title); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($descriptionSite); ?>">
     <meta name="twitter:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
+    <meta name="twitter:image:alt" content="Logo IEEE Unicauca">
 
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Preconexiones para rendimiento -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
     <!-- CSS -->
     <link rel="preload" href="/build/css/app.css" as="style">
     <link rel="stylesheet" href="/build/css/app.css">
 
     <!-- JS -->
+    <link rel="preload" href="/build/js/main.js" as="script">
+    <script src="/build/js/main.js" defer></script>
+
+    
+    <!-- Schema.org JSON-LD para SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "IEEE Student Branch Unicauca",
+        "url": "http://www.ieee.unicauca.edu.co",
+        "logo": "http://www.ieee.unicauca.edu.co/build/img/logos/logo_ext.png",
+        "sameAs": [
+            "https://www.facebook.com/IEEEUnicauca",
+            "https://x.com/ramitaIEEE"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "general"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Popayán",
+            "addressRegion": "Cauca",
+            "addressCountry": "CO"
+        }
+    }
+    </script>
+
+    <!-- Iconos -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" as="style" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
+
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0/particles.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <script rel="preload" src="build/js/main.js" as="script" defer></script>
 </head>
 
-<body>
+<body itemscope itemtype="https://schema.org/WebPage">
     <?php include_once __DIR__ . '/templates/header/header.php'; ?>
     <?php echo $content; ?>
     <?php include_once __DIR__ . '/templates/footer/footer.php'; ?>

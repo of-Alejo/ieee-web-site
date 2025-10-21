@@ -96,8 +96,8 @@ function css(isProduction = false) {
             isProduction && cssnano(), // Minificar solo en producción
         ].filter(Boolean)))
         .pipe(sourcemaps.write('.'))
-        .pipe(dest(`${paths.build}css`))
-        .pipe(notify({ message: 'CSS procesado correctamente!', onLast: true }));
+        .pipe(dest(`${paths.build}css`));
+        //.pipe(notify({ message: 'CSS procesado correctamente!', onLast: true }));
 }
 
 // Lint y minificación de JS

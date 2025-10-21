@@ -22,10 +22,12 @@ $router->get('/', array('Main', 'index'));
 $router->get('/eventos', array('Main', 'events'));
 $router->get('/tet', array('Main', 'tet_2025'));
 $router->get('/anuario', array('Main', 'year_book'));
-$router->get('/galeria', array('Main', 'galery'));
+$router->get('/galeria', array('Main', 'gallery'));
 $router->get('/organizacion', array('Main', 'organization'));
 $router->get('/404', array('AppError', 'e404'));
 $router->get('/500', array('AppError', 'e500'));
+
+$router->get('/admin', array('Main', 'admin'));
 
 // Verifica las rutas
 $router->checkRoutes();
