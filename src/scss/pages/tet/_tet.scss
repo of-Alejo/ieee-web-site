@@ -85,16 +85,15 @@
         }
 
         .logo-tet {
-            border-radius: 50%;
-            max-width: 35rem;
-            height: auto;
+            width: 30rem;
             object-fit: cover;
-            border: 3px solid v.$gold-light-tet;
             margin-bottom: 2rem;
-
+            
             @include m.desktop {
-            margin-bottom: 0;
-            margin-right: 4rem;
+                height: auto;
+                max-width: 40vw;
+                margin-bottom: 0;
+                margin-right: 4rem;
             }
         }
 
@@ -140,10 +139,12 @@
                 border-radius: 8px;
 
                 p {
+                    text-align: center;
                     font-size: 2.1rem;
                     color: white;
                     .counter-time {
                         color: v.$gold-light-tet;
+                        font-size: 2.4rem;
                         font-family: "Goudy Old Style", Garamond, "Times New Roman", serif;
                         font-weight: 900;
                     }
@@ -204,8 +205,8 @@
         padding: 4rem;
 
         h3 {
-            font-size: 3rem;
-            color: v.$red-tet;
+            font-size: 3.2rem;
+            color: v.$red-dark-tet;
             text-align: center;
             margin-bottom: 2rem;
         }
@@ -224,7 +225,7 @@
                 align-items: center;
                 background-color: white;
                 color: v.$red-tet;
-                border: 2px solid v.$gold-tet;
+                border: 4px solid v.$gold-tet;
                 border-radius: 8px;
                 padding: 1rem 1.5rem;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -244,8 +245,8 @@
                     vertical-align: middle;
                     margin-bottom: 1rem;
                     z-index: 3;
-                    width: 180px;
-                    height: 180px;
+                    width: 170px;
+                    height: 170px;
 
                     @include m.tablet {
                         width: 150px;
@@ -448,7 +449,7 @@
         flex-direction: column;
         text-align: center;
         margin: 3rem 0;
-
+        margin-top: 6rem;
         ul {
             display: grid;
             padding: 2rem;
@@ -465,43 +466,66 @@
             }
 
             li {
-            padding: 1rem;
-            background-color: transparent;
-
-            h4 {
-                color: v.$red-tet;
-                font-size: 2rem;
-            }
-
-            .secondPartPonente {
-                display: none;
-            }
-
-            &:hover {
-                transition: all ease 1s;
-                background-color: v.$red-dark-tet;
-                transform: scale(1.01);
-                
+                padding: 1rem;
+                margin: 1.2rem;
+                background-color: transparent;
+                height: 60vh;
                 h4 {
-                color: v.$gold-light-tet;
+                    color: v.$red-tet;
+                    font-size: 2rem;
                 }
-                p {
-                display: none;
-                }
+
                 .secondPartPonente {
-                display: flex;
-                color: white;
-                font-size: 1.4rem;
+                    display: none;
                 }
-                img {
-                display: none;
+                article{
+                    display: flex;
+                    flex-direction: column;
+                    min-height: 100%;
+                    justify-content: center;
+                    @include m.desktop {
+                        justify-content: space-around;
+                        
+                    }
                 }
-            }
+                &:hover {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    transition: all ease 1s;
+                    background-color: v.$red-dark-tet;
+                    box-shadow: 0px 0px 41px 3px v.$gold-light-tet;
+                    -webkit-box-shadow: 0px 0px 41px 3px v.$gold-light-tet;
+                    -moz-box-shadow: 0px 0px 41px 3px v.$gold-light-tet;
+
+                    @include m.desktop {
+                        transform: scale(1.02);
+                    }
+                    
+                    h4 {
+                    color: v.$gold-light-tet;
+                    }
+                    p {
+                    display: none;
+                    }
+                    .secondPartPonente {
+                    display: flex;
+                    color: white;
+                    font-size: 1.6rem;
+                    @include m.desktop {
+                        font-size: 1.65rem;
+                        
+                    }
+                    }
+                    img {
+                    display: none;
+                    }
+                }
             }
         }
 
         h3 {
-            font-size: 2.5rem;
+            font-size: 3.4rem;
             color: v.$gold-tet;
             margin-bottom: 1rem;
         }

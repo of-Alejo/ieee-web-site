@@ -6,7 +6,7 @@ function tet() {
         { id: "icon-3d-3", shape: "sphere" },
         { id: "icon-3d-4", shape: "torus" },
         { id: "icon-3d-5", shape: "dodecahedron" },
-        { id: "icon-3d-6", shape: "tetrahedron" },
+        { id: "icon-3d-6", shape: "torusKnot" },
     ];
 
     icons.forEach(icon => {
@@ -18,15 +18,15 @@ function tet() {
 }
 
 function create3DIcon(container, shape) {
-    const width = isMobile ? 180 : 150; // Tamaño del contenedor
-    const height = isMobile ? 180 : 150;
+    const width = isMobile ? 170 : 150; // Tamaño del contenedor
+    const height = isMobile ? 170 : 150;
 
     // Crear la escena
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(80, width / height, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); // Activar antialiasing
     renderer.setSize(width, height);
-    renderer.setPixelRatio(window.devicePixelRatio * 2); // Mejorar la calidad del renderizado
+    renderer.setPixelRatio(window.devicePixelRatio * 1.5); // Mejorar la calidad del renderizado
     container.appendChild(renderer.domElement);
 
     // Crear geometría
@@ -38,32 +38,39 @@ function create3DIcon(container, shape) {
     } else if (shape === "sphere") {
         geometry = new THREE.SphereGeometry(0.8, 64, 64); // Esfera con más segmentos
     } else if (shape === "torus") {
-        geometry = new THREE.TorusGeometry(0.6, 0.2, 16, 100); // Toro (anillo)
+        geometry = new THREE.TorusGeometry(0.8, 0.2, 16, 100); // Toro (anillo)
     } else if (shape === "dodecahedron") {
         geometry = new THREE.DodecahedronGeometry(0.8); // Dodecaedro
-    } else if (shape === "tetrahedron") {
-        geometry = new THREE.TetrahedronGeometry(0.8); // Tetraedro
+    } else if (shape === "torusKnot") {
+        const radius =  2.0;  
+        const tubeRadius =  1.0;  
+        const radialSegments = 10;  
+        const tubularSegments =  36;  
+        const p =  2;  
+        const q =  3; 
+        geometry = new THREE.TorusKnotGeometry(0.5, 0.2, 100, 100 );; // Tetraedro
     }
 
     // Cambiar el material para incluir caras visibles
     const material = new THREE.MeshStandardMaterial({
-        color: 0xe2bf3f, // Color dorado
-        metalness: 0.5, // Efecto metálico
-        roughness: 0.4, // Superficie más suave
+        color: 0x6d0801, // Color red
+        metalness: 0.7, // Efecto metálico
+        roughness: 0.2, // Superficie más suave
+        flatShading: true,
     });
 
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
     // Añadir luces para mejorar la visibilidad
-    const light1 = new THREE.PointLight(0xffffff, 1, 100);
+    const light1 = new THREE.PointLight(0xd5ba65, 2.5, 100);
     light1.position.set(2, 2, 5);
     scene.add(light1);
 
-    const light2 = new THREE.AmbientLight(0xffffff, 0.8); // Luz ambiental para suavizar sombras
+    const light2 = new THREE.AmbientLight(0xd5ba65, 0.8); // Luz ambiental para suavizar sombras
     scene.add(light2);
 
-    camera.position.z = 3; // Ajustar la posición de la cámara para acomodar el tamaño
+    camera.position.z = 2; // Ajustar la posición de la cámara para acomodar el tamaño
 
     // Animar la geometría
     function animate() {
@@ -109,7 +116,7 @@ function createStarGeometry3D() {
 
 function timerTet(){
     // Fecha objetivo: 6 de noviembre de 2025, 00:00:00
-    const eventDay = new Date('2025-11-06T00:00:00').getTime();
+    const eventDay = new Date('2025-11-06T08:00:00').getTime();
     const elem = document.getElementById('counter-time-tet');
 
     setInterval(() => {
@@ -117,7 +124,7 @@ function timerTet(){
         const rest = eventDay - now;
 
         if (rest <= 0) {
-        elem.innerText = "¡El evento comenzó!";
+        elem.innerText = "¡El TET 2025 comenzó!";
         return;
         }
 

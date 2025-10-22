@@ -64,12 +64,12 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
     <!-- CSS -->
-    <link rel="preload" href="/build/css/app.css" as="style">
-    <link rel="stylesheet" href="/build/css/app.css">
+    <link rel="preload" href="/build/css/appv5.css" as="style">
+    <link rel="stylesheet" href="/build/css/appv5.css">
 
     <!-- JS -->
-    <link rel="preload" href="/build/js/main.js" as="script">
-    <script src="/build/js/main.js" defer></script>
+    <link rel="preload" href="/build/js/mainv3.js" as="script">
+    <script src="/build/js/mainv3.js" defer></script>
 
     
     <!-- Schema.org JSON-LD para SEO -->

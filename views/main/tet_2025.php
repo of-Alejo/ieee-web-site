@@ -21,7 +21,7 @@
 
             <div id="counter-tet" aria-live="polite">
             <p>
-                Empezamos en 
+                Empezamos en <br>
                 <span id="counter-time-tet" class="counter-time">00d 00h 00m 00s</span>
             </p>
             </div>
@@ -40,15 +40,7 @@
         </p>
 
         <figure>
-            <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.198233881399!2d-76.60756641451813!3d2.4409190940970498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3003056efbbfad%3A0xa4256ccb5eaae1d5!2sParaninfo%20Francisco%20Jos%C3%A9%20de%20Caldas%20(Universidad%20del%20Cauca)!5e0!3m2!1ses!2sco!4v1745786423045!5m2!1ses!2sco" 
-            width="600" height="450"
-            style="border:0;" 
-            allowfullscreen 
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade" 
-            title="Mapa de ubicación del evento TET 2025 — Universidad del Cauca, Popayán.">
-            </iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.198233871194!2d-76.60722792568039!3d2.4409190975380284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3003056efbbfad%3A0xa4256ccb5eaae1d5!2sParaninfo%20Francisco%20Jos%C3%A9%20de%20Caldas%20(Universidad%20del%20Cauca)!5e0!3m2!1ses!2sco!4v1761113264643!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             <figcaption>Ubicación del evento TET 2025 en Popayán, Cauca.</figcaption>
         </figure>
     </section>
@@ -108,8 +100,17 @@
             <article>
                 <h4>Inteligencia Artificial en Videojuegos</h4>
                 <p>
-                Descubre cómo la inteligencia artificial está revolucionando los videojuegos mediante personajes 
-                autónomos, mecánicas dinámicas y entornos virtuales inmersivos.
+                Descubre cómo la inteligencia artificial está revolucionando los videojuegos mediante personajes autónomos, mecánicas dinámicas y entornos virtuales inmersivos.
+                </p>
+            </article>
+            </li>
+
+            <li>
+            <div class="icon-3d" id="icon-3d-6" aria-hidden="true"></div>
+            <article>
+                <h4>Software sostenible: cuando la Ingeniería también piensa en verde</h4>
+                <p>
+                Crea programas que cuidan el planeta mientras rinden al máximo. Al usar menos energía, optimizar recursos y diseñar pensando en el futuro. La ingeniería no solo innova, sino que también protege el mundo que compartimos, construyendo un futuro tecnológico responsable, limpio y poderoso.
                 </p>
             </article>
             </li>
@@ -213,7 +214,7 @@
             <article>
                 <h4>Carolina Masso</h4>
                 <p>CEO GAMMA INGENIEROS</p>
-                <p class="secondPartPonente">Ingeniera en Electrónica y Telecomunicaciones con amplia experiencia en ciberseguridad, creadora de Gamma CyberAcademy y líder del CSOC evaluado por Carnegie Mellon.</p>
+                <p class="secondPartPonente">Ingeniera en Electrónica y Telecomunicaciones (Unicauca), Especialista en Gerencia de Empresas (Externado) y Magíster en Mercadeo (Uniandes), con más de 20 años de experiencia. Fundadora de la Unidad de Negocios de Tecnología en Gamma Ingenieros, posicionando la empresa como referente nacional en Ciberseguridad y Ciberdefensa. Creadora de Gamma CyberAcademy, plataforma online para sensibilizar sobre el uso seguro de las TIC. Lideró la creación del CSOC de Gamma, con más de 80 expertos, reconocido como CERT por Carnegie Mellon (2020) y miembro de FIRST.</p>
                 <picture>
                 <source srcset="/build/img/pages/tet/Ponentes/CarolinaMasso.webp" type="image/webp">
                 <img loading="lazy" width="200" height="300" src="/build/img/pages/tet/Ponentes/CarolinaMasso.jpg" alt="Foto de Carolina Masso">
@@ -233,9 +234,10 @@
             </li>
             <li>
             <article>
-                <h4>MSc. Oscar Felix García Rubio</h4>
+                <h4>Ph.D Felix Oscar García Rubio</h4>
                 <p>Software sostenible: cuando la Ingeniería también piensa en verde</p>
-                <p class="secondPartPonente">Catedrático en la Escuela Superior de Informática de Ciudad Real, experto en sostenibilidad del software, métodos ágiles y gamificación.</p>
+                <p class="secondPartPonente"> 
+                Catedrático en la Escuela Superior de Informática de Ciudad Real y codirector del grupo Alarcos, enfocado en sostenibilidad del software, calidad y medición de procesos, métodos ágiles, gamificación y juegos serios. Ha liderado múltiples proyectos de I+D y transferencia tecnológica en estas áreas. Su docencia abarca Ingeniería del Software, Gestión de Proyectos y Procesos de Negocio. Posee certificaciones PMP, CISA, Scrum Manager y Scrum Master I (PSM I).</p>
                 <picture>
                 <source srcset="/build/img/pages/tet/Ponentes/FelixGarcia.webp" type="image/webp">
                 <img loading="lazy" width="200" height="300" src="/build/img/pages/tet/Ponentes/FelixGarcia.jpg" alt="Foto de Oscar Felix García Rubio">
@@ -246,7 +248,7 @@
             <article>
                 <h4>Andrés Cosme</h4>
                 <p>AI Impact on Society: Will It Destroy Us?</p>
-                <p class="secondPartPonente">Director de Data & AI en Lean Solutions Group, con amplia experiencia en IA generativa y automatización inteligente a nivel global.</p>
+                <p class="secondPartPonente">Ingeniero en Electrónica y Telecomunicaciones (Unicauca) con sólida trayectoria internacional en tecnología y negocios. Posee cuatro títulos de posgrado: Máster en Inteligencia Artificial (UPC, España), Máster en Big Data (EOI, España), MSc en Telemática (Universidad de Twente, Holanda) y MBA (Sergio Arboleda, Colombia).</p>
                 <picture>
                 <source srcset="/build/img/pages/tet/Ponentes/AndresCosme.webp" type="image/webp">
                 <img loading="lazy" width="200" height="300" src="/build/img/pages/tet/Ponentes/AndresCosme.jpg" alt="Foto de Andrés Cosme">
@@ -257,7 +259,7 @@
             <article>
                 <h4>Carlos Julio Ramirez</h4>
                 <p>El impacto de la Inteligencia Artificial en nuestra profesión como Ingenieros electrónicos y de sistemas.</p>
-                <p class="secondPartPonente">Ingeniero en Electrónica y Telecomunicaciones, con más de 20 años de experiencia en gestión comercial, consultoría y docencia en Colombia y Latinoamérica.</p>
+                <p class="secondPartPonente">Ingeniero en Electrónica y Telecomunicaciones, con cuatro posgrados en administración, dirección comercial, proyectos y empresas. ITIL Advanced Practitioner, inglés avanzado y más de 20 años liderando relaciones comerciales en Colombia y Latinoamérica. Experto en soluciones tecnológicas, evolución digital y ciberprotección. Amplia experiencia como consultor, docente y gestor de equipos de alto rendimiento.</p>
                 <picture>
                 <source srcset="/build/img/pages/tet/Ponentes/CarlosJulio.webp" type="image/webp">
                 <img loading="lazy" width="200" height="300" src="/build/img/pages/tet/Ponentes/CarlosJulio.jpg" alt="Foto de Carlos Julio Ramirez">

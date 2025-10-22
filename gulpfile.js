@@ -50,7 +50,7 @@ const filesToCopy = [
     './web/',
     './vendor/',
     './.env',
-    './.htaccess',
+    './web/.htaccess',
     './composer.json',
     './composer.lock',
     './package.json',
@@ -112,7 +112,7 @@ function lintJS() {
 function minifyAndObfuscateJS() {
     return src(paths.js)
         .pipe(sourcemaps.init())
-        .pipe(concat('main.js')) // Combinar todos los archivos JS en uno
+        .pipe(concat('mainv3.js')) // Combinar todos los archivos JS en uno
         .pipe(terser({
             compress: {
                 drop_console: true, // Eliminar console.log
@@ -257,7 +257,7 @@ function productionBuild() {
         clean,
         () => css(true), // CSS comprimido
         minifyAndObfuscateJS, // Minificación y ofuscación de JS
-        seoOptimization, // Optimización SEO
+        //seoOptimization, // Optimización SEO
         optimizeImages, //Hacerlomanualmente con los scripts
         optimizeSVG, // Optimización de SVG
         convertToWebp, // Convertir a WebP
@@ -294,5 +294,5 @@ function cacheBust() {
 
 // Exports
 export const build = productionBuild();
-export { css, minifyAndObfuscateJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, seoOptimization, convertHeicToWebp, copyHeic, cleanAll, serve, cacheBust, generateSitemap, debugTask };
+export { css, minifyAndObfuscateJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, convertHeicToWebp, copyHeic, cleanAll, serve, cacheBust, generateSitemap, debugTask };
 export default dev;
