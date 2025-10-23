@@ -63,13 +63,26 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
+    <?php
+    $manifestPath = $_SERVER['DOCUMENT_ROOT'] . '/build/manifest.json';
+    if (file_exists($manifestPath)) {
+        echo "<!-- Manifest existe -->\n";
+        $manifest = json_decode(file_get_contents($manifestPath), true);
+        $cssFile = '/build/' . $manifest['css'];
+        $jsFile = '/build/' . $manifest['js'];
+    } else {
+        $cssFile = '/build/css/app.css';
+        $jsFile = '/build/js/main.js';
+    }
+    ?>
+
     <!-- CSS -->
-    <link rel="preload" href="/build/css/appv5.css" as="style">
-    <link rel="stylesheet" href="/build/css/appv5.css">
+    <link rel="preload" href="<?php echo $cssFile; ?>" as="style">
+    <link rel="stylesheet" href="<?php echo $cssFile; ?>">
 
     <!-- JS -->
-    <link rel="preload" href="/build/js/mainv3.js" as="script">
-    <script src="/build/js/mainv3.js" defer></script>
+    <link rel="preload" href="<?php echo $jsFile; ?>" as="script">
+    <script src="<?php echo $jsFile; ?>" defer></script>
 
     
     <!-- Schema.org JSON-LD para SEO -->
