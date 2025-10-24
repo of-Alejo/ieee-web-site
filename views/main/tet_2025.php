@@ -40,7 +40,7 @@
         </p>
 
         <figure>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.198233871194!2d-76.60722792568039!3d2.4409190975380284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3003056efbbfad%3A0xa4256ccb5eaae1d5!2sParaninfo%20Francisco%20Jos%C3%A9%20de%20Caldas%20(Universidad%20del%20Cauca)!5e0!3m2!1ses!2sco!4v1761113264643!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.198233871194!2d-76.60722792568039!3d2.4409190975380284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3003056efbbfad%3A0xa4256ccb5eaae1d5!2sParaninfo%20Francisco%20Jos%C3%A9%20de%20Caldas%20(Universidad%20del%20Cauca)!5e0!3m2!1ses!2sco!4v1761113264643!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de la ubicación del evento TET 2025 en Popayán, Cauca"></iframe></iframe>
             <figcaption>Ubicación del evento TET 2025 en Popayán, Cauca.</figcaption>
         </figure>
     </section>
@@ -166,15 +166,21 @@
             Realiza el pago del valor total a la siguiente cuenta de ahorros:
             <ul>
                 <li>
-                <i class="fa-solid fa-signature" aria-hidden="true" style="color: #6d0801;"></i>
+                <svg aria-hidden="true" style="color: #6d0801; width: 1em; height: 1em; vertical-align: -0.125em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
+            <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM224 408c0-17.7 14.3-32 32-32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zm-64-96c-17.7 0-32-14.3-32-32s14.3-32 32-32h256c17.7 0 32 14.3 32 32s-14.3 32-32 32H160zm0-96c-17.7 0-32-14.3-32-32s14.3-32 32-32h256c17.7 0 32 14.3 32 32s-14.3 32-32 32H160z"/>
+        </svg>
                 <span>Nombre:</span> Asociación Rama Estudiantil IEEE Unicauca
                 </li>
                 <li>
-                <i class="fa-solid fa-hashtag" aria-hidden="true" style="color: #6d0801;"></i>
+                <svg aria-hidden="true" style="color: #6d0801; width: 1em; height: 1em; vertical-align: -0.125em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
+            <path d="M181.3 32.4c17.4 2.9 29.2 19.4 26.3 36.8L197.8 128h95.1l11.5-69.3c2.9-17.4 19.4-29.2 36.8-26.3s29.2 19.4 26.3 36.8L357.8 128H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H347.1L325.8 320H384c17.7 0 32 14.3 32 32s-14.3 32-32 32H315.1l-11.5 69.3c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8l9.8-58.7H155.1l-11.5 69.3c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8L90.2 384H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h68.9l21.3-128H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h68.9l11.5-69.3c2.9-17.4 19.4-29.2 36.8-26.3zM187.1 192L165.8 320h95.1l21.3-128H187.1z"/>
+        </svg>
                 <span>Número de cuenta:</span> 86800066664
                 </li>
                 <li>
-                <i class="fa-solid fa-money-check-dollar" aria-hidden="true" style="color: #6d0801;"></i>
+                <svg aria-hidden="true" style="color: #6d0801; width: 1em; height: 1em; vertical-align: -0.125em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
+            <path d="M64 64C28.7 64 0 92.7 0 128v256c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320h64v64zM64 256V192h64v64H64zm384 64H192V256H448v64zM192 192V128H448v64H192zM512 320v64H448V320h64z"/>
+        </svg>
                 <span>NIT:</span> 817004128
                 </li>
             </ul>

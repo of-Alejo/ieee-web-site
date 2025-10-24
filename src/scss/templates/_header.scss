@@ -72,9 +72,10 @@
                 }
                 &:nth-child(3){
                     padding: 2rem;
-                    animation: scaleTet 1.1s ease-in-out infinite alternate;
+                    animation: scaleTet 1.2s ease-in-out infinite alternate;
                     background-color: v.$gold-tet;
                     border-width: 2px;
+                    font-weight: 600;
                     border-radius: .5rem 2rem 2rem 2rem;
                     &:hover{
                         background-color: v.$red-tet;

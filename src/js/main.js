@@ -2,7 +2,7 @@
 const baseUrl = window.location.origin;
 const isMobile = window.innerWidth <= 768;
 
-// Páginas permitidas, añadir nuevas rutas aquí
+// Páginas permitidas
 const routes = {
     index: '/',
     eventos: '/eventos',
@@ -14,29 +14,38 @@ const routes = {
     e500: '/500'
 };
 
-// Función principal (main), se ejecuta siempre
-document.addEventListener("DOMContentLoaded", () => {
+// Inicialización principal
+document.addEventListener("DOMContentLoaded", function() {
     const currentPath = window.location.pathname;
     const isAllowedRoute = Object.values(routes).includes(currentPath);
 
-    // Verifica si la URL actual está dentro de las rutas permitidas
-    if (isAllowedRoute) {
-        activateFunctions(); // Activa funciones específicas según la página
+    if (!isAllowedRoute) return;
 
-        (isMobile) ? menuBurger() : null;
-        initializeParticles();
-        if (window.location.pathname == "/tet")
-        tet();
-    } 
+    // Funciones globales
+    if (isMobile) menuBurger();
+    
+    // Inicializar particles solo si la función y librería existen
+    if (typeof initializeParticles === 'function' && typeof particlesJS !== 'undefined') {
+        // Usar requestIdleCallback para ejecutar cuando el navegador esté libre
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(initializeParticles);
+        } else {
+            setTimeout(initializeParticles, 100);
+        }
+    }
+
+    // Activar funciones específicas por página
+    activateFunctions();
 });
 
+// Activar funciones específicas según ruta
 function activateFunctions() {
     const pathActions = {
-        //[routes.index]: initIndexApp
+        '/tet': tet
     };
     
-    if (pathActions[window.location.pathname]) {
-        pathActions[window.location.pathname]();
+    const action = pathActions[window.location.pathname];
+    if (action && typeof action === 'function') {
+        action();
     }
 }
-

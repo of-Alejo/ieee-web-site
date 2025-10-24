@@ -65,7 +65,7 @@ const filesToCopy = [
 // Modos de ejecución
 // ========================================
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = false;
 let buildHash = crypto.randomBytes(5).toString('hex'); // Hash único por build
 
 // ========================================
@@ -232,7 +232,6 @@ function productionBuild() {
   return series(
     clean,
     parallel(css, minifyAndObfuscateJS),
-    cleanUntaggedFiles,
     generateManifest,
     optimizeImages,
     optimizeSVG,

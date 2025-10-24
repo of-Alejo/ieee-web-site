@@ -59,9 +59,6 @@
     <meta name="twitter:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
     <meta name="twitter:image:alt" content="Logo IEEE Unicauca">
 
-    <!-- Preconexiones para rendimiento -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
     <?php
     $manifestPath = $_SERVER['DOCUMENT_ROOT'] . '/build/manifest.json';
@@ -111,9 +108,11 @@
     </script>
 
     <!-- Iconos -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" as="style" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
+    <!-- Preconnect solo a CDNs que uses -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
+    <!-- Scripts con defer y versiones slim si es posible -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0/particles.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 </head>
