@@ -6,16 +6,23 @@
 */
 
 /**
- * Inicia sesión una vez
+ * Start session if not already started
  *
- * @return bool Verdadero si la sesión está iniciada con éxito.
+ * @return bool True if session started or already active
  */
 function startSession() {
-    if (session_status() == PHP_SESSION_NONE) {
-        return session_start();
+    if (function_exists('session_status')) {
+        if (session_status() == PHP_SESSION_NONE) {
+            return session_start();
+        }
+    } else {
+        if (session_id() == '') {
+            return session_start();
+        }
     }
     return true;
 }
+
 
 /**
  * Cambiar esta variable a true si ya está en producción

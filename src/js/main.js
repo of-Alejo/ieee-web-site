@@ -7,6 +7,7 @@ const routes = {
     index: '/',
     eventos: '/eventos',
     tet: '/tet',
+    tet_ingreso: '/tet/ingreso',
     anuario: '/anuario',
     galeria: '/galeria',
     organizacion: '/organizacion',
@@ -18,7 +19,8 @@ const routes = {
 document.addEventListener("DOMContentLoaded", function() {
     const currentPath = window.location.pathname;
     const isAllowedRoute = Object.values(routes).includes(currentPath);
-
+    console.log( "hola" );
+    
     if (!isAllowedRoute) return;
 
     // Funciones globales
@@ -41,10 +43,13 @@ document.addEventListener("DOMContentLoaded", function() {
 // Activar funciones específicas según ruta
 function activateFunctions() {
     const pathActions = {
-        '/tet': tet
+        '/tet': tet,
+        '/tet/ingreso': tet_ingreso
     };
     
     const action = pathActions[window.location.pathname];
+    console.log( action );
+    
     if (action && typeof action === 'function') {
         action();
     }

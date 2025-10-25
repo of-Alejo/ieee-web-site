@@ -1,16 +1,23 @@
-<?php 
+<?php
 
 /*
     APP
-    Hace el llamado para las funciones a utilizar en el sitio web e inicializa la DB
+    Central initialization: Dotenv, functions, DB connection
 */
 
+// ------------------------------
+// AUTOLOAD (Composer)
+// ------------------------------
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Dotenv.php';
+// ------------------------------
+// LOAD ENVIRONMENT VARIABLES (phpdotenv 2.x compatible PHP 5.3)
+// ------------------------------
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
+$dotenv->load();
 
-// Añadir Dotenv (ocultar datos) [.env].
-$dotenv = new Dotenv(__DIR__ . '/../');
-$dotenv->load(); 
-
-require_once 'functions.php';
-require_once 'database.php';
+// ------------------------------
+// LOAD UTILITIES
+// ------------------------------
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/database.php';
+//require_once __DIR__ . '/../tools/createAdmins.php';

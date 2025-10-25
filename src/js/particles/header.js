@@ -19,7 +19,7 @@ function initializeParticles() {
     const particleConfig = {
         particles: {
             number: {
-                value: isMobile ? 8 : 30,
+                value: isMobile ? 12 : 40,
                 density: { 
                     enable: false, 
                     value_area: 946 
@@ -36,7 +36,7 @@ function initializeParticles() {
                 }
             },
             opacity: {
-                value: 0.32,
+                value: 0.38,
                 random: true,
                 anim: { 
                     enable: false, 
@@ -57,7 +57,7 @@ function initializeParticles() {
             },
             line_linked: {
                 enable: true,
-                distance: isMobile ? 100 : 140,
+                distance: isMobile ? 120 : 160,
                 color: "#ffffff",
                 opacity: 0.5,
                 width: 2
@@ -92,7 +92,7 @@ function initializeParticles() {
             },
             modes: {
                 grab: { 
-                    distance: isMobile ? 120 : 180, 
+                    distance: isMobile ? 120 : 200, 
                     line_linked: { opacity: 1 } 
                 },
                 push: { 

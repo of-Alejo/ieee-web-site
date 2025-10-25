@@ -17,6 +17,7 @@ Disallow: /admin/
 Disallow: /login/
 Disallow: /register/
 Disallow: /private/
+Disallow: /ingreso/
 
 # Block access to specific file types
 Disallow: /*.php$

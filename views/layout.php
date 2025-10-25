@@ -115,6 +115,8 @@
     <!-- Scripts con defer y versiones slim si es posible -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0/particles.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.7/dist/purify.min.js" defer></script>
+
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage">
