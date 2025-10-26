@@ -4,7 +4,8 @@
 
 # Proteger el propio archivo .htaccess
 <Files .htaccess>
-    Require all denied
+    Order allow,deny
+    Deny from all
 </Files>
 
 # Evitar listado de directorios
@@ -12,7 +13,8 @@ Options -Indexes
 
 # Proteger archivos sensibles
 <FilesMatch "\.(env|json|log|ini|sh|bak|sql|swp|dist)$">
-    Require all denied
+    Order allow,deny
+    Deny from all
 </FilesMatch>
 
 # ==============================
@@ -21,15 +23,9 @@ Options -Indexes
 
 RewriteEngine On
 
-# PASO 1: Desactivar HSTS antes de redirigir (SOLO si viene por HTTPS)
-<IfModule mod_headers.c>
-    Header always unset Strict-Transport-Security
-    Header always set Strict-Transport-Security "max-age=0"
-</IfModule>
-
-
-# PASO 2: Forzar HTTP (redirigir de https:// a http://)
 RewriteCond %{HTTPS} on
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
 RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=302]
 
 # Evitar bucles en parámetros GET

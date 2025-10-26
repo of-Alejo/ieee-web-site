@@ -268,4 +268,12 @@ class Main {
             'descriptionSite' => 'Conoce a los miembros de la Rama IEEE Unicauca y su trayectoria en el desarrollo tecnológico.'
         ));
     }
+    public static function test($router) {
+        // Para la url '/organizacion'
+        $router->render('main/test_paths', array(
+            'title' => '- test',
+            'metaTitle' => 'Organización - Rama IEEE Unicauca',
+            'descriptionSite' => 'Conoce a los miembros de la Rama IEEE Unicauca y su trayectoria en el desarrollo tecnológico.'
+        ));
+    }
 }

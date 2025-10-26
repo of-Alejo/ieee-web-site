@@ -19,6 +19,7 @@ $router = new Router();
 
 // Validadores de URLs
 $router->get('/', array('Main', 'index'));
+$router->get('/test', array('Main', 'test'));
 $router->get('/eventos', array('Main', 'events'));
 $router->get('/tet', array('Main', 'tet_2025'));
 $router->get('/tet/ingreso', array('Main', 'tet_2025_ingreso'));
