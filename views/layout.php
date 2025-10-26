@@ -107,22 +107,36 @@
     }
     </script>
 
+    <?php
+        // Detectar si es /tet/ingreso con parámetros GET
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $hasGetParams = !empty($_SERVER['QUERY_STRING']);
+        $shouldHideHeader = ($path === '/tet/ingreso' || $path === '/tet/sync' || $path === '/tet/attendees');
+    ?>
     <!-- Iconos -->
     <!-- Preconnect solo a CDNs que uses -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <?php if (!$shouldHideHeader) : ?>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
     <!-- Scripts con defer y versiones slim si es posible -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0/particles.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <?php endif; ?>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.7/dist/purify.min.js" defer></script>
-
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage">
+
+    <?php if (!$shouldHideHeader) : ?>
     <?php include_once __DIR__ . '/templates/header/header.php'; ?>
+    <?php endif; ?>
+
     <?php echo $content; ?>
+
+    <?php if (!$shouldHideHeader) : ?>
     <?php include_once __DIR__ . '/templates/footer/footer.php'; ?>
+    <?php endif; ?>
 </body>
 
 </html>

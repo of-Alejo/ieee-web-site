@@ -19,7 +19,6 @@ const routes = {
 document.addEventListener("DOMContentLoaded", function() {
     const currentPath = window.location.pathname;
     const isAllowedRoute = Object.values(routes).includes(currentPath);
-    console.log( "hola" );
     
     if (!isAllowedRoute) return;
 
@@ -48,7 +47,6 @@ function activateFunctions() {
     };
     
     const action = pathActions[window.location.pathname];
-    console.log( action );
     
     if (action && typeof action === 'function') {
         action();

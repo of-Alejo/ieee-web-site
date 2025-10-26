@@ -65,7 +65,7 @@ const filesToCopy = [
 // Modos de ejecución
 // ========================================
 
-const isProduction = process.env.NODE_ENV === 'production' || false;
+const isProduction = true;
 let buildHash = crypto.randomBytes(5).toString('hex'); // Hash único por build
 
 // Log del modo actual

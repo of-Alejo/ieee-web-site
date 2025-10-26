@@ -1,23 +1,15 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
 @use "sass:color";
-#control-TET-Staff {
-  scroll-margin-top: 40px;
-  @include m.desktop {
-      scroll-margin-top: 80px;
-      
-    }
-}
 
 .tet-access-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 90vh;
-  margin: 6rem auto 0;
+  margin: 6rem auto;
   background: #fff;
   border-radius: 8px;
-  padding: 0 3rem;
+  padding: 3rem 3rem;
   text-align: center;
   background-color: v.$red-dark-tet;
   box-shadow: 0px 0px 20px 2px v.$gold-light-tet;
@@ -31,9 +23,8 @@
     box-shadow: 0px 0px 80px 10px v.$gold-light-tet;
     -webkit-box-shadow: 0px 0px 80px 10px v.$gold-light-tet;
     -moz-box-shadow: 0px 0px 80px 10px v.$gold-light-tet;
-    margin: 12rem auto 0;
-    padding: 0 10rem;
-    height: 80vh;
+    margin: 12rem auto;
+    padding: 4rem 10rem;
   }
   img{
     width: 30rem;
@@ -49,6 +40,49 @@
 .qr-instructions,
 .attendee-card {
   margin-top: 2rem;
+  figcaption{
+    color: v.$gold-light-tet;
+  }
+  .attendee-info-data{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    dt{
+      padding: 1rem 0;
+      font-weight: 700;
+      color: v.$gold-light-tet;
+    }
+    dd{
+      margin: 0;
+      padding: 1rem 0;
+      color: white;
+    }
+  }
+  .entry-history{
+    h4{
+      font-size: 2rem;
+      color: v.$red-dark-tet;
+    }
+    dl{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    }
+    dt{
+      padding: 1rem 0;
+      font-weight: 700;
+      color: v.$red-dark-tet;
+    }
+    dd{
+      
+      padding: 1rem 0;
+      color: v.$red-dark-tet;
+    }
+  }
+  .entry-form{
+    label{
+      margin-top: 2rem;
+      color: v.$gold-light-tet;
+    }
+  }
 }
 
 .field {
@@ -62,9 +96,10 @@
   input[type="text"],
   input[type="password"],
   .qr-input {
+    text-align: center;
     width: 100%;
     padding: 0.7rem;
-    font-size: 1.05rem;
+    font-size: 1.8rem;
     border-radius: 4px;
     border: 1px solid #c2c2c2;
   }

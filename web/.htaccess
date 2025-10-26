@@ -21,9 +21,16 @@ Options -Indexes
 
 RewriteEngine On
 
-# Forzar HTTP (redirigir de https:// a http://)
+# PASO 1: Desactivar HSTS antes de redirigir (SOLO si viene por HTTPS)
+<IfModule mod_headers.c>
+    Header always unset Strict-Transport-Security
+    Header always set Strict-Transport-Security "max-age=0"
+</IfModule>
+
+
+# PASO 2: Forzar HTTP (redirigir de https:// a http://)
 RewriteCond %{HTTPS} on
-RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=302]
 
 # Evitar bucles en parámetros GET
 RewriteCond %{QUERY_STRING} ^i=1$ [NC]
@@ -85,8 +92,8 @@ RewriteRule ^(.+)$ index.php [QSA,L]
 # ==============================
 
 <IfModule mod_headers.c>
-    # Content Security Policy optimizado
-    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; frame-src 'self' https://www.google.com;"
+    # Content Security Policy - MODIFICADO para permitir HTTP
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' data: http: https:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; frame-src 'self' https://www.google.com;"
     
     # Seguridad
     Header always set X-Content-Type-Options "nosniff"

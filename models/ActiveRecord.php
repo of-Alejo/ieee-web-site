@@ -100,6 +100,17 @@ class ActiveRecord {
         return null;
     }
 
+    /**
+     * Obtener todos los Registros
+     *
+     * @param string $order Orden de los resultados
+     * @return array Todos los registros
+     */
+    public static function all($order = 'DESC'){
+        $query = "SELECT * FROM " . static::$table . " ORDER BY 'full_name' {$order}";
+        $result = self::querySQL($query);
+        return $result;
+    }
 
     /**
      * Crea el objeto en memoria que es igual al de la BD

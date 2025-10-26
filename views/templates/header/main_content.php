@@ -29,23 +29,6 @@
             <a class="btn" href="/tet#tet-2025" title="Ver más información sobre TET 2025">¡Quiero saber más!</a>
         </article>
 
-    <?php elseif ($_SERVER['REQUEST_URI'] === '/tet/ingreso') : ?>
-        <article id="header-tet">
-            <h1 id="header-content-tet">
-                TET 
-                <ul id="header-content-tet-list" class="scrolling-list">
-                    <li>Staff</li>
-                    <li>Ingreso</li>
-                    <li>Control</li>
-                </ul>
-                <span>Modo administración</span>
-            </h1>
-
-            <p>Este es un apartado especial para el manejo y control de entrada al evento.</p>
-            <a class="btn" href="/tet/ingreso#control-TET-Staff" title="Ver más información sobre TET 2025">¡Ingresar!</a>
-        </article>
-
-
     <?php elseif ($_SERVER['REQUEST_URI'] === '/anuario') : ?>
         <article>
             <h1 id="header-content">Anuario<span>Unicauca</span></h1>

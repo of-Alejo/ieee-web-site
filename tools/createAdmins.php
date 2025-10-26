@@ -3,13 +3,12 @@ require_once '../models/TetAdmin.php';
 
 // Ejemplo lista de admins (usernames y passwords simples, cámbialos)
 $admins = array(
-    array('username' => 'adminTET1', 'password' => 'pwdT3T2O25!admin100'),
-    array('username' => 'adminTET2', 'password' => 'pwdT3T2O25!admin200'),
-    array('username' => 'adminTET3', 'password' => 'pwdT3T2O25!admin300'),
-    array('username' => 'adminTET4', 'password' => 'pwdT3T2O25!admin400'),
-    array('username' => 'adminTET5', 'password' => 'pwdT3T2O25!admin500'),
-    array('username' => 'adminTET6', 'password' => 'pwdT3T2O25!admin600'),
-    array('username' => 'admin', 'password' => 'admin123'),
+    array('username' => 'adminTET1', 'password' => 'pwdT3T2O25!admin172'),
+    array('username' => 'adminTET2', 'password' => 'pwdT3T2O25!admin434'),
+    array('username' => 'adminTET3', 'password' => 'pwdT3T2O25!admin213'),
+    array('username' => 'adminTET4', 'password' => 'pwdT3T2O25!admin645'),
+    array('username' => 'adminTET5', 'password' => 'pwdT3T2O25!admin578'),
+    array('username' => 'adminTET6', 'password' => 'pwdT3T2O25!admin234'),
 );
 
 foreach ($admins as $adminData) {

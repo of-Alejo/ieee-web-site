@@ -1,6 +1,9 @@
 <?php
 
 require_once '../models/TetAdmin.php';
+require_once '../models/TetAttendee.php';
+require_once '../models/GoogleSheetsSync.php';
+
 class Main {
     public static function index($router) {
         // Para la url '/'
@@ -29,6 +32,13 @@ class Main {
         ));
     }
 
+    public static function tet_2025_ingreso_test($router) {
+        $router->render('main/tet/testhash', array(
+            'title' => '- Sincronización',
+            'metaTitle' => 'TET 2025 - Zona exclusiva para visualización de invitados.',
+            'descriptionSite' => 'Zona exclusiva para el control de ingreso al evento.'
+        ));
+    }
     public static function tet_2025_ingreso($router) {
         startSession();
         $viewData = array(
@@ -38,144 +48,197 @@ class Main {
             'content_state' => 'login',
             'login_error' => null,
             'scan_error' => null,
-            'attendee' => null
+            'attendee' => null,
+            'photo_path' => null
         );
         
-        $remoteIP = $_SERVER['REMOTE_ADDR'];
-        
         // ============================================
-        // MANEJO POST - LOGIN (RESPONDE JSON)
+        // POST - MANEJAR FORMULARIOS
         // ============================================
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userToValidate = new TetAdmin($_POST);
             
-            // Guard: Validaciones del formulario
-            if (!$userToValidate->isValidLoginFields()) {
-                header('Content-Type: application/json');
-                echo json_encode(array(
-                    'success' => false,
-                    'error' => TetAdmin::getAlerts('error')
-                ));
-                return;
+            // CASO 1: Registro de ingreso (formulario de evento) - PRIMERO
+            if (isset($_POST['register_entry'])) {
+                require_once __DIR__ . '/../models/TetAttendee.php';
+                
+                $email = sanitize($_POST['email_address']);
+                $eventDay = sanitize($_POST['event_day']);
+                TetAttendee::registerEntry($email, $eventDay);
+                header('Location: /tet/ingreso');
+                exit;
             }
             
-            // Guard: Buscar usuario
-            $userInDB = TetAdmin::where('username', $userToValidate->username);
-            if ($userInDB == NULL) {
-                error_log("TET login fallido: usuario '{$userToValidate->username}' no existe desde IP: {$remoteIP}");
-                sleep(2);
+            // CASO 2: Login (formulario de autenticación) - SEGUNDO
+            if (isset($_POST['username']) && isset($_POST['pwd'])) {
+                $userToValidate = new TetAdmin($_POST);
+                
+                if (!$userToValidate->isValidLoginFields()) {
+                    header('Content-Type: application/json');
+                    echo json_encode(array(
+                        'success' => false,
+                        'error' => TetAdmin::getAlerts('error')
+                    ));
+                    return;
+                }
+                
+                $userInDB = TetAdmin::where('username', $userToValidate->username);
+                
+                if ($userInDB == NULL) {
+                    sleep(2);
+                    header('Content-Type: application/json');
+                    echo json_encode(array(
+                        'success' => false,
+                        'error' => 'El usuario no existe en el sistema.'
+                    ));
+                    return;
+                }
+                
+                if (!$userInDB->checkPassword($userToValidate->pwd)) {
+                    sleep(2);
+                    header('Content-Type: application/json');
+                    echo json_encode(array(
+                        'success' => false,
+                        'error' => 'Credenciales incorrectas. Verifica tu usuario y contraseña.'
+                    ));
+                    return;
+                }
+                
+                $_SESSION['is_validator'] = true;
+                $_SESSION['validator_login_time'] = time();
+                $_SESSION['validator_id'] = $userInDB->id;
+                
+                if (function_exists('session_regenerate_id')) {
+                    session_regenerate_id(true);
+                }
                 
                 header('Content-Type: application/json');
                 echo json_encode(array(
-                    'success' => false,
-                    'error' => 'El usuario no existe en el sistema.'
+                    'success' => true,
+                    'redirect' => '/tet/ingreso'
                 ));
                 return;
             }
-            
-            // Guard: Verificar contraseña
-            if (!$userInDB->checkPassword($userToValidate->pwd)) {
-                error_log("TET login fallido: contraseña incorrecta para '{$userToValidate->username}' desde IP: {$remoteIP}");
-                sleep(2);
-                
-                header('Content-Type: application/json');
-                echo json_encode(array(
-                    'success' => false,
-                    'error' => 'Credenciales incorrectas. Verifica tu usuario y contraseña.'
-                ));
-                return;
-            }
-            
-            // Login exitoso
-            $_SESSION['is_validator'] = true;
-            $_SESSION['validator_login_time'] = time();
-            $_SESSION['validator_username'] = $userInDB->username;
-            $_SESSION['validator_id'] = $userInDB->id;
-            
-            if (function_exists('session_regenerate_id')) {
-                session_regenerate_id(true);
-            }
-            
-            error_log("TET login exitoso: {$userInDB->username} (ID: {$userInDB->id}) desde IP: {$remoteIP}");
-            
-            header('Content-Type: application/json');
-            echo json_encode(array(
-                'success' => true,
-                'redirect' => '/tet/ingreso',
-                'message' => 'Acceso concedido correctamente'
-            ));
-            return;
         }
-        
+
+
         // ============================================
-        // MANEJO GET - VISTAS
+        // GET - VISTAS
         // ============================================
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $isValidator = isset($_SESSION['is_validator']) && $_SESSION['is_validator'] === true;
             
-            // Guard: Verificar sesión expirada
+            // Verificar sesión expirada
             if ($isValidator && isset($_SESSION['validator_login_time'])) {
-                $sessionTimeout = 2 * 60 * 60;
-                
-                if ((time() - $_SESSION['validator_login_time']) > $sessionTimeout) {
+                if ((time() - $_SESSION['validator_login_time']) > 7200) { // 2h
                     session_unset();
                     session_destroy();
                     $isValidator = false;
-                    
                     $viewData['login_error'] = 'Tu sesión ha expirado. Inicia sesión nuevamente.';
-                    $router->render('main/tet/tet_2025_ingreso', $viewData);
-                    return;
                 }
             }
             
-            // Guard: No autenticado
             if (!$isValidator) {
                 $router->render('main/tet/tet_2025_ingreso', $viewData);
                 return;
             }
             
-            // Autenticado - Vista scan por defecto
             $viewData['content_state'] = 'scan';
             
-            // Guard: No hay código QR
             if (empty($_GET['code'])) {
                 $router->render('main/tet/tet_2025_ingreso', $viewData);
                 return;
             }
             
-            // Validar y procesar código QR
             $qrCode = sanitize($_GET['code']);
             
-            // Guard: Formato inválido
             if (strlen($qrCode) !== 64 || !ctype_xdigit($qrCode)) {
                 $viewData['scan_error'] = 'Formato inválido (64 caracteres hexadecimales requeridos).';
                 $router->render('main/tet/tet_2025_ingreso', $viewData);
                 return;
             }
             
-            // Buscar asistente
-            $attendees = TetAttendee::where('qr_hash_code', $qrCode);
+            require_once __DIR__ . '/../models/TetAttendee.php';
+            $attendee = TetAttendee::where('qr_hash_code', $qrCode);
             
-            // Guard: Código no encontrado
-            if (empty($attendees) || !is_array($attendees)) {
+            if (empty($attendee)) {
                 $viewData['scan_error'] = 'Código QR no válido o no encontrado.';
                 $router->render('main/tet/tet_2025_ingreso', $viewData);
                 return;
             }
             
-            // Código válido
-            $viewData['attendee'] = $attendees[0];
+            // Construir ruta de la foto
+            $photoURL = '/build/img/TET/photos/' . $attendee->qr_hash_code . '.jpg';
+            
+            $viewData['attendee'] = $attendee;
+            $viewData['photo_path'] = $photoURL;
             $viewData['content_state'] = 'verify';
             $router->render('main/tet/tet_2025_ingreso', $viewData);
             return;
         }
         
-        // ============================================
-        // MÉTODO NO PERMITIDO
-        // ============================================
+        // Método no permitido
         http_response_code(405);
         header('Content-Type: application/json');
         echo json_encode(array('error' => 'Método no permitido'));
+    }
+
+    public static function tet_2025_attendees($router) {
+        startSession();
+        
+        $viewData = array(
+            'title' => '- Asistentes',
+            'metaTitle' => 'TET 2025 - Asistentes',
+            'descriptionSite' => 'Lista de todos los asistentes registrados',
+            'attendees' => array()
+        );
+        
+        // Guard: Verificar sesión
+        $isValidator = isset($_SESSION['is_validator']) && $_SESSION['is_validator'] === true;
+        
+        if (!$isValidator) {
+            header('Location: /tet/ingreso');
+            exit;
+        }
+        
+        $attendeesDB = TetAttendee::all();
+        
+        $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+        
+        $attendees = array();
+        foreach ($attendeesDB as $attendee) {
+            $attendee->qr_url = QRGenerator::getQRFromHash($attendee->qr_hash_code, $baseURL);
+            $attendee->photo_path = '/build/img/TET/photos/' . $attendee->qr_hash_code . '.jpg';
+            $attendees[] = $attendee;
+        }
+        
+        $viewData['attendees'] = $attendees;
+        $viewData['total'] = count($attendees);
+        
+        $router->render('main/tet/tet_2025_attendees', $viewData);
+    }
+
+
+    public static function sync_google_sheets($router) {
+        startSession();
+        
+        // Guard: Solo admin puede sincronizar
+        $isValidator = isset($_SESSION['is_validator']) && $_SESSION['is_validator'] === true;
+        
+        if (!$isValidator) {
+            header('Location: /tet/ingreso');
+            return;
+        }
+        
+        // Ejecutar sincronización
+        $result = GoogleSheetsSync::syncFromGoogleSheets();
+        
+        // Renderizar vista con resultados
+        $router->render('main/tet/sync_results', array(
+            'title' => '- Sincronización',
+            'metaTitle' => 'TET 2025 - Zona exclusiva para visualización de invitados.',
+            'descriptionSite' => 'Zona exclusiva para el control de ingreso al evento.',
+            'result' => $result
+        ));
     }
 
 

@@ -30,7 +30,7 @@ function startSession() {
  * @return bool Retorna True si está en Modo Producción (Cambiar en functions.php)
  */
 function isProduction() {
-    return isset($_ENV['ENVIRONMENT']) && $_ENV['ENVIRONMENT'] === 'production';
+    return false;
 }
 
 // Imprime la información de la variable.
