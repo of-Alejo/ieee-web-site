@@ -4,11 +4,15 @@
 
 .sync-results-wrapper{
     display: block;
+    width: 100vw;
     margin: 4rem auto;
     background-color: v.$red-dark-tet;
     padding: 4rem 2rem;
     border: 3px v.$gold-light-tet solid;
     border-radius: 2rem;
+    @include m.desktop {
+        width: 80vw;
+    }
     h1,h3{
         color: v.$gold-light-tet;
     }

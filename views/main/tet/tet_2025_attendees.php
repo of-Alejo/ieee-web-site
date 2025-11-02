@@ -6,7 +6,18 @@
     <section class="attendees-header">
         <h2>📋 Asistentes Registrados</h2>
         <p class="total-count">Total: <strong><?php echo $total; ?> asistentes</strong></p>
-        <a href="/tet/sync" class="btn">Actualizar BD (Solo si hay cambios en los formularios)</a>
+        <a id="syncBD" href="/tet/sync" class="btn">Actualizar BD (Solo si hay cambios en los formularios)</a>
+        <script>
+            document.getElementById("syncBD").addEventListener("click", function() {
+            const btn = this;
+            btn.disabled = true;              // 🔒 Deshabilitar
+            btn.textContent = "Sincronizando..."; // Feedback visual
+
+            // Acción que quieras ejecutar (ejemplo: recargar página)
+            location.reload();
+            });
+        </script>
+        <a href="/tet/ingreso" class="btn">Ir a Control</a>
     </section>
     <div class="search-container" style="margin-bottom: 30px; text-align: center;">
         <input type="text" id="attendee-search" placeholder="Buscar por nombre, correo o celular..." style="width: 100%; max-width: 400px; padding: 8px; font-size:14px;">

@@ -1,7 +1,6 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
 @use "sass:color";
-
 .tet-access-wrapper {
   display: flex;
   flex-direction: column;
@@ -15,7 +14,6 @@
   box-shadow: 0px 0px 20px 2px v.$gold-light-tet;
   -webkit-box-shadow: 0px 0px 20px 2px v.$gold-light-tet;
   -moz-box-shadow: 0px 0px 20px 2px v.$gold-light-tet;
-  
   p{
     color: white;
   }
@@ -30,6 +28,7 @@
     width: 30rem;
     border: 6px solid v.$gold-light-tet;
     border-radius: 1rem;
+    background-color: white;
   }
   h2{
     color: v.$gold-light-tet;
@@ -114,6 +113,10 @@
   }
 }
 
+.alert-error{
+  background-color: rgb(233, 86, 86);
+  color: white;
+}
 .alert-danger {
   background: #f8d7da;
   color: #932030;

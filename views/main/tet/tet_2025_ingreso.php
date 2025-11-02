@@ -6,12 +6,12 @@
     <?php if ($content_state == 'login'): ?>
         <h2>Acceso Staff</h2>
         <picture>
-            <source srcset="/build/img/pages/tet/logo_tet.webp" type="image/webp">
+            <source srcset="/build/img/pages/tet/logo_tet_2.webp" type="image/webp">
             <img 
             loading="lazy" 
             width="200" 
             height="300" 
-            src="/build/img/pages/tet/logo_tet.png" 
+            src="/build/img/pages/tet/logo_tet_2.jpg" 
             alt="Logo del Seminario de Tecnologías Emergentes en Telecomunicaciones TET 2025" 
             class="logo-tet">
         </picture>
@@ -38,20 +38,30 @@
     <?php elseif ($content_state == 'scan'): ?>
         <h2>TET 2025 Control de Entrada QR</h2>
         <picture>
-            <source srcset="/build/img/pages/tet/logo_tet.webp" type="image/webp">
+            <source srcset="/build/img/pages/tet/logo_tet_2.webp" type="image/webp">
             <img 
             loading="lazy" 
             width="200" 
             height="300" 
-            src="/build/img/pages/tet/logo_tet.png" 
+            src="/build/img/pages/tet/logo_tet_2.jpg" 
             alt="Logo del Seminario de Tecnologías Emergentes en Telecomunicaciones TET 2025" 
             class="logo-tet">
         </picture>
         <section aria-label="QR Code Scanning">
             <p>¡Listo! Usa alguna aplicación de Escaneo QR en tu dispositivo para validar una entrada.</p>
             
-            <a href="/tet/sync" class="btn">Actualizar BD (Solo si hay cambios en los formularios)</a>
+            <a id="syncBD" href="/tet/sync" class="btn">Actualizar BD (Solo si hay cambios en los formularios) Toma su tiempo</a>
             <a href="/tet/attendees" class="btn">Todos los registros (Búsqueda manual)</a>
+            <script>
+            document.getElementById("syncBD").addEventListener("click", function() {
+            const btn = this;
+            btn.disabled = true;              // 🔒 Deshabilitar
+            btn.textContent = "Sincronizando..."; // Feedback visual
+
+            // Acción que quieras ejecutar (ejemplo: recargar página)
+            location.reload();
+            });
+            </script>
         </section>
         <!-- In future, add html5-qrcode with aria-live and status notifications -->
 

@@ -23,6 +23,23 @@
         <div class="alert alert-danger">
             <h2>✗ Error en Sincronización</h2>
             <p><?php echo htmlspecialchars($result['error']); ?></p>
+            <button id="retryBtnSync" class="btn">Volver a Intentar</button>
+
+            <script>
+            document.getElementById("retryBtnSync").addEventListener("click", function() {
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = "Sincronizando... Aprox 1.5 minutos";
+
+            location.reload();
+
+            setTimeout(() => {
+                btn.disabled = false;           
+                btn.textContent = "Volver a Intentar";
+            }, 90000);
+            });
+            </script>
+
         </div>
     <?php endif; ?>
     

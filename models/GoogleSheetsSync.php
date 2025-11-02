@@ -37,10 +37,7 @@ class GoogleSheetsSync {
         $possiblePaths[] = '/tmp/tet_photos/';
         $possiblePaths[] = '/var/tmp/tet_photos/';
         
-        self::$log[] = 'DEBUG: Buscando directorio de fotos...';
-        
         foreach ($possiblePaths as $path) {
-            self::$log[] = 'DEBUG: Probando ruta: ' . $path;
             
             if (is_dir($path) && is_writable($path)) {
                 self::$log[] = 'DEBUG: ✓ Directorio encontrado y escribible: ' . $path;
@@ -66,16 +63,14 @@ class GoogleSheetsSync {
             }
         }
         
-        self::$log[] = 'ERROR: No se encontró directorio de fotos escribible';
+        self::$log[] = 'ERROR: No se encontró directorio de fotos';
         return false;
     }
     
     /**
      * En servidor sin cURL, solo usar file_get_contents
      */
-    private static function downloadFile($url) {
-        self::$log[] = 'Descargando: ' . substr($url, 0, 60) . '...';
-        
+    private static function downloadFile($url) {        
         if (!ini_get('allow_url_fopen')) {
             self::$log[] = '✗ allow_url_fopen está deshabilitado';
             return false;
@@ -109,8 +104,6 @@ class GoogleSheetsSync {
             self::$log[] = '✗ Respuesta vacía';
             return false;
         }
-        
-        self::$log[] = '✓ Descargado: ' . strlen($data) . ' bytes';
         return $data;
     }
     
@@ -124,8 +117,6 @@ class GoogleSheetsSync {
             self::$log[] = 'ERROR: GOOGLE_SHEETS_TET_API_URL no configurada en .env';
             return false;
         }
-        
-        self::$log[] = 'Conectando a API: ' . substr($apiURL, 0, 50) . '...';
         
         $response = self::downloadFile($apiURL);
         
@@ -212,8 +203,6 @@ class GoogleSheetsSync {
      * Descarga y guarda foto
      */
     private static function downloadAndSavePhoto($googleDriveURL, $qrHash) {
-        self::$log[] = '  Descargando foto...';
-        
         if (empty($googleDriveURL) || strtolower($googleDriveURL) === 'no') {
             self::$log[] = '    URL vacía, saltando';
             return false;
@@ -229,7 +218,7 @@ class GoogleSheetsSync {
         
         $photoData = self::downloadFile($directDownloadURL);
         
-        if ($photoData === false) {
+        if ($photoData == false) {
             return false;
         }
         
@@ -241,14 +230,12 @@ class GoogleSheetsSync {
         
         $saved = @file_put_contents($filename, $photoData);
         
-        if ($saved === false) {
-            self::$log[] = '    ✗ Error guardando en: ' . $filename;
-            return false;
+        if ($saved == false) {
+            $saved = @file_put_contents($filename, $photoData);
+            if ($saved == false) return false;
         }
         
         @chmod($filename, 0644);
-        
-        self::$log[] = '    ✓ Guardada: ' . $saved . ' bytes';
         return true;
     }
     
@@ -258,31 +245,15 @@ class GoogleSheetsSync {
     public static function syncFromGoogleSheets() {
         self::$log = array();
         
-        self::$log[] = '=== INICIO SINCRONIZACIÓN ===';
-        self::$log[] = 'Timestamp: ' . date('Y-m-d H:i:s');
-        self::$log[] = 'PHP Version: ' . phpversion();
-        self::$log[] = 'Sistema: ' . php_uname();
         self::$log[] = '';
         
         $syncedData = self::fetchDataFromAPI();
         
-        if ($syncedData === false) {
-            self::$log[] = '=== ERROR: Sincronización fallida ===';
-            return array(
-                'success' => false,
-                'log' => self::$log,
-                'total' => 0,
-                'inserted' => 0,
-                'updated' => 0,
-                'qr_generated' => 0,
-                'photos' => 0,
-                'errors' => 1,
-                'skipped' => 0
-            );
+        if ($syncedData == false) {
+            $syncedData = self::fetchDataFromAPI();
+            if ($syncedData == false) return false;
         }
         
-        self::$log[] = '';
-        self::$log[] = 'Procesando registros...';
         self::$log[] = '';
         
         $stats = array(
@@ -354,8 +325,6 @@ class GoogleSheetsSync {
             $existing = TetAttendee::where('email_address', $email);
             
             if ($existing === null) {
-                self::$log[] = '  Acción: INSERTAR';
-                
                 $attendeeData['qr_generated'] = 0;
                 $attendee = new TetAttendee($attendeeData);
                 
@@ -383,8 +352,6 @@ class GoogleSheetsSync {
                     $stats['errors']++;
                 }
             } else {
-                self::$log[] = '  Acción: ACTUALIZAR';
-                
                 if (!empty($existing->qr_hash_code)) {
                     self::$log[] = '    QR ya existe';
                     $stats['qr_exists']++;
