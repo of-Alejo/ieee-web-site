@@ -1,3 +1,6 @@
+// ========================================
+// Importaciones
+// ========================================
 import gulp from 'gulp';
 import gulpSass from 'gulp-sass';
 import * as sass from 'sass';
@@ -6,293 +9,296 @@ import cssnano from 'cssnano';
 import postcss from 'gulp-postcss';
 import sourcemaps from 'gulp-sourcemaps';
 import imagemin from 'gulp-imagemin';
-import svgmin from 'gulp-svgmin';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminOptipng from 'imagemin-optipng';
+import svgmin from 'gulp-svgmin';
 import webp from 'gulp-webp';
 import terser from 'gulp-terser-js';
 import concat from 'gulp-concat';
 import notify from 'gulp-notify';
 import eslint from 'gulp-eslint';
-import seo from 'gulp-seo';
-import fs from 'fs-extra';
-import path from 'path';
 import javascriptObfuscator from 'gulp-javascript-obfuscator';
 import browserSync from 'browser-sync';
 import rev from 'gulp-rev';
 import revDel from 'gulp-rev-delete-original';
 import sitemap from 'gulp-sitemap';
-import debug from 'gulp-debug';
+import fs from 'fs-extra';
+import path from 'path';
+import crypto from 'crypto';
 
 const sassCompiler = gulpSass(sass);
-const { src, dest, watch, parallel, series } = gulp;
+const { src, dest, watch, series, parallel } = gulp;
 const server = browserSync.create();
 
-// Rutas configuradas para los archivos
+// ========================================
+// Configuración general
+// ========================================
+
 const paths = {
-    scss: 'src/scss/**/*.scss',
-    js: 'src/js/**/*.js',
-    images: 'src/img/**/*',
-    php: 'views/**/*.php',
-    pngJpgImages: 'src/img/**/*.{png,jpg,jpeg}',
-    heicImages: 'src/img/**/*.{heic,HEIC}',
-    svgImages: 'src/img/**/*.svg',
-    icoFiles: 'src/img/**/*.ico',
-    build: 'web/build/',
+  scss: 'src/scss/**/*.scss',
+  js: 'src/js/**/*.js',
+  images: 'src/img/**/*',
+  php: 'views/**/*.php',
+  pngJpgImages: 'src/img/**/*.{png,jpg,jpeg}',
+  heicImages: 'src/img/**/*.{heic,HEIC}',
+  svgImages: 'src/img/**/*.svg',
+  icoFiles: 'src/img/**/*.ico',
+  build: 'web/build/'
 };
 
-// Archivos y carpetas a copiar a la carpeta project
 const filesToCopy = [
-    './controllers/',
-    './includes/',
-    './models/',
-    './views/',
-    './web/',
-    './vendor/',
-    './.env',
-    './web/.htaccess',
-    './composer.json',
-    './composer.lock',
-    './package.json',
-    './Router.php',
+  './controllers/',
+  './includes/',
+  './models/',
+  './views/',
+  './web/',
+  './vendor/',
+  './.env',
+  './web/.htaccess',
+  './composer.json',
+  './composer.lock',
+  './package.json',
+  './Router.php'
 ];
 
+// ========================================
+// Modos de ejecución
+// ========================================
+
+const isProduction = true;
+let buildHash = crypto.randomBytes(5).toString('hex'); // Hash único por build
+
+// Log del modo actual
+console.log(`🔧 Modo: ${isProduction ? '🚀 PRODUCCIÓN' : '🛠️ DESARROLLO'}`);
+if (isProduction) console.log(`📦 Build hash: ${buildHash}`);
+
+// ========================================
 // Manejo de errores
+// ========================================
+
 function handleError(err) {
-    notify.onError({
-        title: "Error en Gulp",
-        message: `Error: ${err.message}`,
-        sound: "Beep",
-    })(err);
-    console.error(`[Error]: ${err.toString()}`);
-    this.emit('end');
+  notify.onError({
+    title: 'Error en Gulp',
+    message: `Error: ${err.message}`,
+    sound: 'Beep'
+  })(err);
+  console.error(`[Error]: ${err.toString()}`);
+  this.emit('end');
 }
 
-// Limpieza de la carpeta build
+// ========================================
+// Limpieza
+// ========================================
+
 async function clean() {
-    const del = (await import('del')).deleteSync; // Importación dinámica
-    del([paths.build]);
+  const del = (await import('del')).deleteSync;
+  del([paths.build]);
+  console.log('🧹 Carpeta build limpiada');
 }
 
-// Limpieza de la carpeta project
-async function cleanProduction() {
-    const del = (await import('del')).deleteSync; // Importación dinámica
-    del(['project']);
+// Eliminar archivos sin hash en producción
+async function cleanUntaggedFiles() {
+  if (!isProduction) return Promise.resolve();
+
+  const del = (await import('del')).deleteSync;
+  // Borra app.css y main.js sin hash
+  del([
+    `${paths.build}css/app.css`,
+    `${paths.build}js/main.js`
+  ]);
+  console.log('🧹 Archivos sin hash eliminados');
 }
 
-// Limpieza de todas las carpetas
-function cleanAll() {
-    return del([paths.build, 'project']);
+// ========================================
+// CSS
+// ========================================
+
+function css() {
+  const outputStyle = isProduction ? 'compressed' : 'expanded';
+
+  let pipeline = src(paths.scss)
+    .pipe(sourcemaps.init())
+    .pipe(sassCompiler({ outputStyle }).on('error', handleError))
+    .pipe(postcss([
+      autoprefixer({ overrideBrowserslist: ['last 2 versions', '> 1%', 'not dead'] }),
+      isProduction && cssnano({ preset: ['default', { discardComments: { removeAll: true } }] })
+    ].filter(Boolean)));
+
+  pipeline = pipeline.pipe(concat(isProduction ? `app-${buildHash}.css` : 'app.css'));
+  
+  // Solo escribir sourcemaps en desarrollo
+  if (!isProduction) {
+    pipeline = pipeline.pipe(sourcemaps.write('.'));
+  }
+  
+  pipeline = pipeline.pipe(dest(`${paths.build}css`));
+
+  return pipeline.pipe(notify({ 
+    message: isProduction ? '✅ CSS producción listo' : '✅ CSS desarrollo compilado', 
+    onLast: true 
+  }));
 }
 
-// Compilar y optimizar CSS
-function css(isProduction = false) {
-    const outputStyle = isProduction ? 'compressed' : 'expanded';
-    return src(paths.scss)
-        .pipe(sourcemaps.init())
-        .pipe(sassCompiler({ outputStyle: outputStyle }).on('error', handleError))
-        .pipe(postcss([
-            autoprefixer({ overrideBrowserslist: ['last 2 versions', 'not dead'] }),
-            isProduction && cssnano(), // Minificar solo en producción
-        ].filter(Boolean)))
-        .pipe(sourcemaps.write('.'))
-        .pipe(dest(`${paths.build}css`));
-        //.pipe(notify({ message: 'CSS procesado correctamente!', onLast: true }));
-}
+// ========================================
+// JS
+// ========================================
 
-// Lint y minificación de JS
-function lintJS() {
-    return src(`${paths.build}build/js/main.js`)
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError());
-}
-
-// Minificar y ofuscar JavaScript
 function minifyAndObfuscateJS() {
-    return src(paths.js)
-        .pipe(sourcemaps.init())
-        .pipe(concat('mainv3.js')) // Combinar todos los archivos JS en uno
-        .pipe(terser({
-            compress: {
-                drop_console: true, // Eliminar console.log
-            },
-            output: {
-                comments: false, // Eliminar comentarios
-            },
-        }).on('error', handleError)) // Minificar el archivo
-        .pipe(javascriptObfuscator({ // Ofuscar el archivo
-            compact: true,
-            controlFlowFlattening: true,
-            deadCodeInjection: true,
-            debugProtection: true, // Protección contra depuración
-            disableConsoleOutput: true,
-        }))
-        .pipe(sourcemaps.write('.'))
-        .pipe(dest(`${paths.build}js`))
-        .pipe(notify({ message: 'JavaScript procesado, minificado y ofuscado!', onLast: true }));
+  let pipeline = src(paths.js);
+  
+  // Solo inicializar sourcemaps en desarrollo
+  if (!isProduction) {
+    pipeline = pipeline.pipe(sourcemaps.init());
+  }
+
+  // Concatenar archivos (con hash solo en producción)
+  pipeline = pipeline.pipe(concat(isProduction ? `main-${buildHash}.js` : 'main.js'));
+
+  // Minificación con Terser (diferente según entorno)
+  pipeline = pipeline.pipe(terser({
+    compress: {
+      drop_console: isProduction,     // Elimina console.log solo en producción
+      drop_debugger: isProduction,    // Elimina debugger; solo en producción
+      hoist_funs: true,    // Sube declaraciones para simplificar
+      reduce_vars: true, 
+      collapse_vars: true, // Reduce variables repetidas
+      dead_code: true,
+      unused: true,
+      passes: isProduction ? 2 : 3    // Más pasadas de optimización en producción
+    },
+    mangle: isProduction ? { toplevel: true } : false, // Ofuscar nombres de variables en producción
+    output: {
+      comments: false                 // Elimina comentarios siempre
+    }
+  }).on('error', handleError));
+
+  // Ofuscación SOLO en producción
+  if (isProduction) {
+    pipeline = pipeline.pipe(javascriptObfuscator({
+      compact: true,                  // Compactar código (producción)
+      controlFlowFlattening: true,    // Dificulta lectura del flujo
+      controlFlowFlatteningThreshold: 0.75,
+      deadCodeInjection: true,        // Inyecta código muerto (confunde)
+      deadCodeInjectionThreshold: 0.4,
+      debugProtection: true,          // Protección contra debugging
+      debugProtectionInterval: 2000,  // Refresca protección cada 2s
+      disableConsoleOutput: true,     // Desactiva console en producción
+      stringArray: true,              // Ofusca strings
+      stringArrayThreshold: 0.75,
+      transformObjectKeys: true,
+      unicodeEscapeSequence: false
+    }));
+  }
+
+  // Source maps (solo en desarrollo)
+  if (!isProduction) {
+    pipeline = pipeline.pipe(sourcemaps.write('.'));
+  }
+
+  // Guardar en destino
+  pipeline = pipeline.pipe(dest(`${paths.build}js`));
+
+  return pipeline.pipe(notify({
+    message: isProduction 
+      ? '✅ JavaScript producción: minificado y ofuscado' 
+      : '✅ JavaScript desarrollo: concatenado',
+    onLast: true
+  }));
 }
 
-// Optimizar imágenes
+// ========================================
+// Imágenes y SVG
+// ========================================
+
 function optimizeImages() {
-    return src(paths.pngJpgImages)
-        .pipe(imagemin([
-            imageminMozjpeg({ quality: 75, progressive: true }),
-            imageminOptipng({ optimizationLevel: 5 }),
-        ]))
-        .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: '¡Imágenes optimizadas!', onLast: true }));
+  return src(paths.pngJpgImages)
+    .pipe(imagemin([
+      imageminMozjpeg({ quality: isProduction ? 75 : 85, progressive: true }),
+      imageminOptipng({ optimizationLevel: isProduction ? 5 : 3 })
+    ]))
+    .pipe(dest(`${paths.build}img`))
+    .pipe(notify({ message: '✅ Imágenes optimizadas!', onLast: true }));
 }
 
-// Optimizar archivos SVG
 function optimizeSVG() {
-    return src(paths.svgImages)
-        .pipe(svgmin())
-        .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: '¡Archivos SVG optimizados!', onLast: true }));
+  return src(paths.svgImages)
+    .pipe(svgmin({
+      plugins: [
+        { removeViewBox: false },
+        { cleanupIDs: isProduction }
+      ]
+    }))
+    .pipe(dest(`${paths.build}img`))
+    .pipe(notify({ message: '✅ SVG optimizados!', onLast: true }));
 }
 
-// Copiar archivos ICO
-function copyIcons() {
-    return src(paths.icoFiles)
-        .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: '¡Archivos ICO copiados!', onLast: true }));
-}
-
-// Convertir imágenes a formato WebP
 function convertToWebp() {
-    return src(paths.pngJpgImages)
-        .pipe(webp({ quality: 80 }))
-        .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: '¡Imágenes convertidas a WebP!', onLast: true }));
+  return src(paths.pngJpgImages)
+    .pipe(webp({ quality: 80 }))
+    .pipe(dest(`${paths.build}img`))
+    .pipe(notify({ message: '✅ WebP generados', onLast: true }));
 }
 
-// Convertir imágenes HEIC a formato WebP
-function convertHeicToWebp() {
-    return src(paths.heicImages)
-        .pipe(webp({ quality: 80 })) 
-        .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: '¡Imágenes HEIC convertidas a WebP!', onLast: true }));
+function copyIcons() {
+  return src(paths.icoFiles)
+    .pipe(dest(`${paths.build}img`));
 }
 
-// Copiar archivos HEIC sin optimizar
-function copyHeic() {
-    return src(paths.heicImages)
-        .pipe(dest(`${paths.build}img`))
-        .pipe(notify({ message: '¡Imágenes HEIC copiadas sin optimizar!', onLast: true }));
-}
+// ========================================
+// Cache bust (manifest común)
+// ========================================
 
-// Optimización SEO para archivos PHP
-function seoOptimization() {
-    return src(paths.php)
-        .pipe(seo({
-            siteName: 'IEEE Web Site',
-            robots: 'index, follow',
-            canonical: 'http://ieee.unicauca.edu.co/',
-        }))
-        .pipe(dest('./logs/reports/seo'))
-        .pipe(notify({ message: 'SEO optimizado para archivos PHP!', onLast: true }));
-}
+function generateManifest() {
+  if (!isProduction) {
+    console.log('ℹ️ Manifest omitido en desarrollo');
+    return Promise.resolve();
+  }
 
-// Nueva función para copiar archivos y carpetas a la carpeta project
-function copyToProduction() {
-    return Promise.all(
-        filesToCopy.map((file) => {
-            const resolvedPath = path.resolve(file); // Resolver la ruta completa
-            if (!fs.existsSync(resolvedPath)) {
-                console.error(`La ruta no existe: ${resolvedPath}`);
-                return Promise.resolve(); // Ignorar rutas inexistentes
-            }
-            return fs.copy(resolvedPath, `project/${file.replace('./', '')}`);
-        })
-    ).then(() => {
-        console.log('¡Archivos copiados a la carpeta project y listo para subir por SFTP!');
-    }).catch((err) => {
-        console.error(`Error al copiar archivos: ${err.message}`);
-    });
-}
+  const manifestData = {
+    css: `css/app-${buildHash}.css`,
+    js: `js/main-${buildHash}.js`,
+    hash: buildHash,
+    timestamp: new Date().toISOString()
+  };
 
-// Generar sitemap
-function generateSitemap() {
-    return src('web/**/*.php', { read: false })
-        .pipe(sitemap({
-            siteUrl: 'http://ieee.unicauca.edu.co/',
-        }))
-        .pipe(dest('./web'));
-}
-
-// Nueva función para depuración
-function debugTask() {
-    return src(paths.js)
-        .pipe(debug({ title: 'Procesando archivo:' }))
-        .pipe(dest(`${paths.build}js`));
-}
-
-// Servidor de desarrollo con BrowserSync
-function serve(done) {
-    server.init({
-        server: {
-            baseDir: './web',
-        },
-        port: 3000,
-    });
-    done();
+  fs.writeJsonSync(`${paths.build}manifest.json`, manifestData, { spaces: 2 });
+  console.log(`✅ Manifest generado con hash: ${buildHash}`);
+  return Promise.resolve();
 }
 
 function reload(done) {
-    server.reload();
-    done();
+  server.reload();
+  done();
 }
 
-// Automatizar tareas en desarrollo
 function dev() {
-    watch(paths.scss, series(css, reload));
-    watch(paths.js, series(minifyAndObfuscateJS, reload));
-    watch(paths.php, reload);
+  watch(paths.scss, series(css, reload));
+  watch(paths.js, series(minifyAndObfuscateJS, reload));
+  watch(paths.php, reload);
+  watch(paths.images, series(optimizeImages, optimizeSVG, copyIcons, reload));
 }
 
-// Build final para producción
+// ========================================
+// Production build
+// ========================================
+
 function productionBuild() {
-    return series(
-        clean,
-        () => css(true), // CSS comprimido
-        minifyAndObfuscateJS, // Minificación y ofuscación de JS
-        //seoOptimization, // Optimización SEO
-        optimizeImages, //Hacerlomanualmente con los scripts
-        optimizeSVG, // Optimización de SVG
-        convertToWebp, // Convertir a WebP
-        copyHeic, // Copiar HEIC sin optimizar
-        copyIcons, // Copiar archivos ICO
-        //generateSitemap, // Generar sitemap
-        cleanProduction, // Limpiar carpeta project
-        () => {
-            return src(paths.php) // Copiar archivos PHP a la carpeta project
-                .pipe(dest('project'));
-        },
-        () => {
-            return src(paths.build) // Copiar archivos de build a la carpeta project
-                .pipe(dest('project'));
-        },
-        () => {
-            return src('web/**/*') // Copiar archivos de web a la carpeta project
-                .pipe(dest('project'));
-        },
-        cacheBust, // Agregar hash a los archivos
-        copyToProduction // Copiar archivos a la carpeta project
-    );
+  return series(
+    clean,
+    parallel(css, minifyAndObfuscateJS),
+    generateManifest,
+    cleanUntaggedFiles,
+    optimizeImages,
+    optimizeSVG,
+    convertToWebp,
+    copyIcons
+  );
 }
 
-// Cache Busting
-function cacheBust() {
-    return src(`${paths.build}/**/*.{css,js}`)
-        .pipe(rev())
-        .pipe(dest(paths.build))
-        .pipe(revDel())
-        .pipe(rev.manifest())
-        .pipe(dest(paths.build));
-}
+// ========================================
+// Exportaciones
+// ========================================
 
-// Exports
 export const build = productionBuild();
-export { css, minifyAndObfuscateJS, optimizeImages, optimizeSVG, copyIcons, convertToWebp, dev, clean, lintJS, convertHeicToWebp, copyHeic, cleanAll, serve, cacheBust, generateSitemap, debugTask };
-export default dev;
+export { css, minifyAndObfuscateJS, cleanUntaggedFiles, generateManifest, optimizeImages, optimizeSVG, convertToWebp, copyIcons, dev, clean };
+export default series(dev);

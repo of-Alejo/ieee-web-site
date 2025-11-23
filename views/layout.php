@@ -59,17 +59,27 @@
     <meta name="twitter:image" content="http://ieee.unicauca.edu.co/build/img/logos/logo_ext.png">
     <meta name="twitter:image:alt" content="Logo IEEE Unicauca">
 
-    <!-- Preconexiones para rendimiento -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <?php
+    $manifestPath = $_SERVER['DOCUMENT_ROOT'] . '/build/manifest.json';
+    if (file_exists($manifestPath)) {
+        echo "<!-- Manifest existe -->\n";
+        $manifest = json_decode(file_get_contents($manifestPath), true);
+        $cssFile = '/build/' . $manifest['css'];
+        $jsFile = '/build/' . $manifest['js'];
+    } else {
+        $cssFile = '/build/css/app.css';
+        $jsFile = '/build/js/main.js';
+    }
+    ?>
 
     <!-- CSS -->
-    <link rel="preload" href="/build/css/appv5.css" as="style">
-    <link rel="stylesheet" href="/build/css/appv5.css">
+    <link rel="preload" href="<?php echo $cssFile; ?>" as="style">
+    <link rel="stylesheet" href="<?php echo $cssFile; ?>">
 
     <!-- JS -->
-    <link rel="preload" href="/build/js/mainv3.js" as="script">
-    <script src="/build/js/mainv3.js" defer></script>
+    <link rel="preload" href="<?php echo $jsFile; ?>" as="script">
+    <script src="<?php echo $jsFile; ?>" defer></script>
 
     
     <!-- Schema.org JSON-LD para SEO -->
@@ -97,18 +107,36 @@
     }
     </script>
 
+    <?php
+        // Detectar si es /tet/ingreso con parámetros GET
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $hasGetParams = !empty($_SERVER['QUERY_STRING']);
+        $shouldHideHeader = ($path === '/tet/ingreso' || $path === '/tet/sync' || $path === '/tet/attendees');
+    ?>
     <!-- Iconos -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" as="style" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
+    <!-- Preconnect solo a CDNs que uses -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <?php if (!$shouldHideHeader) : ?>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
+    <!-- Scripts con defer y versiones slim si es posible -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0/particles.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <?php endif; ?>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.7/dist/purify.min.js" defer></script>
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage">
+
+    <?php if (!$shouldHideHeader) : ?>
     <?php include_once __DIR__ . '/templates/header/header.php'; ?>
+    <?php endif; ?>
+
     <?php echo $content; ?>
+
+    <?php if (!$shouldHideHeader) : ?>
     <?php include_once __DIR__ . '/templates/footer/footer.php'; ?>
+    <?php endif; ?>
 </body>
 
 </html>

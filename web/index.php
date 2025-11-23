@@ -8,7 +8,7 @@
     y funciones esenciales. Con ->get(string URL, array función), ->post(string URL, array función) se asigna lo antes dicho.
 */
 
-//require_once __DIR__ . '/../includes/app.php';
+require_once __DIR__ . '/../includes/app.php';
 
 require_once __DIR__ . '/../controllers/Main.php';
 require_once __DIR__ . '/../controllers/Error.php';
@@ -19,8 +19,15 @@ $router = new Router();
 
 // Validadores de URLs
 $router->get('/', array('Main', 'index'));
+$router->get('/test', array('Main', 'test'));
 $router->get('/eventos', array('Main', 'events'));
 $router->get('/tet', array('Main', 'tet_2025'));
+$router->get('/tet/ingreso', array('Main', 'tet_2025_ingreso'));
+$router->post('/tet/ingreso', array('Main', 'tet_2025_ingreso'));
+$router->get('/tet/attendees', array('Main', 'tet_2025_attendees'));
+$router->get('/tet/testhash', array('Main', 'tet_2025_ingreso_test'));
+$router->get('/tet/sync', array('Main', 'sync_google_sheets'));
+$router->post('/tet/sync', array('Main', 'sync_google_sheets'));
 $router->get('/anuario', array('Main', 'year_book'));
 $router->get('/galeria', array('Main', 'gallery'));
 $router->get('/organizacion', array('Main', 'organization'));

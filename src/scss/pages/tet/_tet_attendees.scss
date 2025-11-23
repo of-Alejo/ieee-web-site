@@ -1,0 +1,208 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use "sass:color";
+
+.tet-attendees-wrapper {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+    .search-container input {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    .search-container input:focus {
+        outline: none;
+        border-color: v.$red-dark-tet;
+        box-shadow: 0 0 6px v.$red-dark-tet;
+    }
+
+  .attendees-header {
+    text-align: center;
+    margin-bottom: 30px;
+    .btn{
+      background-color: v.$red-dark-tet;
+      color: v.$gold-light-tet;
+      &:hover{
+        color: white;
+      }
+    }
+    h2 {
+      color: v.$gold-light-tet;
+      font-size: 28px;
+    }
+  }
+
+  .total-count {
+    color: #666;
+    font-size: 16px;
+  }
+
+  .attendees-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    @include m.desktop {
+        grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .attendee-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: white;
+    border: 3px v.$gold-light-tet solid;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    dd {
+      color: black;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .attendee-photo-wrapper {
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    margin: 0;
+  }
+
+  .attendee-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .attendee-info {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+      color: v.$gold-light-tet;
+      word-break: break-word;
+    }
+
+    dl {
+      margin: 0;
+      font-size: 13px;
+
+      dt {
+        font-weight: bold;
+        color: v.$gold-light-tet;
+        margin-top: 8px;
+      }
+
+      dd {
+        margin: 3px 0 0 0;
+        color: v.$red-dark-tet;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+
+    &-student {
+      background: #fceba1;
+      color: v.$gold-tet;
+    }
+
+    &-professional {
+      background: #f3e5f5;
+      color: #7b1fa2;
+    }
+
+    &-teacher {
+      background: #e8f5e9;
+      color: #388e3c;
+    }
+
+    &-ieee_member {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+
+    &.status-in {
+      background: #c8e6c9;
+      color: #2e7d32;
+    }
+
+    &.status-pending {
+      background: #fff9c4;
+      color: #f57f17;
+    }
+  }
+
+  .attendee-qr {
+    padding: 15px;
+    text-align: center;
+    background: #f9f9f9;
+
+    .qr-label {
+      margin: 0 0 10px 0;
+      font-size: 12px;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .qr-code {
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      padding: 5px;
+      width: 16rem;
+    }
+
+    .qr-hash {
+      margin: 8px 0 0 0;
+      font-family: monospace;
+      font-size: 10px;
+      color: #999;
+    }
+  }
+
+  .alert {
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+
+    &-info {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .attendees-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

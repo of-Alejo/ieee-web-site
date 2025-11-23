@@ -4,15 +4,17 @@
 
 # Proteger el propio archivo .htaccess
 <Files .htaccess>
-    Require all denied
+    Order allow,deny
+    Deny from all
 </Files>
 
 # Evitar listado de directorios
 Options -Indexes
 
 # Proteger archivos sensibles
-<FilesMatch "\.(env|json|log|ini|sh|bak|sql|swp|dist|htaccess)$">
-    Require all denied
+<FilesMatch "\.(env|json|log|ini|sh|bak|sql|swp|dist)$">
+    Order allow,deny
+    Deny from all
 </FilesMatch>
 
 # ==============================
@@ -21,10 +23,10 @@ Options -Indexes
 
 RewriteEngine On
 
-# Forzar siempre HTTP (redirigir de https:// a http://)
 RewriteCond %{HTTPS} on
-RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=302]
 
 # Evitar bucles en parámetros GET
 RewriteCond %{QUERY_STRING} ^i=1$ [NC]
@@ -37,48 +39,63 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^(.+)$ index.php [QSA,L]
 
 # ==============================
-# Rendimiento
+# Rendimiento optimizado
 # ==============================
 
-# Habilitar compresión GZIP/Deflate
+# Compresión GZIP/Deflate mejorada
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml
+    # Comprimir tipos de archivo específicos
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/rss+xml application/atom+xml image/svg+xml
+
+    # Comprimir todos los archivos salvo imágenes y video
+    SetOutputFilter DEFLATE
+    SetEnvIfNoCase Request_URI \
+        \.(?:gif|jpe?g|png|ico|bmp|webp|mp4|avi|mov)$ no-gzip dont-vary
+    SetEnvIfNoCase Request_URI \
+        \.(?:exe|t?gz|zip|bz2|rar)$ no-gzip dont-vary
 </IfModule>
 
-# Configurar almacenamiento en caché (para recursos estáticos)
+# Cache optimizado con TTL eficientes
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresByType text/html "access plus 1 hour"
-    ExpiresByType text/css "access plus 1 hour"
-    ExpiresByType text/javascript "access plus 1 hour"
-    ExpiresByType application/javascript "access plus 1 hour"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/gif "access plus 1 year"
-    ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType application/pdf "access plus 1 month"
+    
+    # HTML con TTL corto para contenido dinámico
+    ExpiresByType text/html "access plus 10 minutes"
+    
+    # CSS y JS con TTL medio (pero versionas archivos)
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType text/javascript "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    
+    # Imágenes con TTL largo
+    ExpiresByType image/jpeg "access plus 6 months"
+    ExpiresByType image/png "access plus 6 months"
+    ExpiresByType image/webp "access plus 6 months"
+    ExpiresByType image/gif "access plus 6 months"
     ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Fuentes con TTL largo
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # PDFs
+    ExpiresByType application/pdf "access plus 1 month"
 </IfModule>
-<FilesMatch "\.(css|js)$">
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires 0
-</FilesMatch>
 
 # ==============================
-# Cabeceras de seguridad
+# Cabeceras de seguridad y rendimiento
 # ==============================
 
 <IfModule mod_headers.c>
-    # Evitar sniffing de tipos MIME
+    # Content Security Policy - MODIFICADO para permitir HTTP
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' data: http: https:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; frame-src 'self' https://www.google.com;"
+    
+    # Seguridad
     Header always set X-Content-Type-Options "nosniff"
-
-    # Política de referencia
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-
-    # Control de iframes (anti clickjacking)
     Header always set X-Frame-Options "SAMEORIGIN"
-
-    # HSTS: forzar HTTPS en navegadores
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Vary para cache inteligente
+    Header append Vary "Accept-Encoding"
 </IfModule>

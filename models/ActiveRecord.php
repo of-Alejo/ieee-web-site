@@ -75,6 +75,44 @@ class ActiveRecord {
     }
 
     /**
+     * Where search by column (compatible PHP 5.3, prevents SQL injection)
+     *
+     * @param string $column Column name for the WHERE clause
+     * @param string $value  Value to search
+     * @return mixed         Found object or null
+     */
+    public static function where($column, $value) {
+        // Validate column name for security (whitelist columns if possible)
+        if (!in_array($column, static::$dbColumns)) {
+            return null;
+        }
+
+        // Prepare the statement to avoid SQL injection
+        $query = "SELECT * FROM " . static::$table . " WHERE {$column} = :value LIMIT 1";
+        $stmt = self::$db->prepare($query);
+        $stmt->bindValue(':value', $value);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) {
+            return static::createObject($result[0]);
+        }
+        return null;
+    }
+
+    /**
+     * Obtener todos los Registros
+     *
+     * @param string $order Orden de los resultados
+     * @return array Todos los registros
+     */
+    public static function all($order = 'DESC'){
+        $query = "SELECT * FROM " . static::$table . " ORDER BY 'full_name' {$order}";
+        $result = self::querySQL($query);
+        return $result;
+    }
+
+    /**
      * Crea el objeto en memoria que es igual al de la BD
      *
      * @param array $record Registro de la base de datos

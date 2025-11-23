@@ -29,7 +29,6 @@
             <a class="btn" href="/tet#tet-2025" title="Ver más información sobre TET 2025">¡Quiero saber más!</a>
         </article>
 
-
     <?php elseif ($_SERVER['REQUEST_URI'] === '/anuario') : ?>
         <article>
             <h1 id="header-content">Anuario<span>Unicauca</span></h1>

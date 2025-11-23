@@ -1,0 +1,32 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use "sass:color";
+
+.sync-results-wrapper{
+    display: block;
+    width: 100vw;
+    margin: 4rem auto;
+    background-color: v.$red-dark-tet;
+    padding: 4rem 2rem;
+    border: 3px v.$gold-light-tet solid;
+    border-radius: 2rem;
+    @include m.desktop {
+        width: 80vw;
+    }
+    h1,h3{
+        color: v.$gold-light-tet;
+    }
+    .sync-log{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+    .btn{
+        display: flex;
+        text-align: center;
+        margin: 0 auto;
+        justify-content: center;
+    }
+}
