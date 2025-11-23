@@ -40,7 +40,6 @@
                             class="attendee-photo"
                             width="150" 
                             height="150" 
-                            loading="lazy"
                         >
                     </figure>
                     

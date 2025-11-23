@@ -11,55 +11,32 @@ class GoogleSheetsSync {
     
     /**
      * Obtiene la ruta de carpeta de fotos
-     * En Linux, usa rutas absolutas
      */
     private static function getPhotosDir() {
         if (self::$PHOTOS_DIR !== null) {
             return self::$PHOTOS_DIR;
         }
         
-        $possiblePaths = array();
+        $possiblePaths = array(
+            '/www/ieee/docs/web/build/img/TET/photos/',
+            '/tmp/tet_photos/',
+            '/var/tmp/tet_photos/'
+        );
         
-        // Método 1: DOCUMENT_ROOT (Linux)
         if (!empty($_SERVER['DOCUMENT_ROOT'])) {
-            $possiblePaths[] = $_SERVER['DOCUMENT_ROOT'] . '/build/img/TET/photos/';
+            array_unshift($possiblePaths, $_SERVER['DOCUMENT_ROOT'] . '/build/img/TET/photos/');
         }
         
-        // Método 2: Ruta fija conocida para Linux
-        $possiblePaths[] = '/www/ieee/docs/web/build/img/TET/photos/';
-        
-        // Método 3: Relativa desde script
-        $currentDir = dirname(__FILE__);
-        $projectRoot = dirname($currentDir);
-        $possiblePaths[] = $projectRoot . '/web/build/img/TET/photos/';
-        
-        // Método 4: Alternativas de carpetas temporales
-        $possiblePaths[] = '/tmp/tet_photos/';
-        $possiblePaths[] = '/var/tmp/tet_photos/';
-        
         foreach ($possiblePaths as $path) {
-            
             if (is_dir($path) && is_writable($path)) {
-                self::$log[] = 'DEBUG: ✓ Directorio encontrado y escribible: ' . $path;
                 self::$PHOTOS_DIR = $path;
                 return self::$PHOTOS_DIR;
-            } elseif (is_dir($path) && !is_writable($path)) {
-                self::$log[] = 'DEBUG: ✗ Directorio existe pero NO es escribible: ' . $path;
-                self::$log[] = 'DEBUG: Intentando cambiar permisos...';
-                if (@chmod($path, 0777)) {
-                    self::$log[] = 'DEBUG: ✓ Permisos cambiados a 777';
-                    if (is_writable($path)) {
-                        self::$PHOTOS_DIR = $path;
-                        return self::$PHOTOS_DIR;
-                    }
-                }
-            } else {
-                self::$log[] = 'DEBUG: Carpeta no existe, intentando crear...';
-                if (@mkdir($path, 0777, true)) {
-                    self::$log[] = 'DEBUG: ✓ Carpeta creada: ' . $path;
-                    self::$PHOTOS_DIR = $path;
-                    return self::$PHOTOS_DIR;
-                }
+            } elseif (is_dir($path) && @chmod($path, 0777) && is_writable($path)) {
+                self::$PHOTOS_DIR = $path;
+                return self::$PHOTOS_DIR;
+            } elseif (@mkdir($path, 0777, true) && is_writable($path)) {
+                self::$PHOTOS_DIR = $path;
+                return self::$PHOTOS_DIR;
             }
         }
         
@@ -68,84 +45,52 @@ class GoogleSheetsSync {
     }
     
     /**
-     * En servidor sin cURL, solo usar file_get_contents
+     * Descarga archivo
      */
-    private static function downloadFile($url) {        
+    private static function downloadFile($url) {
         if (!ini_get('allow_url_fopen')) {
-            self::$log[] = '✗ allow_url_fopen está deshabilitado';
             return false;
         }
         
         $context = stream_context_create(array(
-            'http' => array(
-                'timeout' => 30,
-                'user_agent' => 'Mozilla/5.0 (Linux)',
-                'follow_location' => 1,
-                'max_redirects' => 5,
-                'ignore_errors' => true
-            ),
-            'https' => array(
-                'timeout' => 30,
-                'user_agent' => 'Mozilla/5.0 (Linux)',
-                'follow_location' => 1,
-                'max_redirects' => 5,
-                'ignore_errors' => true
-            )
+            'http' => array('timeout' => 30, 'user_agent' => 'Mozilla/5.0'),
+            'https' => array('timeout' => 30, 'user_agent' => 'Mozilla/5.0')
         ));
         
         $data = @file_get_contents($url, false, $context);
         
-        if ($data === false) {
-            self::$log[] = '✗ No se pudo descargar';
-            return false;
-        }
-        
-        if (strlen($data) < 1) {
-            self::$log[] = '✗ Respuesta vacía';
-            return false;
-        }
-        return $data;
+        return ($data !== false && strlen($data) > 0) ? $data : false;
     }
     
     /**
-     * Obtiene datos de la API
+     * Obtiene datos de la API (ahora con missing_photo)
      */
     private static function fetchDataFromAPI() {
         $apiURL = isset($_ENV['GOOGLE_SHEETS_TET_API_URL']) ? $_ENV['GOOGLE_SHEETS_TET_API_URL'] : null;
         
         if (empty($apiURL)) {
-            self::$log[] = 'ERROR: GOOGLE_SHEETS_TET_API_URL no configurada en .env';
+            self::$log[] = 'ERROR: GOOGLE_SHEETS_TET_API_URL no configurada';
             return false;
         }
         
         $response = self::downloadFile($apiURL);
         
         if ($response === false) {
-            self::$log[] = 'ERROR: No se pudo conectar con Google Sheets API';
+            self::$log[] = 'ERROR: No se pudo conectar con Google Sheets';
             return false;
         }
         
         $data = json_decode($response, true);
         
-        if (!$data) {
-            self::$log[] = 'ERROR: Respuesta JSON inválida';
+        if (!$data || !isset($data['success']) || !$data['success']) {
+            self::$log[] = 'ERROR: Respuesta inválida de API';
             return false;
         }
         
-        if (!isset($data['success']) || !$data['success']) {
-            self::$log[] = 'ERROR: Google Sheets retornó success=false';
-            return false;
-        }
-        
-        if (!isset($data['data']) || !is_array($data['data'])) {
-            self::$log[] = 'ERROR: No hay datos en respuesta';
-            return false;
-        }
-        
-        $total = count($data['data']);
-        self::$log[] = 'Datos recibidos: ' . $total . ' registros';
-        
-        return $data['data'];
+        return array(
+            'synced' => isset($data['data']) ? $data['data'] : array(),
+            'missing' => isset($data['missing_photo']) ? $data['missing_photo'] : array()
+        );
     }
     
     /**
@@ -155,33 +100,25 @@ class GoogleSheetsSync {
         if (preg_match('/id=([a-zA-Z0-9-_]+)/', $url, $matches)) {
             return 'https://drive.google.com/uc?export=download&id=' . $matches[1];
         }
-        
         if (preg_match('/\/d\/([a-zA-Z0-9-_]+)/', $url, $matches)) {
             return 'https://drive.google.com/uc?export=download&id=' . $matches[1];
         }
-        
         return $url;
     }
     
     /**
-     * Valida que sea imagen (por magic bytes)
+     * Valida imagen
      */
     private static function isValidImage($photoData) {
-        $size = strlen($photoData);
+        if (strlen($photoData) < 1000) return false;
         
-        if ($size < 1000) {
-            self::$log[] = '    ✗ Muy pequeño: ' . $size . ' bytes';
-            return false;
-        }
-        
-        // Verificar magic bytes
         $imageMagic = array(
-            'jpeg' => array(0xFF, 0xD8, 0xFF),
-            'png' => array(0x89, 0x50, 0x4E, 0x47),
-            'gif' => array(0x47, 0x49, 0x46)
+            array(0xFF, 0xD8, 0xFF),
+            array(0x89, 0x50, 0x4E, 0x47),
+            array(0x47, 0x49, 0x46)
         );
         
-        foreach ($imageMagic as $format => $bytes) {
+        foreach ($imageMagic as $bytes) {
             $match = true;
             for ($i = 0; $i < count($bytes); $i++) {
                 if (ord($photoData[$i]) != $bytes[$i]) {
@@ -189,13 +126,9 @@ class GoogleSheetsSync {
                     break;
                 }
             }
-            if ($match) {
-                self::$log[] = '    ✓ Formato: ' . strtoupper($format);
-                return true;
-            }
+            if ($match) return true;
         }
         
-        self::$log[] = '    ✗ No es imagen válida (magic bytes no coinciden)';
         return false;
     }
     
@@ -203,37 +136,22 @@ class GoogleSheetsSync {
      * Descarga y guarda foto
      */
     private static function downloadAndSavePhoto($googleDriveURL, $qrHash) {
-        if (empty($googleDriveURL) || strtolower($googleDriveURL) === 'no') {
-            self::$log[] = '    URL vacía, saltando';
-            return false;
-        }
+        if (empty($googleDriveURL)) return false;
         
         $photosDir = self::getPhotosDir();
-        if ($photosDir === false) {
-            self::$log[] = '    ✗ No se pudo obtener directorio';
-            return false;
-        }
+        if ($photosDir === false) return false;
         
         $directDownloadURL = self::convertGoogleDriveURL($googleDriveURL);
-        
         $photoData = self::downloadFile($directDownloadURL);
         
-        if ($photoData == false) {
-            return false;
-        }
-        
-        if (!self::isValidImage($photoData)) {
+        if ($photoData === false || !self::isValidImage($photoData)) {
             return false;
         }
         
         $filename = $photosDir . $qrHash . '.jpg';
-        
         $saved = @file_put_contents($filename, $photoData);
         
-        if ($saved == false) {
-            $saved = @file_put_contents($filename, $photoData);
-            if ($saved == false) return false;
-        }
+        if ($saved === false) return false;
         
         @chmod($filename, 0644);
         return true;
@@ -244,25 +162,30 @@ class GoogleSheetsSync {
      */
     public static function syncFromGoogleSheets() {
         self::$log = array();
+        self::$log[] = '=== INICIO SINCRONIZACIÓN ===';
         
-        self::$log[] = '';
+        $apiData = self::fetchDataFromAPI();
         
-        $syncedData = self::fetchDataFromAPI();
-        
-        if ($syncedData == false) {
-            $syncedData = self::fetchDataFromAPI();
-            if ($syncedData == false) return false;
+        if ($apiData === false) {
+            return array(
+                'success' => false,
+                'log' => self::$log,
+                'missing_emails' => array()
+            );
         }
         
+        $syncedData = $apiData['synced'];
+        $missingData = $apiData['missing'];
+        
+        self::$log[] = 'Registros con foto: ' . count($syncedData);
+        self::$log[] = 'Registros sin foto: ' . count($missingData);
         self::$log[] = '';
         
         $stats = array(
             'inserted' => 0,
             'updated' => 0,
             'qr_generated' => 0,
-            'qr_exists' => 0,
             'photos' => 0,
-            'skipped' => 0,
             'errors' => 0
         );
         
@@ -273,33 +196,14 @@ class GoogleSheetsSync {
             'IEEE' => 'ieee_member'
         );
         
-        $recordCount = 0;
-        
+        // Procesar registros con foto
         foreach ($syncedData as $record) {
-            $recordCount++;
-            
-            if (!isset($record['email_address']) || empty($record['email_address'])) {
-                self::$log[] = 'Registro ' . $recordCount . ': Email vacío, saltando';
-                $stats['skipped']++;
-                continue;
-            }
+            if (!isset($record['email_address']) || empty($record['email_address'])) continue;
             
             $email = strtolower(trim($record['email_address']));
-            
             $fullName = isset($record['full_name']) ? sanitize(trim($record['full_name'])) : 'Sin nombre';
             
-            self::$log[] = 'Registro ' . $recordCount . ': ' . $fullName . ' (' . $email . ')';
-            
             $entryType = 'student';
-            if (isset($record['entry_type'])) {
-                $rawType = trim($record['entry_type']);
-                foreach ($entryTypeMap as $pattern => $value) {
-                    if (stripos($rawType, $pattern) !== false) {
-                        $entryType = $value;
-                        break;
-                    }
-                }
-            }
             
             $attendeeData = array(
                 'full_name' => $fullName,
@@ -309,7 +213,7 @@ class GoogleSheetsSync {
                 'document_number' => isset($record['document_number']) ? sanitize($record['document_number']) : '',
                 'entry_type' => $entryType,
                 'payment_confirmed' => 1,
-                'photo_uploaded' => !empty($record['photo_url']) ? 1 : 0,
+                'photo_uploaded' => 1,
                 'photo_file_path' => isset($record['photo_url']) ? sanitize($record['photo_url']) : '',
                 'qr_email_sent' => 0,
                 'attended_event' => 0,
@@ -329,7 +233,6 @@ class GoogleSheetsSync {
                 $attendee = new TetAttendee($attendeeData);
                 
                 if ($attendee->save()) {
-                    self::$log[] = '    ✓ Insertado en BD';
                     $stats['inserted']++;
                     
                     $qrHash = QRGenerator::generateHash($email, $attendee->id);
@@ -342,29 +245,22 @@ class GoogleSheetsSync {
                     
                     $attendee->qr_hash_code = $qrHash;
                     $attendee->qr_generated = 1;
-                    
-                    if ($attendee->save()) {
-                        self::$log[] = '    ✓ QR generado';
-                        $stats['qr_generated']++;
-                    }
+                    $attendee->save();
+                    $stats['qr_generated']++;
                 } else {
-                    self::$log[] = '    ✗ Error insertando';
                     $stats['errors']++;
                 }
             } else {
-                if (!empty($existing->qr_hash_code)) {
-                    self::$log[] = '    QR ya existe';
-                    $stats['qr_exists']++;
+                if (empty($existing->qr_hash_code)) {
+                    $attendeeData['qr_generated'] = 0;
+                } else {
                     $attendeeData['qr_hash_code'] = $existing->qr_hash_code;
                     $attendeeData['qr_generated'] = $existing->qr_generated;
-                } else {
-                    $attendeeData['qr_generated'] = 0;
                 }
                 
                 $existing->updateProperties($attendeeData);
                 
                 if ($existing->save()) {
-                    self::$log[] = '    ✓ Actualizado';
                     $stats['updated']++;
                     
                     if (empty($existing->qr_hash_code)) {
@@ -378,37 +274,43 @@ class GoogleSheetsSync {
                         
                         $existing->qr_hash_code = $qrHash;
                         $existing->qr_generated = 1;
-                        
-                        if ($existing->save()) {
-                            self::$log[] = '    ✓ QR generado';
-                            $stats['qr_generated']++;
-                        }
+                        $existing->save();
+                        $stats['qr_generated']++;
                     }
                 } else {
-                    self::$log[] = '    ✗ Error actualizando';
                     $stats['errors']++;
                 }
             }
+        }
+        
+        // Extraer solo emails faltantes
+        $missingEmails = array();
+        foreach ($missingData as $missing) {
+            $email = !empty($missing['email_principal']) && $missing['email_principal'] != '(vacío)' 
+                ? $missing['email_principal'] 
+                : $missing['email_alternativo'];
             
-            self::$log[] = '';
+            if ($email && $email != '(vacío)') {
+                $missingEmails[] = array(
+                    'email' => $email,
+                    'name' => isset($missing['full_name']) ? $missing['full_name'] : 'Desconocido'
+                );
+            }
         }
         
         self::$log[] = '';
         self::$log[] = '=== RESULTADOS ===';
-        self::$log[] = 'Total procesados: ' . count($syncedData);
         self::$log[] = 'Insertados: ' . $stats['inserted'];
         self::$log[] = 'Actualizados: ' . $stats['updated'];
-        self::$log[] = 'QR Generados: ' . $stats['qr_generated'];
-        self::$log[] = 'QR Existentes: ' . $stats['qr_exists'];
         self::$log[] = 'Fotos descargadas: ' . $stats['photos'];
         self::$log[] = 'Errores: ' . $stats['errors'];
-        self::$log[] = 'Saltados: ' . $stats['skipped'];
-        self::$log[] = '=== FIN SINCRONIZACIÓN ===';
+        self::$log[] = 'Faltantes: ' . count($missingEmails);
         
         return array_merge(array(
             'success' => true,
             'total' => count($syncedData),
-            'log' => self::$log
+            'log' => self::$log,
+            'missing_emails' => $missingEmails
         ), $stats);
     }
     
