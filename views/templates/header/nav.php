@@ -9,6 +9,6 @@
         </picture>
     </a>
     <a href="/anuario" aria-label="Ir a la sección ANUARIO" title="ANUARIO">ANUARIO</a>
-    <a href="/galeria" aria-label="Ir a la sección GALERÍA" title="GALERÍA">GALERÍA</a>
+    <a href="/capitulos" aria-label="Ir a la sección CAPÍTULOS" title="CAPÍTULOS">CAPÍTULOS</a>
     <a href="/organizacion" aria-label="Ir a la sección ORGANIZACIÓN" title="ORGANIZACIÓN">ORGANIZACIÓN</a>
 </nav>

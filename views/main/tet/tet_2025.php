@@ -21,7 +21,6 @@
 
             <div id="counter-tet" aria-live="polite">
             <p>
-                Empezamos en <br>
                 <span id="counter-time-tet" class="counter-time">00d 00h 00m 00s</span>
             </p>
             </div>

@@ -29,7 +29,7 @@ $router->get('/tet/testhash', array('Main', 'tet_2025_ingreso_test'));
 $router->get('/tet/sync', array('Main', 'sync_google_sheets'));
 $router->post('/tet/sync', array('Main', 'sync_google_sheets'));
 $router->get('/anuario', array('Main', 'year_book'));
-$router->get('/galeria', array('Main', 'gallery'));
+$router->get('/capitulos', array('Main', 'chapters'));
 $router->get('/organizacion', array('Main', 'organization'));
 $router->get('/404', array('AppError', 'e404'));
 $router->get('/500', array('AppError', 'e500'));

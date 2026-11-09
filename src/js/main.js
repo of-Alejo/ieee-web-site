@@ -11,6 +11,7 @@ const routes = {
     anuario: '/anuario',
     galeria: '/galeria',
     organizacion: '/organizacion',
+    organizacion: '/capitulos',
     e404: '/404',
     e500: '/500'
 };
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const isAllowedRoute = Object.values(routes).includes(currentPath);
     
     if (!isAllowedRoute) return;
-
+    
     // Funciones globales
     if (isMobile) menuBurger();
     

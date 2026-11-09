@@ -116,6 +116,7 @@
     <!-- Iconos -->
     <!-- Preconnect solo a CDNs que uses -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php if (!$shouldHideHeader) : ?>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 

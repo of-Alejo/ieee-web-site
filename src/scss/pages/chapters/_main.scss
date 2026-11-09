@@ -1,0 +1,611 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+/* ========== CHAPTERS INFO ========== */
+
+.chapters-info {
+    padding: 4rem 2rem;
+    background: v.$white;
+    @include m.tablet { padding: 4rem 4rem; }
+
+    h2 {
+        font-size: 4rem;
+        color: v.$azul;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-family: v.$mainFont;
+        font-weight: v.$bold;
+        letter-spacing: -0.5px;
+        
+        &::after {
+            content: '';
+            display: block;
+            width: 250px;
+            height: 4px;
+            background: linear-gradient(90deg, v.$azul, lighten(v.$azul, 20%));
+            margin: 1.2rem auto 0;
+            border-radius: 2px;
+            @include m.desktop {
+                width: 550px;
+            }
+        }
+    }
+
+    &__content {
+        max-width: 850px;
+        margin: 0 auto;
+    }
+
+    &__text p {
+        color: v.$gray;
+        line-height: 1.8;
+        font-size: 1.6rem;
+        margin-bottom: 1.2rem;
+        font-family: v.$mainFont;
+        @include m.desktop {
+            font-size: 1.8rem;
+            
+        }
+    }
+
+    &__benefits {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0 0;
+
+        li {
+            padding: 0.8rem 0 0.8rem 2rem;
+            position: relative;
+            color: v.$gray;
+            line-height: 1.7;
+            font-family: v.$mainFont;
+            font-size: 1.4rem;
+            @include m.desktop {
+                font-size: 1.8rem;
+                
+            }
+
+            &::before {
+                content: '✓';
+                position: absolute;
+                left: 0;
+                color: v.$azul;
+                font-weight: v.$bold;
+                font-size: 1.8rem;
+                @include m.desktop {
+                    
+                }
+            }
+        }
+    }
+}
+
+/* ========== SOCIETIES GRID ========== */
+
+.societies-grid {
+    padding: 4rem 2rem;
+    background: v.$lightGray;
+    @include m.tablet { padding: 4rem 4rem; }
+
+    h2 {
+        font-size: 4rem;
+        color: v.$azul;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-family: v.$mainFont;
+        font-weight: v.$bold;
+        letter-spacing: -0.5px;
+        
+        &::after {
+            content: '';
+            display: block;
+            width: 250px;
+            height: 4px;
+            background: linear-gradient(90deg, v.$azul, lighten(v.$azul, 20%));
+            margin: 1.2rem auto 0;
+            border-radius: 2px;
+            @include m.desktop {
+                width: 580px;
+            }
+        }
+    }
+
+    &__intro {
+        text-align: center;
+        font-size: 1.6rem;
+        color: v.$gray;
+        margin-bottom: 3rem;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: v.$mainFont;
+        line-height: 1.6;
+        @include m.desktop {
+            font-size: 1.6rem;
+        }
+    }
+
+    &__container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        max-width: 1050px;
+        margin: 0 auto;
+        @include m.tablet {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+/* ========== SOCIETY CARD ========== */
+
+.society-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+
+    /* RAS - Gradient rojo */
+    &[data-society='ras'] {
+        .society-card__header {
+            background: linear-gradient(135deg, v.$ras-primary 30%, lighten(v.$ras-primary, 30%) 100%);
+        }
+        .society-card__content {
+            background: lighten(v.$ras-primary, 62%);
+        }
+        &:hover .society-card__header {
+            background: v.$ras-primary;
+        }
+        .society-card__icon {
+            background-color: #fff;
+        }
+        .society-card__full-name, .society-card__focus, .society-card__info{
+            color: v.$ras-primary;
+        }
+    }
+
+    /* CS - Gradient naranja */
+    &[data-society='cs'] {
+        .society-card__header {
+            background: linear-gradient(135deg, v.$cs-primary 30%, lighten(v.$cs-primary, 30%) 100%);
+        }
+        .society-card__content {
+            background: lighten(v.$cs-primary, 45%);
+        }
+        &:hover .society-card__header {
+            background: v.$cs-primary;
+        }
+        .society-card__full-name, .society-card__focus, .society-card__info{
+            color: v.$cs-primary;
+        }
+    }
+
+    /* EDS - Gradient azul */
+    &[data-society='eds'] {
+        .society-card__header {
+            background: linear-gradient(135deg, v.$eds-primary 30%, lighten(v.$eds-primary, 30%) 100%);
+        }
+        .society-card__content {
+            background: lighten(v.$eds-primary, 80%);
+        }
+        &:hover .society-card__header {
+            background: v.$eds-primary;
+        }
+        .society-card__full-name, .society-card__focus, .society-card__info{
+            color: v.$eds-primary;
+        }
+    }
+
+    /* WIE - Gradient morado */
+    &[data-society='wie'] {
+        .society-card__header {
+            background: linear-gradient(135deg, v.$wie-primary 30%, lighten(v.$wie-primary, 30%) 100%);
+        }
+        .society-card__content {
+            background: lighten(v.$wie-primary, 60%);
+        }
+        &:hover .society-card__header {
+            background: v.$wie-primary;
+        }
+        .society-card__icon {
+            background-color: #fff;
+        }
+        .society-card__full-name, .society-card__focus, .society-card__info{
+            color: v.$wie-primary;
+        }
+    }
+
+    &__header {
+        padding: 2rem;
+        color: v.$white;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+        h3 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: v.$bold;
+            font-family: v.$mainFont;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    &__icon {
+        width: 100px;
+        height: 100px;
+        border-radius: 40px;
+        padding: .5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        backdrop-filter: blur(10px);
+        
+        picture, img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 40px;
+        }
+    }
+
+    &__content {
+        padding: 2rem;
+        flex: 1;
+        transition: background 0.3s ease;
+    }
+
+    &__full-name {
+        font-size: 2rem;
+        margin: 0 0 1rem;
+        font-weight: v.$bold;
+        font-family: v.$mainFont;
+        letter-spacing: -0.3px;
+    }
+
+    &__description {
+        font-size: 1.4rem;
+        color: v.$gray;
+        line-height: 1.7;
+        margin-bottom: 1.3rem;
+        font-family: v.$mainFont;
+    }
+
+    &__focus {
+        margin-bottom: 1.3rem;
+
+        h5 {
+            font-size: 1.5rem;
+            font-weight: v.$bold;
+            margin: 0 0 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            font-family: v.$mainFont;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+
+            li {
+                padding: 0.4rem 0 0.4rem 1.4rem;
+                position: relative;
+                color: v.$gray;
+                font-size: 1.3rem;
+                line-height: 1.5;
+                font-family: v.$mainFont;
+
+                &::before {
+                    content: '•';
+                    position: absolute;
+                    left: 0;
+                    color: v.$azul;
+                    font-weight: v.$bold;
+                }
+            }
+        }
+    }
+
+    &__info {
+        padding-top: 1.2rem;
+        border-top: 2px solid rgba(0, 0, 0, 0.08);
+        font-size: 1.2rem;
+        color: v.$gray;
+        font-family: v.$mainFont;
+
+        .info-item {
+            margin-bottom: 0.6rem;
+
+            strong {
+                font-weight: v.$bold;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+/* ========== WHY JOIN ========== */
+
+.why-join {
+    padding: 4rem 2rem;
+    background: v.$white;
+    @include m.tablet { padding: 4rem 4rem; }
+
+    h2 {
+        font-size: 4rem;
+        color: v.$azul;
+        margin-bottom: 3rem;
+        text-align: center;
+        font-family: v.$mainFont;
+        font-weight: v.$bold;
+        letter-spacing: -0.5px;
+        
+        &::after {
+            content: '';
+            display: block;
+            width: 300px;
+            height: 4px;
+            background: linear-gradient(90deg, v.$azul, lighten(v.$azul, 20%));
+            margin: 1.2rem auto 0;
+            border-radius: 2px;
+            @include m.desktop {
+                width: 450px;
+                
+            }
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 1050px;
+        margin: 0 auto;
+        
+        @include m.tablet {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        @include m.desktop {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    &__card {
+        padding: 2rem;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(18, 63, 114, 0.05), rgba(18, 63, 114, 0.02));
+        text-align: center;
+        transition: all 0.3s ease;
+        border-left: 4px solid v.$azul;
+        border: 1px solid rgba(18, 63, 114, 0.1);
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(18, 63, 114, 0.12);
+            border-left-width: 5px;
+        }
+
+        h3 {
+            font-size: 2rem;
+            color: v.$azul;
+            margin: 1rem 0 0.8rem;
+            font-weight: v.$bold;
+            font-family: v.$mainFont;
+        }
+
+        p {
+            color: v.$gray;
+            line-height: 1.7;
+            font-size: 1.4rem;
+            margin: 0;
+            font-family: v.$mainFont;
+        }
+    }
+
+    &__card-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, v.$azul, lighten(v.$azul, 15%));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: v.$white;
+        box-shadow: 0 4px 12px rgba(18, 63, 114, 0.2);
+        
+        svg {
+            width: 32px;
+            height: 32px;
+        }
+    }
+}
+
+/* ========== CTA ========== */
+
+.chapters-cta {
+    padding: 4.5rem 2rem;
+    background: linear-gradient(135deg, v.$azul 0%, darken(v.$azul, 8%) 100%);
+    color: v.$white;
+    text-align: center;
+    @include m.tablet { padding: 4.5rem 4rem; }
+
+    h2 {
+        font-size: 4rem;
+        margin: 0 0 1.2rem;
+        font-weight: v.$bold;
+        font-family: v.$mainFont;
+        letter-spacing: -0.5px;
+    }
+
+    p {
+        font-size: 1.4rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+        font-family: v.$mainFont;
+        line-height: 1.6;
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        max-width: 500px;
+        margin: 0 auto;
+        @include m.tablet {
+            flex-direction: row;
+            justify-content: center;
+        }
+        
+        .btn {
+            color: v.$azul;
+            background-color: white;
+            font-size: 1.5rem;
+            padding: 1rem 1.5rem;
+        }
+    }
+}
+
+/* ========== CONTACT ========== */
+
+.chapters-contact {
+    padding: 4rem 2rem;
+    background: v.$lightGray;
+    @include m.tablet { padding: 4rem 4rem; }
+
+    h2 {
+        font-size: 4rem;
+        color: v.$azul;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        font-family: v.$mainFont;
+        font-weight: v.$bold;
+        letter-spacing: -0.5px;
+        
+        &::after {
+            content: '';
+            display: block;
+            width: 300px;
+            height: 4px;
+            background: linear-gradient(90deg, v.$azul, lighten(v.$azul, 20%));
+            margin: 1.2rem auto 0;
+            border-radius: 2px;
+            @include m.desktop {
+                width: 400px;
+                
+            }
+        }
+    }
+
+    &__faq {
+        max-width: 750px;
+        margin: 0 auto 2.5rem;
+    }
+
+    &__info {
+        background: v.$white;
+        padding: 2.5rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        max-width: 550px;
+        margin: 0 auto;
+
+        h3 {
+            font-size: 4rem;
+            color: v.$azul;
+            margin: 0 0 1rem;
+            font-weight: v.$bold;
+            font-family: v.$mainFont;
+        }
+
+        p {
+            color: v.$gray;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-family: v.$mainFont;
+            line-height: 1.6;
+        }
+
+        .btn {
+            font-size: 0.95rem;
+            padding: 0.9rem 1.5rem;
+        }
+    }
+}
+
+/* ========== FAQ ========== */
+
+.faq-item {
+    background: v.$white;
+    border: 1px solid rgba(18, 63, 114, 0.1);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: v.$azul;
+        box-shadow: 0 4px 12px rgba(18, 63, 114, 0.08);
+    }
+
+    summary {
+        padding: 1.4rem;
+        cursor: pointer;
+        font-weight: v.$bold;
+        color: v.$azul;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+        font-family: v.$mainFont;
+        font-size: 1.6rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: rgba(18, 63, 114, 0.03);
+            color: v.$azul;
+        }
+
+        &::after {
+            content: '▼';
+            transition: transform 0.3s ease;
+            color: v.$azul;
+            font-weight: v.$bold;
+        }
+    }
+
+    &[open] summary {
+        background: rgba(18, 63, 114, 0.06);
+        border-bottom: 2px solid v.$azul;
+
+        &::after {
+            transform: rotate(180deg);
+        }
+    }
+
+    p {
+        padding: 0 1.4rem 1.4rem;
+        color: v.$gray;
+        line-height: 1.8;
+        margin: 0;
+        font-family: v.$mainFont;
+        font-size: 1.3rem;
+    }
+}

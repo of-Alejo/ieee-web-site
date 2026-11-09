@@ -122,17 +122,18 @@
         }
         h1 {
             font-size: 7rem;
-            color: rgba(255, 255, 255, 0.301); 
+            color: rgba(255, 255, 255, 0.5); 
             position: relative;
             padding-bottom: 2rem;
-            top: -5rem;
             width: 100%;
+            
             @include m.desktop {
+                font-size: 8rem;
                 top: 0;
             }
             span {
                 position: absolute; 
-                bottom: 0rem;
+                bottom: -.5rem;
                 left: 1.2rem;
                 font-size: 5rem;
                 color: white; 
@@ -141,11 +142,12 @@
         }
 
         p {
-            font-size: 1.5rem; 
+            font-size: 1.7rem; 
             color: white;
             margin-top: 1rem;
             @include m.desktop {
                 width: 40rem;
+                font-size: 1.8rem; 
                 
             }
         }

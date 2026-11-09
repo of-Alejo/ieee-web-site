@@ -166,8 +166,7 @@ function timerTet() {
         const rest = eventDay - now;
 
         if (rest <= 0) {
-            elem.innerText = "¡El TET 2025 comenzó!";
-            clearInterval(intervalId);
+            elem.innerText = "¡El TET 2025 ha terminado!";
             return;
         }
 

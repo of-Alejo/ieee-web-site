@@ -41,6 +41,14 @@
             <p>¿Quieres ver las fotos de nuestros eventos? <br>¡No te pierdas la oportunidad de revivir esos momentos especiales!</p>
             <a class="btn" href="/galeria#galery" title="Ir a la sección de Galería">¡Quiero ver!</a>
         </article>
+    <?php elseif ($_SERVER['REQUEST_URI'] === '/capitulos') : ?>
+        <article>
+            <h1 id="header-content">Capítulos<span>Técnicos</span></h1>
+            <p>Explora las diferentes sociedades técnicas que conforman la 
+                <abbr abbr title="Institute of Electrical and Electronics Engineers">IEEE</abbr> 
+                en la Rama Unicauca. Cada sociedad se especializa en áreas específicas de la ingeniería y tecnología.</p>
+            <a class="btn" href="/capitulos#chapters" title="Ir a la sección de Capítulos">¡Quiero conocerlos!</a>
+        </article>
     <?php elseif ($_SERVER['REQUEST_URI'] === '/organizacion') : ?>
         <article>
             <h1 id="header-content">Organización<span>IEEE</span></h1>

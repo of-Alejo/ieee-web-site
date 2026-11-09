@@ -251,10 +251,10 @@ class Main {
         ));
     }
 
-    public static function gallery($router) {
-        // Para la url '/galeria'
-        $router->render('main/galery', array(
-            'title' => '- Galería',
+    public static function chapters($router) {
+        // Para la url '/capitulos'
+        $router->render('main/chapters/main', array(
+            'title' => '- Capítulos',
             'metaTitle' => 'Galería - Rama IEEE Unicauca',
             'descriptionSite' => 'En nuestra galería podrás encontrar fotos y videos de nuestros eventos y actividades.'
         ));
